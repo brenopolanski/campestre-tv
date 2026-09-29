@@ -15,6 +15,9 @@
 /.next/
 /out/
 
+# env.style (generated tinted favicons)
+/public/__envstyle/
+
 # production
 /build
 
