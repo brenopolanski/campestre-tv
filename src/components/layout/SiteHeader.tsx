@@ -20,7 +20,7 @@ const SiteHeader = () => {
           priority
         />
       </Link>
-      <nav className="flex items-center gap-8 px-8 py-5 sm:py-0">
+      <nav className="flex items-center gap-8 px-8 py-5 sm:flex-1 sm:justify-center sm:py-0">
         <a className="border-b border-foreground pb-2 label-caps" href="#ao-vivo">
           Ao vivo
         </a>
@@ -37,7 +37,7 @@ const SiteHeader = () => {
           Contato
         </a>
       </nav>
-      <div className="flex items-center justify-end px-8 py-4 sm:ml-auto sm:py-0">
+      <div className="flex items-center justify-end px-8 py-4 sm:w-[22rem] sm:shrink-0 sm:border-l sm:border-border sm:py-0">
         <ThemeControls />
       </div>
     </header>
