@@ -3,8 +3,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 
-import { ThemeProvider } from '@/components/theme-provider'
 import { cn } from '@/lib/utils'
+import { ThemeProvider } from '@/providers/ThemeProvider'
 
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' })
 
