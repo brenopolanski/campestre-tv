@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 
 import { cn } from '@/lib/utils'
-import { ThemeProvider } from '@/providers/ThemeProvider'
+import { Providers } from '@/providers/Providers'
 
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -38,7 +38,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
