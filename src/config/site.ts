@@ -16,6 +16,7 @@ export const siteConfig = {
     siteName,
     'campestre',
     'campina grande',
+    'paraíba',
     'tennis',
     'clube campestre',
     'transmissões',
