@@ -1,12 +1,10 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { DM_Sans } from 'next/font/google'
 
+import { fontVariables } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import { Providers } from '@/providers/Providers'
-
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' })
 
 export const metadata: Metadata = {
   title: 'campestre.tv — Tênis ao vivo das quadras do clube',
@@ -32,7 +30,7 @@ interface RootLayoutProps {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html
-      className={cn('antialiased', dmSans.variable, 'font-sans')}
+      className={cn('font-sans text-base antialiased', fontVariables)}
       data-court="saibro"
       lang="pt-BR"
       suppressHydrationWarning
