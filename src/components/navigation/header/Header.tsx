@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { ThemeControls } from '@/components/theme/ThemeControls'
 import { paths } from '@/config/paths'
+
+import { ThemeToggle } from './ThemeToggle'
 
 export const Header = () => {
   return (
@@ -39,7 +40,7 @@ export const Header = () => {
         </a>
       </nav>
       <div className="flex items-center px-8 py-4 sm:shrink-0 sm:py-0">
-        <ThemeControls />
+        <ThemeToggle />
       </div>
     </header>
   )
