@@ -38,12 +38,3 @@ export const courts: Court[] = [
     width: 1024,
   },
 ]
-
-export const courtThemes = [
-  { id: 'saibro', name: 'Saibro', swatch: 'bg-court-clay' },
-  { id: 'rapida', name: 'Quadra Rápida', swatch: 'bg-court-hard' },
-  { id: 'grama', name: 'Grama', swatch: 'bg-court-grass' },
-  { id: 'wimbledon', name: 'Wimbledon', swatch: 'bg-court-wimbledon' },
-] as const
-
-export type CourtThemeId = (typeof courtThemes)[number]['id']

@@ -14,7 +14,6 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html
       className={cn('font-sans text-base antialiased', fontVariables)}
-      data-court="saibro"
       lang="pt-BR"
       suppressHydrationWarning
     >
