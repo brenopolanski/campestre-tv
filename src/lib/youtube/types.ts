@@ -83,3 +83,29 @@ export interface YouTubeVideo {
 export interface YouTubeVideosResponse {
   videos: YouTubeVideo[]
 }
+
+export interface YouTubePlaylistItem {
+  snippet?: {
+    channelTitle?: string
+    resourceId?: {
+      videoId?: string
+    }
+  }
+}
+
+export interface YouTubePlaylistItemsResponse {
+  items?: YouTubePlaylistItem[]
+}
+
+export interface YouTubeChannelVideo extends YouTubeVideo {
+  courtName: string | null
+}
+
+export interface YouTubeChannelBroadcasts {
+  channel: {
+    id: string
+    title: string
+  }
+  liveCount: number
+  videos: YouTubeChannelVideo[]
+}

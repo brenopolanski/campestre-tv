@@ -87,6 +87,71 @@ Example response:
 
 `live.status` is `live`, `upcoming`, `completed`, or `none`. Counts and live times are omitted when YouTube does not send them. A missing count is not `0`. Videos that are private, deleted, or unknown are left out of `videos`.
 
+### Monitor a channel
+
+Set the public channel id in `.env`. Change it there when the monitored channel changes. No source change is required.
+
+```bash
+YOUTUBE_CHANNEL_ID=UCdWZMGfre33FZdDgcd1dz-A
+YOUTUBE_CHANNEL_VIDEO_LIMIT=50
+```
+
+`YOUTUBE_CHANNEL_VIDEO_LIMIT` is how many recent uploads to inspect. It defaults to 50, which is one playlist page.
+
+```http
+GET /api/youtube/channel
+```
+
+An optional `channelId` query overrides the configured channel:
+
+```http
+GET /api/youtube/channel?channelId=UCdWZMGfre33FZdDgcd1dz-A
+```
+
+Discovery uses public data only. The uploads playlist id is the channel id with the `UC` prefix replaced by `UU`, so the app does not call `channels.list` or `search.list`. `search.list` costs 100 quota units. Each poll instead calls `playlistItems.list` (1 unit) and then `videos.list` (1 unit) for live details such as concurrent viewers. At a 60 second interval that is about 2,880 units per day, inside the default 10,000 unit quota.
+
+The response keeps broadcasts whose status is `live`, `upcoming`, or `completed`, with live streams first. Ordinary uploads are left out. `liveCount` is the number of videos currently live. `courtName` is set only when the title contains exactly one `Quadra N`, for example `Campestre TV - Quadra 1` becomes `Quadra 1`. Otherwise `courtName` is `null`.
+
+`fetchYouTubeChannel` in `src/lib/youtube/fetch-channel.ts` calls this endpoint from the browser.
+
+```json
+{
+  "channel": {
+    "id": "UCdWZMGfre33FZdDgcd1dz-A",
+    "title": "Campestre TV"
+  },
+  "liveCount": 2,
+  "videos": [
+    {
+      "id": "VIDEO_ID_1",
+      "title": "Campestre TV - Quadra 1",
+      "courtName": "Quadra 1",
+      "channelId": "UCdWZMGfre33FZdDgcd1dz-A",
+      "channelTitle": "Campestre TV",
+      "thumbnailUrl": "https://i.ytimg.com/vi/VIDEO_ID_1/hqdefault.jpg",
+      "live": {
+        "status": "live",
+        "actualStartTime": "2026-10-07T18:00:00Z",
+        "concurrentViewers": 342
+      }
+    },
+    {
+      "id": "VIDEO_ID_2",
+      "title": "Campestre TV - Quadra 2",
+      "courtName": "Quadra 2",
+      "channelId": "UCdWZMGfre33FZdDgcd1dz-A",
+      "channelTitle": "Campestre TV",
+      "thumbnailUrl": "https://i.ytimg.com/vi/VIDEO_ID_2/hqdefault.jpg",
+      "live": {
+        "status": "live",
+        "actualStartTime": "2026-10-07T18:05:00Z",
+        "concurrentViewers": 127
+      }
+    }
+  ]
+}
+```
+
 ## Adding components
 
 To add components to your app, run the following command:
