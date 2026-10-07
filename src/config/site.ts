@@ -1,8 +1,13 @@
-const siteName = 'Campestre.tv'
+const siteName = 'Campestre TV'
+const siteTagline = 'Tênis ao vivo das quadras do clube'
 
 export const siteConfig = {
   name: siteName,
-  description: 'Site de transmissões de tênis do Clube Campestre, Campina Grande.',
+  tagline: siteTagline,
+  title: `${siteName} - ${siteTagline}`,
+  description:
+    'Assista às partidas das quadras do Campestre ao vivo, 24 horas por dia. Três quadras, transmissão contínua e gratuita.',
+  shortDescription: 'Transmissão ao vivo das quadras de tênis do Campestre.',
   url: 'https://campestre.tv',
   themeColor: {
     light: '#FFFFFF',
@@ -10,25 +15,25 @@ export const siteConfig = {
   },
   email: '', // TODO: add email
   links: {
-    youtube: 'https://www.youtube.com/@campestre-tv',
+    youtube: 'https://youtube.com/@campestre-tv',
   },
   keywords: [
     siteName,
     'campestre',
     'campina grande',
-    'paraíba',
-    'tennis',
     'clube campestre',
-    'transmissões',
     'live',
+    'paraíba',
     'streaming',
-    'youtube',
+    'tennis',
+    'transmissões',
     'vídeo',
     'vídeo ao vivo',
     'vídeo ao vivo online',
-    'vídeo ao vivo streaming',
-    'vídeo ao vivo youtube',
     'vídeo ao vivo online youtube',
+    'vídeo ao vivo streaming',
     'vídeo ao vivo streaming youtube',
+    'vídeo ao vivo youtube',
+    'youtube',
   ],
 } as const

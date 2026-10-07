@@ -1,6 +1,7 @@
 {
-  "name": "Campestre.tv",
-  "short_name": "Campestre.tv",
+  "name": "Campestre TV",
+  "short_name": "Campestre TV",
+  "description": "Transmissão ao vivo das quadras de tênis do Campestre.",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
