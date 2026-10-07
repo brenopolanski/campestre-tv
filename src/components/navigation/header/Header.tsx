@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { paths } from '@/config/paths'
 
 import { ThemeToggle } from './ThemeToggle'
+import { YoutubeSubscribe } from './YoutubeSubscribe'
 
 export const Header = () => {
   return (
@@ -39,8 +40,9 @@ export const Header = () => {
           Contato
         </a>
       </nav>
-      <div className="flex items-center px-8 py-4 sm:shrink-0 sm:py-0">
+      <div className="flex items-center gap-2 px-8 py-4 sm:shrink-0 sm:py-0">
         <ThemeToggle />
+        <YoutubeSubscribe />
       </div>
     </header>
   )

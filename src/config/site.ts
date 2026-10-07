@@ -16,6 +16,7 @@ export const siteConfig = {
   email: '', // TODO: add email
   links: {
     youtube: 'https://youtube.com/@campestre-tv',
+    youtubeChannelId: 'UCdWZMGfre33FZdDgcd1dz-A',
   },
   keywords: [
     siteName,
