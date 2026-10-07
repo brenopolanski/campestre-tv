@@ -15,10 +15,11 @@ export const YoutubeSubscribe = () => {
           target="_blank"
         />
       }
-      size="icon"
+      // size="icon"
       variant="ghost"
     >
       <YoutubeIcon />
+      Subscribe 271
     </Button>
   )
 }
