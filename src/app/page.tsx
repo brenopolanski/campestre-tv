@@ -1,13 +1,13 @@
 import { CourtCard } from '@/components/broadcast/CourtCard'
 import { CourtPlayer } from '@/components/broadcast/CourtPlayer'
 import { SiteFooter } from '@/components/layout/SiteFooter'
-import { SiteHeader } from '@/components/layout/SiteHeader'
+import { Header } from '@/components/navigation/header/Header'
 import { courts, featuredCourt } from '@/lib/courts'
 
-const Page = () => {
+const Home = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SiteHeader />
+      <Header />
       <main id="ao-vivo">
         <CourtPlayer court={featuredCourt} />
         <section className="grid border-b border-border sm:grid-cols-2">
@@ -25,4 +25,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default Home

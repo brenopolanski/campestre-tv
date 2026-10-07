@@ -2,14 +2,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { ThemeControls } from '@/components/theme/ThemeControls'
+import { paths } from '@/config/paths'
 
-const SiteHeader = () => {
+export const Header = () => {
   return (
-    <header className="flex flex-col border-b border-border sm:flex-row">
+    <header className="flex flex-col justify-between border-b border-border sm:flex-row">
       <Link
         aria-label="campestre.tv"
-        className="flex items-center border-b border-border px-8 py-7 sm:w-[22rem] sm:border-r sm:border-b-0"
-        href="/"
+        className="flex items-center border-b border-border px-8 py-7 sm:border-b-0"
+        href={paths.home}
       >
         <Image
           alt="campestre.tv"
@@ -37,11 +38,9 @@ const SiteHeader = () => {
           Contato
         </a>
       </nav>
-      <div className="flex items-center justify-end px-8 py-4 sm:w-[22rem] sm:shrink-0 sm:border-l sm:border-border sm:py-0">
+      <div className="flex items-center px-8 py-4 sm:shrink-0 sm:py-0">
         <ThemeControls />
       </div>
     </header>
   )
 }
-
-export { SiteHeader }
