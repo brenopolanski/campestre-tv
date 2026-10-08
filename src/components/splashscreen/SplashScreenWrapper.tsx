@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 import { SplashScreen } from './SplashScreen'
 
-const DEFAULT_DURATION_MS = 1_800
+const DEFAULT_DURATION_MS = 2_000
 const DEFAULT_FADE_MS = 400
 
 type SplashPhase = 'exiting' | 'hidden' | 'visible'

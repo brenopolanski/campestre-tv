@@ -4,11 +4,11 @@ export const SplashScreen = () => {
   return (
     <div
       aria-live="polite"
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-canvas"
       role="status"
     >
       <svg
-        className="splash-logo h-auto w-[min(72vw,36rem)] text-foreground"
+        className="splash-logo h-auto w-[min(72vw,36rem)] text-white"
         viewBox="0 0 646.77 110.63"
         aria-hidden
       >

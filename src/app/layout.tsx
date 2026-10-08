@@ -3,7 +3,6 @@ import '@/styles/globals.css'
 import { SplashScreenWrapper } from '@/components/splashscreen/SplashScreenWrapper'
 import { fontVariables } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
-import { Providers } from '@/providers/Providers'
 
 export { metadata, viewport } from './metadata'
 
@@ -19,9 +18,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       suppressHydrationWarning
     >
       <body>
-        <Providers>
-          <SplashScreenWrapper>{children}</SplashScreenWrapper>
-        </Providers>
+        <SplashScreenWrapper>{children}</SplashScreenWrapper>
       </body>
     </html>
   )
