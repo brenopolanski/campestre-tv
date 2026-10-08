@@ -20,7 +20,7 @@ const playerTitle = (title: string | undefined): string => {
   return trimmed
 }
 
-const YouTubeLivePlayer = ({ title, videoId }: YouTubeLivePlayerProps) => {
+export const YouTubeLivePlayer = ({ title, videoId }: YouTubeLivePlayerProps) => {
   const frameRef = useRef<HTMLDivElement>(null)
   const [failed, setFailed] = useState(false)
   const [ready, setReady] = useState(false)
@@ -85,5 +85,3 @@ const YouTubeLivePlayer = ({ title, videoId }: YouTubeLivePlayerProps) => {
     </div>
   )
 }
-
-export { YouTubeLivePlayer }

@@ -1,11 +1,12 @@
 'use client'
 
-import { type ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { CourtCard } from '@/components/broadcast/CourtCard'
 import { CourtPlayer } from '@/components/broadcast/CourtPlayer'
 import { YouTubeLivePlayer } from '@/components/youtube/YouTubeLivePlayer'
-import { type BroadcastCourt, courts, featuredCourt } from '@/lib/courts'
+import type { BroadcastCourt } from '@/lib/courts'
+import { courts, featuredCourt } from '@/lib/courts'
 import { fetchYouTubeChannel } from '@/lib/youtube/fetch-channel'
 import { canEmbedLiveVideo, getYouTubeWatchUrl } from '@/lib/youtube/playback'
 import type { YouTubeChannelVideo } from '@/lib/youtube/types'
@@ -24,13 +25,13 @@ const toBroadcastCourt = (video: YouTubeChannelVideo): BroadcastCourt => {
 }
 
 interface BroadcastShellProps {
-  cards: ReactNode
-  player: ReactNode
+  cards: React.ReactNode
+  player: React.ReactNode
 }
 
 const BroadcastShell = ({ cards, player }: BroadcastShellProps) => {
   return (
-    <div className="mx-auto flex w-full max-w-[1280px] flex-col md:flex-row">
+    <div className="mx-auto flex w-full max-w-7xl flex-col md:flex-row">
       <div className="w-full min-w-0 md:flex-1">{player}</div>
       <nav aria-label="Quadras" className="border-t border-surface md:border-t-0 md:border-l">
         <ul className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain p-4 md:flex-col md:overflow-visible md:p-[1.4rem]">
