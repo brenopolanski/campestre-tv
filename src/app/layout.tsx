@@ -1,4 +1,4 @@
-import './globals.css'
+import '@/styles/globals.css'
 
 import { SplashScreenWrapper } from '@/components/splashscreen/SplashScreenWrapper'
 import { fontVariables } from '@/lib/fonts'
