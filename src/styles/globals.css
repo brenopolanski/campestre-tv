@@ -110,6 +110,13 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-live: var(--live);
+  /* Start custom colors */
+  --color-canvas: #242424;
+  --color-surface: #2c2c2c;
+  --color-ink: #888888;
+  --color-brand: #4bd573;
+  --color-brand-ink: #152d1c;
+  /* End custom colors */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -129,7 +136,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-canvas text-ink selection:bg-brand selection:text-brand-ink;
   }
 
   button:not(:disabled),

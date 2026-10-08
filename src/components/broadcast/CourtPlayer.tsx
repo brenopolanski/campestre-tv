@@ -22,7 +22,7 @@ const copyPageUrl = () => {
 const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayerProps) => {
   return (
     <section className="w-full p-4 md:p-[1.4rem]">
-      <div className="rounded-[0.25rem] bg-[#2c2c2c] p-4 pb-0 md:p-[1.4rem] md:pb-0">
+      <div className="rounded-[0.25rem] bg-surface p-4 pb-0 md:p-[1.4rem] md:pb-0">
         <figure className="relative overflow-hidden rounded-[0.25rem]">
           {playback ?? (
             <>
@@ -42,7 +42,7 @@ const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayer
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <span className="bg-[#242424] px-4 py-3 text-sm text-[#888888]">
+                  <span className="bg-canvas px-4 py-3 text-sm text-ink">
                     Assistir no YouTube
                     <span className="sr-only"> (abre em uma nova aba)</span>
                   </span>
@@ -62,10 +62,10 @@ const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayer
           )}
         </figure>
         <div className="flex items-center justify-between">
-          <h1 className="py-4 text-[1.25rem] font-bold text-[#4bd573] uppercase">{court.name}</h1>
+          <h1 className="py-4 text-[1.25rem] font-bold text-brand uppercase">{court.name}</h1>
           <button
             aria-label="Compartilhar"
-            className="flex size-10 items-center justify-center rounded-[0.25rem] bg-[#242424] text-[#888888] transition-colors hover:bg-[#4bd573] hover:text-[#152d1c]"
+            className="flex size-10 items-center justify-center rounded-[0.25rem] bg-canvas text-ink transition-colors hover:bg-brand hover:text-brand-ink"
             type="button"
             onClick={copyPageUrl}
           >
