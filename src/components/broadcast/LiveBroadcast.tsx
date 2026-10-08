@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 
 import { CourtCard } from '@/components/broadcast/CourtCard'
 import { CourtPlayer } from '@/components/broadcast/CourtPlayer'
@@ -23,12 +23,22 @@ const toBroadcastCourt = (video: YouTubeChannelVideo): BroadcastCourt => {
   }
 }
 
-const streamSubtitle = (video: YouTubeChannelVideo, name: string): string | undefined => {
-  if (!video.title || video.title === name) {
-    return undefined
-  }
+interface BroadcastShellProps {
+  cards: ReactNode
+  player: ReactNode
+}
 
-  return video.title
+const BroadcastShell = ({ cards, player }: BroadcastShellProps) => {
+  return (
+    <div className="mx-auto flex w-full max-w-[1280px] flex-col md:flex-row">
+      <div className="w-full min-w-0 md:flex-1">{player}</div>
+      <nav aria-label="Quadras" className="border-t border-[#2c2c2c] md:border-t-0 md:border-l">
+        <ul className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain p-4 md:flex-col md:overflow-visible md:p-[1.4rem]">
+          {cards}
+        </ul>
+      </nav>
+    </div>
+  )
 }
 
 const LiveBroadcast = () => {
@@ -61,14 +71,12 @@ const LiveBroadcast = () => {
 
   if (!liveVideos || liveVideos.length === 0) {
     return (
-      <>
-        <CourtPlayer court={featuredCourt} />
-        <section className="grid border-b border-border sm:grid-cols-2">
-          {courts.map((court, index) => (
-            <CourtCard key={court.id} court={court} divided={index === 0} />
-          ))}
-        </section>
-      </>
+      <BroadcastShell
+        cards={courts.map((court) => (
+          <CourtCard key={court.id} court={court} />
+        ))}
+        player={<CourtPlayer court={featuredCourt} />}
+      />
     )
   }
 
@@ -76,39 +84,34 @@ const LiveBroadcast = () => {
   const watching = selectedVideoId === selected.id
   const embeddable = canEmbedLiveVideo(selected)
   const court = toBroadcastCourt(selected)
-  const others = liveVideos.filter((video) => video.id !== selected.id)
 
   return (
-    <>
-      <CourtPlayer
-        court={court}
-        externalWatchUrl={watching && !embeddable ? getYouTubeWatchUrl(selected.id) : undefined}
-        playback={
-          watching && embeddable ? (
-            <YouTubeLivePlayer title={selected.title} videoId={selected.id} />
-          ) : undefined
-        }
-        subtitle={streamSubtitle(selected, court.name)}
-        onWatch={watching ? undefined : () => setSelectedVideoId(selected.id)}
-      />
-      {others.length > 0 ? (
-        <section className="grid border-b border-border sm:grid-cols-2">
-          {others.map((video, index) => {
-            const cardCourt = toBroadcastCourt(video)
+    <BroadcastShell
+      cards={liveVideos.map((video) => {
+        const cardCourt = toBroadcastCourt(video)
 
-            return (
-              <CourtCard
-                key={video.id}
-                court={cardCourt}
-                divided={index % 2 === 0}
-                subtitle={streamSubtitle(video, cardCourt.name)}
-                onWatch={() => setSelectedVideoId(video.id)}
-              />
-            )
-          })}
-        </section>
-      ) : null}
-    </>
+        return (
+          <CourtCard
+            key={video.id}
+            active={video.id === selected.id}
+            court={cardCourt}
+            onWatch={() => setSelectedVideoId(video.id)}
+          />
+        )
+      })}
+      player={
+        <CourtPlayer
+          court={court}
+          externalWatchUrl={watching && !embeddable ? getYouTubeWatchUrl(selected.id) : undefined}
+          playback={
+            watching && embeddable ? (
+              <YouTubeLivePlayer title={selected.title} videoId={selected.id} />
+            ) : undefined
+          }
+          onWatch={watching ? undefined : () => setSelectedVideoId(selected.id)}
+        />
+      }
+    />
   )
 }
 

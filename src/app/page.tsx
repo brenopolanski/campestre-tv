@@ -1,10 +1,16 @@
 import { LiveBroadcast } from '@/components/broadcast/LiveBroadcast'
-import { SiteFooter } from '@/components/layout/SiteFooter'
 import { Header } from '@/components/navigation/header/Header'
+import { fontInter } from '@/lib/fonts'
+import { cn } from '@/lib/utils'
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div
+      className={cn(
+        fontInter.className,
+        'min-h-screen bg-[#242424] text-[#888888] selection:bg-[#4bd573] selection:text-[#152d1c]',
+      )}
+    >
       <Header />
       <main id="ao-vivo">
         <LiveBroadcast />
@@ -13,7 +19,6 @@ const Home = () => {
           <p>Transmissão ao vivo das quadras de tênis do Campestre.</p>
         </section>
       </main>
-      <SiteFooter />
     </div>
   )
 }

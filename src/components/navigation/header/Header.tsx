@@ -3,46 +3,20 @@ import Link from 'next/link'
 
 import { paths } from '@/config/paths'
 
-import { ThemeToggle } from './ThemeToggle'
-import { YoutubeSubscribe } from './YoutubeSubscribe'
-
 export const Header = () => {
   return (
-    <header className="flex flex-col justify-between border-b border-border sm:flex-row">
-      <Link
-        aria-label="campestre.tv"
-        className="flex items-center border-b border-border px-8 py-7 sm:border-b-0"
-        href={paths.home}
-      >
-        <Image
-          alt="campestre.tv"
-          className="h-7 w-auto"
-          height={110}
-          src="/campestretv-logo.svg"
-          width={646}
-          priority
-        />
-      </Link>
-      <nav className="flex items-center gap-8 px-8 py-5 sm:flex-1 sm:justify-center sm:py-0">
-        <a className="border-b border-foreground pb-2 label-caps" href="#ao-vivo">
-          Ao vivo
-        </a>
-        <a
-          className="pb-2 label-caps text-muted-foreground transition-colors hover:text-foreground"
-          href="#sobre"
-        >
-          Sobre
-        </a>
-        <a
-          className="pb-2 label-caps text-muted-foreground transition-colors hover:text-foreground"
-          href="#contato"
-        >
-          Contato
-        </a>
-      </nav>
-      <div className="flex items-center gap-2 px-8 py-4 sm:shrink-0 sm:py-0">
-        <ThemeToggle />
-        <YoutubeSubscribe />
+    <header className="bg-[#2c2c2c] text-white">
+      <div className="mx-auto flex w-full max-w-[1280px] justify-center px-4 py-4 md:px-[1.4rem]">
+        <Link aria-label="campestre.tv" href={paths.home}>
+          <Image
+            alt="campestre.tv"
+            className="h-[30px] w-auto"
+            height={110}
+            src="/campestretv-logo.svg"
+            width={646}
+            priority
+          />
+        </Link>
       </div>
     </header>
   )

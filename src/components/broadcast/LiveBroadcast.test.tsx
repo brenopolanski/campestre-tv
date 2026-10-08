@@ -93,7 +93,7 @@ describe('LiveBroadcast', () => {
     expect(player.getAttribute('data-video-id')).toBe('abcdefghijk')
     expect(screen.getAllByTestId('youtube-player')).toHaveLength(1)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Assistir Transmissão especial ao vivo' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Transmissão especial' }))
 
     expect(screen.queryByTestId('youtube-player')).toBeNull()
     const link = screen.getByRole('link', { name: /Assistir no YouTube/ })
