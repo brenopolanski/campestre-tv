@@ -1,11 +1,15 @@
-export interface Court {
+export interface BroadcastCourt {
   alt: string
   height: number
-  id: number
   image: string
   name: string
-  viewers: number
+  viewers?: number
   width: number
+}
+
+export interface Court extends BroadcastCourt {
+  id: number
+  viewers: number
 }
 
 export const featuredCourt: Court = {

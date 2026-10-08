@@ -3,27 +3,33 @@ import Image from 'next/image'
 
 import { LiveStatus } from '@/components/broadcast/LiveStatus'
 import { Button } from '@/components/ui/button'
-import type { Court } from '@/lib/courts'
+import type { BroadcastCourt } from '@/lib/courts'
 import { cn } from '@/lib/utils'
 
 interface CourtCardProps {
-  court: Court
+  court: BroadcastCourt
   divided?: boolean
+  subtitle?: string
+  onWatch?: () => void
 }
 
-const CourtCard = ({ court, divided = false }: CourtCardProps) => {
+const CourtCard = ({ court, divided = false, subtitle, onWatch }: CourtCardProps) => {
   return (
     <article
       className={cn('px-8 py-10', divided && 'border-b border-border sm:border-r sm:border-b-0')}
     >
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <h2 className="text-base font-medium tracking-[0.18em] uppercase">{court.name}</h2>
+        <div>
+          <h2 className="text-base font-medium tracking-[0.18em] uppercase">{court.name}</h2>
+          {subtitle ? <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p> : null}
+        </div>
         <LiveStatus viewers={court.viewers} />
       </div>
       <Button
         aria-label={`Assistir ${court.name} ao vivo`}
         className="group relative block h-auto w-full overflow-hidden rounded-none p-0 hover:bg-transparent"
         variant="ghost"
+        onClick={onWatch}
       >
         <Image
           alt={court.alt}

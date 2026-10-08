@@ -39,15 +39,19 @@ const Viewers = ({ count }: ViewersProps) => {
 
 interface LiveStatusProps {
   onDark?: boolean
-  viewers: number
+  viewers?: number
 }
 
 const LiveStatus = ({ onDark = false, viewers }: LiveStatusProps) => {
   return (
     <div className="flex items-center gap-5">
       <LiveBadge onDark={onDark} />
-      <Separator className="h-5" orientation="vertical" />
-      <Viewers count={viewers} />
+      {typeof viewers === 'number' ? (
+        <>
+          <Separator className="h-5" orientation="vertical" />
+          <Viewers count={viewers} />
+        </>
+      ) : null}
     </div>
   )
 }
