@@ -9,7 +9,7 @@ interface CourtCardProps {
   onWatch?: () => void
 }
 
-const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) => {
+export const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) => {
   return (
     <li className="w-[66%] shrink-0 snap-start rounded-lg bg-surface p-4 md:w-[21cqw]">
       <button
@@ -19,7 +19,7 @@ const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) => {
         onClick={onWatch}
       >
         <Image
-          alt=""
+          alt={court.alt}
           className={cn(
             'aspect-video w-full rounded-lg object-cover outline-4 outline-transparent transition-[outline-color] duration-300 group-hover:outline-brand',
             active && 'outline-brand',
@@ -42,5 +42,3 @@ const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) => {
     </li>
   )
 }
-
-export { CourtCard }

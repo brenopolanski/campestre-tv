@@ -6,7 +6,7 @@ interface LiveBadgeProps {
   onDark?: boolean
 }
 
-const LiveBadge = ({ onDark = false }: LiveBadgeProps) => {
+export const LiveBadge = ({ onDark = false }: LiveBadgeProps) => {
   return (
     <span
       className={cn(
@@ -27,7 +27,7 @@ interface ViewersProps {
   count: number
 }
 
-const Viewers = ({ count }: ViewersProps) => {
+export const Viewers = ({ count }: ViewersProps) => {
   return (
     <span className="flex items-center gap-2 text-sm text-muted-foreground tabular-nums">
       <UserIcon aria-hidden="true" className="size-4" />
@@ -41,7 +41,7 @@ interface LiveStatusProps {
   viewers?: number
 }
 
-const LiveStatus = ({ onDark = false, viewers }: LiveStatusProps) => {
+export const LiveStatus = ({ onDark = false, viewers }: LiveStatusProps) => {
   return (
     <div className="flex items-center gap-5">
       <LiveBadge onDark={onDark} />
@@ -54,5 +54,3 @@ const LiveStatus = ({ onDark = false, viewers }: LiveStatusProps) => {
     </div>
   )
 }
-
-export { LiveBadge, LiveStatus, Viewers }
