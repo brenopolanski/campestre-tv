@@ -78,33 +78,44 @@ export const LiveBroadcast = () => {
   if (!liveVideos || liveVideos.length === 0) {
     return (
       <BroadcastShell
-        cards={courts.map((court, index) => (
-          <CourtCard key={generateReactKey('court-card', court.id, index)} court={court} />
-        ))}
+        cards={[...courts]
+          .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { numeric: true }))
+          .map((court, index) => (
+            <CourtCard key={generateReactKey('court-card', court.id, index)} court={court} />
+          ))}
         player={<CourtPlayer court={featuredCourt} />}
       />
     )
   }
 
-  const selected = liveVideos.find((video) => video.id === selectedVideoId) ?? liveVideos[0]
+  const selected =
+    liveVideos
+      .sort((a, b) => a.title.localeCompare(b.title, 'pt-BR', { numeric: true }))
+      .find((video) => video.id === selectedVideoId) ?? liveVideos[0]
   const watching = selectedVideoId === selected.id
   const embeddable = canEmbedLiveVideo(selected)
   const court = toBroadcastCourt(selected)
 
   return (
     <BroadcastShell
-      cards={liveVideos.map((video, index) => {
-        const cardCourt = toBroadcastCourt(video)
-
-        return (
-          <CourtCard
-            key={generateReactKey('court-card', video.id, index)}
-            active={video.id === selected.id}
-            court={cardCourt}
-            onWatch={() => setSelectedVideoId(video.id)}
-          />
+      cards={[...liveVideos]
+        .sort((a, b) =>
+          (a.courtName ?? a.title).localeCompare(b.courtName ?? b.title, 'pt-BR', {
+            numeric: true,
+          }),
         )
-      })}
+        .map((video, index) => {
+          const cardCourt = toBroadcastCourt(video)
+
+          return (
+            <CourtCard
+              key={generateReactKey('court-card', video.id, index)}
+              active={video.id === selected.id}
+              court={cardCourt}
+              onWatch={() => setSelectedVideoId(video.id)}
+            />
+          )
+        })}
       player={
         <CourtPlayer
           court={court}
