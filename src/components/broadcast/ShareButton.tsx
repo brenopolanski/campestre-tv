@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { LinkIcon, Share2Icon, TelegramIcon, WhatsappIcon } from '@/components/shared/Icons'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { ANALYTICS_EVENTS, trackEvent } from '@/lib/analytics'
 import { cn } from '@/lib/utils'
 
 const COPIED_MS = 2_000
@@ -61,6 +62,8 @@ export const ShareButton = ({
     }
   }, [open])
 
+  const shareData = () => (title ? { court: title } : undefined)
+
   const shareUrl = () => {
     if (url) {
       return url
@@ -80,6 +83,7 @@ export const ShareButton = ({
   const handleOpenChange: OpenChangeHandler = (next, eventDetails) => {
     if (next && typeof navigator.share === 'function') {
       eventDetails.cancel()
+      trackEvent(ANALYTICS_EVENTS.shareNative, shareData())
       void navigator.share({ title: shareTitle(), url: shareUrl() }).catch(() => {})
 
       return
@@ -96,6 +100,7 @@ export const ShareButton = ({
     try {
       await navigator.clipboard.writeText(shareUrl())
       setCopied(true)
+      trackEvent(ANALYTICS_EVENTS.shareCopy, shareData())
     } catch {
       setCopied(false)
     }
@@ -107,10 +112,12 @@ export const ShareButton = ({
   }
 
   const shareWhatsApp = () => {
+    trackEvent(ANALYTICS_EVENTS.shareWhatsapp, shareData())
     openShareWindow(`https://wa.me/?text=${encodeURIComponent(`${shareTitle()} - ${shareUrl()}`)}`)
   }
 
   const shareTelegram = () => {
+    trackEvent(ANALYTICS_EVENTS.shareTelegram, shareData())
     openShareWindow(
       `https://t.me/share/url?url=${encodeURIComponent(shareUrl())}&text=${encodeURIComponent(shareTitle())}`,
     )

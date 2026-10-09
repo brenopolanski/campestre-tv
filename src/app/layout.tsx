@@ -1,5 +1,6 @@
 import '@/styles/globals.css'
 
+import { Analytics } from '@vercel/analytics/next'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { SplashScreenWrapper } from '@/components/splashscreen/SplashScreenWrapper'
@@ -23,6 +24,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
         <SplashScreenWrapper>
           <NuqsAdapter>{children}</NuqsAdapter>
         </SplashScreenWrapper>
+        <Analytics />
       </body>
     </html>
   )

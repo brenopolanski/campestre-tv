@@ -11,7 +11,7 @@ export const siteConfig = {
   url: 'https://campestre.tv',
   themeColor: {
     light: '#FFFFFF',
-    dark: '#17211C',
+    dark: '#242424',
   },
   email: '', // TODO: add email
   links: {

@@ -4,6 +4,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import { useEffect, useState } from 'react'
 
 import { YouTubeLivePlayer } from '@/components/youtube/YouTubeLivePlayer'
+import { ANALYTICS_EVENTS, trackEvent } from '@/lib/analytics'
 import type { BroadcastCourt } from '@/lib/courts'
 import { courts, featuredCourt } from '@/lib/courts'
 import { generateReactKey } from '@/lib/utils'
@@ -120,6 +121,11 @@ export const LiveBroadcast = () => {
   const court = toBroadcastCourt(selected)
 
   const watchVideo = (video: YouTubeChannelVideo) => {
+    trackEvent(ANALYTICS_EVENTS.courtWatch, {
+      court: readCourtNumber(video),
+      name: video.courtName ?? video.title,
+      source: 'card',
+    })
     setPlayingVideoId(video.id)
     void setLiveCourt(readCourtNumber(video))
   }
@@ -147,7 +153,18 @@ export const LiveBroadcast = () => {
               <YouTubeLivePlayer title={selected.title} videoId={selected.id} />
             ) : undefined
           }
-          onWatch={watching ? undefined : () => setPlayingVideoId(selected.id)}
+          onWatch={
+            watching
+              ? undefined
+              : () => {
+                  trackEvent(ANALYTICS_EVENTS.courtWatch, {
+                    court: readCourtNumber(selected),
+                    name: court.name,
+                    source: 'player',
+                  })
+                  setPlayingVideoId(selected.id)
+                }
+          }
         />
       }
     />

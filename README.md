@@ -19,7 +19,7 @@
 
 ## Introduction
 
-Campestre TV plays the club's tennis courts live in the browser. The page lists the courts that are on air and opens the one you pick, including a shared `?live=` link.
+Campestre TV plays the club's tennis courts live in the browser. The page lists the courts that are on air and opens the one you pick.
 
 ### :heart: Found this project useful?
 

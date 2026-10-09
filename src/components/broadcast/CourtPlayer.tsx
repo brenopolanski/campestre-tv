@@ -4,6 +4,7 @@ import Image from 'next/image'
 
 import { PlayIcon } from '@/components/shared/Icons'
 import { siteConfig } from '@/config/site'
+import { ANALYTICS_EVENTS, trackEvent } from '@/lib/analytics'
 import type { BroadcastCourt } from '@/lib/courts'
 
 import { LiveStatus } from './LiveStatus'
@@ -38,6 +39,9 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
                   href={externalWatchUrl}
                   rel="noopener noreferrer"
                   target="_blank"
+                  onClick={() => {
+                    trackEvent(ANALYTICS_EVENTS.youtubeWatch, { court: court.name })
+                  }}
                 >
                   <span className="bg-canvas px-4 py-3 text-sm text-ink">
                     Assistir no YouTube
