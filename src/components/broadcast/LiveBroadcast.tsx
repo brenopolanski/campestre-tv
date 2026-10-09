@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react'
 
-import { CourtCard } from '@/components/broadcast/CourtCard'
-import { CourtPlayer } from '@/components/broadcast/CourtPlayer'
 import { YouTubeLivePlayer } from '@/components/youtube/YouTubeLivePlayer'
 import type { BroadcastCourt } from '@/lib/courts'
 import { courts, featuredCourt } from '@/lib/courts'
@@ -11,11 +9,14 @@ import { fetchYouTubeChannel } from '@/lib/youtube/fetch-channel'
 import { canEmbedLiveVideo, getYouTubeWatchUrl } from '@/lib/youtube/playback'
 import type { YouTubeChannelVideo } from '@/lib/youtube/types'
 
+import { CourtCard } from './CourtCard'
+import { CourtPlayer } from './CourtPlayer'
+
 const toBroadcastCourt = (video: YouTubeChannelVideo): BroadcastCourt => {
   return {
     alt: video.title ? video.title : 'Transmissão ao vivo',
     height: 720,
-    image: video.thumbnailUrl ?? '/court-1.jpg',
+    image: video.thumbnailUrl ?? '/no-thumb.png',
     name: video.courtName ?? video.title,
     width: 1280,
     ...(typeof video.live.concurrentViewers === 'number'
@@ -45,7 +46,7 @@ const BroadcastShell = ({ cards, player }: BroadcastShellProps) => {
   )
 }
 
-const LiveBroadcast = () => {
+export const LiveBroadcast = () => {
   const [liveVideos, setLiveVideos] = useState<YouTubeChannelVideo[] | null>(null)
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null)
 
@@ -118,5 +119,3 @@ const LiveBroadcast = () => {
     />
   )
 }
-
-export { LiveBroadcast }

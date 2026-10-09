@@ -25,6 +25,7 @@ const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) => {
             active && 'outline-brand',
           )}
           height={court.height}
+          loading="eager"
           sizes="(min-width: 768px) min(21vw, 16.8rem), 66vw"
           src={court.image}
           width={court.width}

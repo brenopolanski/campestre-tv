@@ -12,32 +12,41 @@ export interface Court extends BroadcastCourt {
   viewers: number
 }
 
-export const featuredCourt: Court = {
-  alt: 'Transmissão ao vivo da Quadra 1 do Campestre Tênis Clube',
-  height: 864,
+const mainCourt = {
+  alt: 'Transmissão da Quadra 5',
   id: 1,
-  image: '/court-1.jpg',
-  name: 'Quadra 1',
-  viewers: 124,
+  image: '/no-thumb.png',
+  name: 'Quadra 5',
+  viewers: 98,
+}
+
+export const featuredCourt: Court = {
+  height: 864,
   width: 1536,
+  ...mainCourt,
 }
 
 export const courts: Court[] = [
   {
-    alt: 'Transmissão da Quadra 2',
+    height: 640,
+    width: 1024,
+    ...mainCourt,
+  },
+  {
+    alt: 'Transmissão da Quadra 6',
     height: 640,
     id: 2,
-    image: '/court-2.jpg',
-    name: 'Quadra 2',
+    image: '/no-thumb.png',
+    name: 'Quadra 6',
     viewers: 98,
     width: 1024,
   },
   {
-    alt: 'Transmissão da Quadra 3',
+    alt: 'Transmissão da Quadra 8',
     height: 640,
     id: 3,
-    image: '/court-3.jpg',
-    name: 'Quadra 3',
+    image: '/no-thumb.png',
+    name: 'Quadra 8',
     viewers: 76,
     width: 1024,
   },

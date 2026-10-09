@@ -22,18 +22,18 @@ const copyPageUrl = () => {
 const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayerProps) => {
   return (
     <section className="w-full p-4 md:p-[1.4rem]">
-      <div className="rounded-[0.25rem] bg-surface p-4 pb-0 md:p-[1.4rem] md:pb-0">
-        <figure className="relative overflow-hidden rounded-[0.25rem]">
+      <div className="rounded-lg bg-surface p-4 pb-0 md:p-[1.4rem] md:pb-0">
+        <figure className="relative overflow-hidden rounded-lg">
           {playback ?? (
             <>
               <Image
                 alt={court.alt}
                 className="aspect-video h-auto w-full object-cover"
                 height={court.height}
+                loading="eager"
                 sizes="(min-width: 768px) 70vw, 100vw"
                 src={court.image}
                 width={court.width}
-                priority
               />
               {externalWatchUrl ? (
                 <a
