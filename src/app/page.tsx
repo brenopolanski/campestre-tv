@@ -3,9 +3,9 @@ import { Header } from '@/components/navigation/header/Header'
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main>
+      <main className="flex flex-1 flex-col">
         <LiveBroadcast />
       </main>
     </div>
