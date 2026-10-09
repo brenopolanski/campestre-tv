@@ -34,10 +34,19 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     title: siteConfig.title,
     description: siteConfig.shortDescription,
+    images: [
+      {
+        url: '/og.png',
+        width: 1200,
+        height: 675,
+        alt: siteConfig.title,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.shortDescription,
+    images: ['/og.png'],
   },
 }
