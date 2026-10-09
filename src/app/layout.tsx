@@ -1,5 +1,7 @@
 import '@/styles/globals.css'
 
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
+
 import { SplashScreenWrapper } from '@/components/splashscreen/SplashScreenWrapper'
 import { fontVariables } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
@@ -18,7 +20,9 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       suppressHydrationWarning
     >
       <body>
-        <SplashScreenWrapper>{children}</SplashScreenWrapper>
+        <SplashScreenWrapper>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </SplashScreenWrapper>
       </body>
     </html>
   )

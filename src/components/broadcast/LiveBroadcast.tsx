@@ -1,5 +1,6 @@
 'use client'
 
+import { parseAsInteger, useQueryState } from 'nuqs'
 import { useEffect, useState } from 'react'
 
 import { YouTubeLivePlayer } from '@/components/youtube/YouTubeLivePlayer'
@@ -26,6 +27,18 @@ const toBroadcastCourt = (video: YouTubeChannelVideo): BroadcastCourt => {
   }
 }
 
+const readCourtNumber = (video: YouTubeChannelVideo): number | null => {
+  const digits = video.courtName?.match(/\d+/)?.[0]
+
+  return digits ? Number(digits) : null
+}
+
+const compareVideos = (a: YouTubeChannelVideo, b: YouTubeChannelVideo) => {
+  return (a.courtName ?? a.title).localeCompare(b.courtName ?? b.title, 'pt-BR', {
+    numeric: true,
+  })
+}
+
 interface BroadcastShellProps {
   cards: React.ReactNode
   player: React.ReactNode
@@ -47,9 +60,26 @@ const BroadcastShell = ({ cards, player }: BroadcastShellProps) => {
   )
 }
 
+export const LiveBroadcastFallback = () => {
+  return (
+    <BroadcastShell
+      cards={[...courts]
+        .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { numeric: true }))
+        .map((court, index) => (
+          <CourtCard key={generateReactKey('court-card', court.id, index)} court={court} />
+        ))}
+      player={<CourtPlayer court={featuredCourt} />}
+    />
+  )
+}
+
 export const LiveBroadcast = () => {
   const [liveVideos, setLiveVideos] = useState<YouTubeChannelVideo[] | null>(null)
-  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null)
+  const [playingVideoId, setPlayingVideoId] = useState<string | null>(null)
+  const [liveCourt, setLiveCourt] = useQueryState(
+    'live',
+    parseAsInteger.withOptions({ history: 'replace', scroll: false }),
+  )
 
   useEffect(() => {
     let active = true
@@ -76,46 +106,37 @@ export const LiveBroadcast = () => {
   }, [])
 
   if (!liveVideos || liveVideos.length === 0) {
-    return (
-      <BroadcastShell
-        cards={[...courts]
-          .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR', { numeric: true }))
-          .map((court, index) => (
-            <CourtCard key={generateReactKey('court-card', court.id, index)} court={court} />
-          ))}
-        player={<CourtPlayer court={featuredCourt} />}
-      />
-    )
+    return <LiveBroadcastFallback />
   }
 
+  const sortedVideos = [...liveVideos].sort(compareVideos)
   const selected =
-    liveVideos
-      .sort((a, b) => a.title.localeCompare(b.title, 'pt-BR', { numeric: true }))
-      .find((video) => video.id === selectedVideoId) ?? liveVideos[0]
-  const watching = selectedVideoId === selected.id
+    sortedVideos.find((video) => liveCourt !== null && readCourtNumber(video) === liveCourt) ??
+    sortedVideos.find((video) => video.id === playingVideoId) ??
+    sortedVideos[0]
+  const watching = playingVideoId === selected.id
   const embeddable = canEmbedLiveVideo(selected)
   const court = toBroadcastCourt(selected)
 
+  const watchVideo = (video: YouTubeChannelVideo) => {
+    setPlayingVideoId(video.id)
+    void setLiveCourt(readCourtNumber(video))
+  }
+
   return (
     <BroadcastShell
-      cards={[...liveVideos]
-        .sort((a, b) =>
-          (a.courtName ?? a.title).localeCompare(b.courtName ?? b.title, 'pt-BR', {
-            numeric: true,
-          }),
-        )
-        .map((video, index) => {
-          const cardCourt = toBroadcastCourt(video)
+      cards={sortedVideos.map((video, index) => {
+        const cardCourt = toBroadcastCourt(video)
 
-          return (
-            <CourtCard
-              key={generateReactKey('court-card', video.id, index)}
-              active={video.id === selected.id}
-              court={cardCourt}
-              onWatch={() => setSelectedVideoId(video.id)}
-            />
-          )
-        })}
+        return (
+          <CourtCard
+            key={generateReactKey('court-card', video.id, index)}
+            active={video.id === selected.id}
+            court={cardCourt}
+            onWatch={() => watchVideo(video)}
+          />
+        )
+      })}
       player={
         <CourtPlayer
           court={court}
@@ -125,7 +146,7 @@ export const LiveBroadcast = () => {
               <YouTubeLivePlayer title={selected.title} videoId={selected.id} />
             ) : undefined
           }
-          onWatch={watching ? undefined : () => setSelectedVideoId(selected.id)}
+          onWatch={watching ? undefined : () => setPlayingVideoId(selected.id)}
         />
       }
     />

@@ -1,4 +1,6 @@
-import { LiveBroadcast } from '@/components/broadcast/LiveBroadcast'
+import { Suspense } from 'react'
+
+import { LiveBroadcast, LiveBroadcastFallback } from '@/components/broadcast/LiveBroadcast'
 import { Header } from '@/components/navigation/header/Header'
 
 const Home = () => {
@@ -6,7 +8,9 @@ const Home = () => {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex flex-1 flex-col">
-        <LiveBroadcast />
+        <Suspense fallback={<LiveBroadcastFallback />}>
+          <LiveBroadcast />
+        </Suspense>
       </main>
     </div>
   )
