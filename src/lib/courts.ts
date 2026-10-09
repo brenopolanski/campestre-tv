@@ -2,6 +2,7 @@ export interface BroadcastCourt {
   alt: string
   height: number
   image: string
+  live?: boolean
   name: string
   viewers?: number
   width: number

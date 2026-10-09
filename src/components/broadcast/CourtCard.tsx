@@ -3,6 +3,8 @@ import Image from 'next/image'
 import type { BroadcastCourt } from '@/lib/courts'
 import { cn } from '@/lib/utils'
 
+import { LiveStatus } from './LiveStatus'
+
 interface CourtCardProps {
   court: BroadcastCourt
   active?: boolean
@@ -30,14 +32,17 @@ export const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) =>
           src={court.image}
           width={court.width}
         />
-        <h2
-          className={cn(
-            'text-base font-bold uppercase transition-colors duration-300 group-hover:text-brand',
-            active ? 'text-brand' : 'text-ink',
-          )}
-        >
-          {court.name}
-        </h2>
+        <div className="grid gap-2">
+          <h2
+            className={cn(
+              'text-base font-bold uppercase transition-colors duration-300 group-hover:text-brand',
+              active ? 'text-brand' : 'text-ink',
+            )}
+          >
+            {court.name}
+          </h2>
+          <LiveStatus live={court.live} viewers={court.viewers} onDark />
+        </div>
       </button>
     </li>
   )

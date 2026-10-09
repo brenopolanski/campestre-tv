@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { PlayIcon, Share2Icon } from '@/components/shared/Icons'
 import type { BroadcastCourt } from '@/lib/courts'
 
+import { LiveStatus } from './LiveStatus'
+
 interface CourtPlayerProps {
   court: BroadcastCourt
   externalWatchUrl?: string
@@ -60,8 +62,11 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
             </>
           )}
         </figure>
-        <div className="flex items-center justify-between">
-          <h1 className="py-4 text-[1.25rem] font-bold text-brand uppercase">{court.name}</h1>
+        <div className="flex items-start justify-between gap-4 py-4">
+          <div className="grid gap-2">
+            <h1 className="text-[1.25rem] font-bold text-brand uppercase">{court.name}</h1>
+            <LiveStatus live={court.live} viewers={court.viewers} onDark />
+          </div>
           <button
             aria-label="Compartilhar"
             className="flex size-10 items-center justify-center rounded-lg bg-canvas text-ink transition-colors hover:bg-brand hover:text-brand-ink"

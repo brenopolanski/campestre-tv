@@ -19,6 +19,7 @@ const toBroadcastCourt = (video: YouTubeChannelVideo): BroadcastCourt => {
     alt: video.title ? video.title : 'Transmissão ao vivo',
     height: 720,
     image: video.thumbnailUrl ?? '/no-thumb.png',
+    live: true,
     name: video.courtName ?? video.title,
     width: 1280,
     ...(typeof video.live.concurrentViewers === 'number'
