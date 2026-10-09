@@ -34,7 +34,7 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
                 src={court.image}
                 width={court.width}
               />
-              {externalWatchUrl ? (
+              {externalWatchUrl && (
                 <a
                   className="absolute inset-0 flex items-center justify-center bg-black/25 focus-visible:outline-2 focus-visible:outline-offset-2"
                   href={externalWatchUrl}
@@ -46,8 +46,8 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
                     <span className="sr-only"> (abre em uma nova aba)</span>
                   </span>
                 </a>
-              ) : null}
-              {onWatch ? (
+              )}
+              {onWatch && (
                 <button
                   aria-label={`Assistir ${court.name} ao vivo`}
                   className="absolute inset-0 flex items-center justify-center"
@@ -56,7 +56,7 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
                 >
                   <PlayIcon className="size-10 fill-white text-white" />
                 </button>
-              ) : null}
+              )}
             </>
           )}
         </figure>
