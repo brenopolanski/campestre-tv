@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { YouTubeLivePlayer } from '@/components/youtube/YouTubeLivePlayer'
 import type { BroadcastCourt } from '@/lib/courts'
 import { courts, featuredCourt } from '@/lib/courts'
+import { generateReactKey } from '@/lib/utils'
 import { fetchYouTubeChannel } from '@/lib/youtube/fetch-channel'
 import { canEmbedLiveVideo, getYouTubeWatchUrl } from '@/lib/youtube/playback'
 import type { YouTubeChannelVideo } from '@/lib/youtube/types'
@@ -77,8 +78,8 @@ export const LiveBroadcast = () => {
   if (!liveVideos || liveVideos.length === 0) {
     return (
       <BroadcastShell
-        cards={courts.map((court) => (
-          <CourtCard key={court.id} court={court} />
+        cards={courts.map((court, index) => (
+          <CourtCard key={generateReactKey('court-card', court.id, index)} court={court} />
         ))}
         player={<CourtPlayer court={featuredCourt} />}
       />
@@ -92,12 +93,12 @@ export const LiveBroadcast = () => {
 
   return (
     <BroadcastShell
-      cards={liveVideos.map((video) => {
+      cards={liveVideos.map((video, index) => {
         const cardCourt = toBroadcastCourt(video)
 
         return (
           <CourtCard
-            key={video.id}
+            key={generateReactKey('court-card', video.id, index)}
             active={video.id === selected.id}
             court={cardCourt}
             onWatch={() => setSelectedVideoId(video.id)}
