@@ -1,16 +1,12 @@
-import './globals.css'
+import '@/styles/globals.css'
 
-import { Geist, Geist_Mono } from 'next/font/google'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
-import { ThemeProvider } from '@/components/theme-provider'
+import { SplashScreenWrapper } from '@/components/splashscreen/SplashScreenWrapper'
+import { fontVariables } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 
-const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
-
-const fontMono = Geist_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-})
+export { metadata, viewport } from './metadata'
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -19,12 +15,14 @@ interface RootLayoutProps {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html
-      className={cn('antialiased', fontMono.variable, 'font-sans', geist.variable)}
-      lang="en"
+      className={cn('font-sans text-base antialiased', fontVariables)}
+      lang="pt-BR"
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <SplashScreenWrapper>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </SplashScreenWrapper>
       </body>
     </html>
   )

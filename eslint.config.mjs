@@ -1,3 +1,4 @@
+import { plugin as shadcn } from '@shadcn/lint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
@@ -29,6 +30,7 @@ const eslintConfig = defineConfig([
   ]),
   {
     plugins: {
+      shadcn,
       'simple-import-sort': simpleImportSort,
       'unused-imports': unusedImports,
     },
@@ -60,6 +62,7 @@ const eslintConfig = defineConfig([
       'simple-import-sort/exports': 'error',
       'simple-import-sort/imports': 'error',
       'unused-imports/no-unused-imports': 'error',
+      'shadcn/no-unknown-classes': 'error',
     },
   },
   {
