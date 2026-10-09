@@ -5,17 +5,27 @@ import { useEffect, useState } from 'react'
 
 import { LinkIcon, Share2Icon, TelegramIcon, WhatsappIcon } from '@/components/shared/Icons'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
 
 const COPIED_MS = 2_000
 
 interface ShareButtonProps {
+  'aria-label'?: string
+  live?: number
+  size?: 'md' | 'sm'
   title?: string
   url?: string
 }
 
 type OpenChangeHandler = NonNullable<ComponentProps<typeof Popover>['onOpenChange']>
 
-export const ShareButton = ({ title, url }: ShareButtonProps) => {
+export const ShareButton = ({
+  'aria-label': ariaLabel = 'Compartilhar',
+  live,
+  size = 'md',
+  title,
+  url,
+}: ShareButtonProps) => {
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -51,7 +61,20 @@ export const ShareButton = ({ title, url }: ShareButtonProps) => {
     }
   }, [open])
 
-  const shareUrl = () => url ?? window.location.href
+  const shareUrl = () => {
+    if (url) {
+      return url
+    }
+
+    if (typeof live === 'number') {
+      const next = new URL(window.location.href)
+      next.searchParams.set('live', String(live))
+
+      return next.toString()
+    }
+
+    return window.location.href
+  }
   const shareTitle = () => title ?? document.title
 
   const handleOpenChange: OpenChangeHandler = (next, eventDetails) => {
@@ -96,10 +119,13 @@ export const ShareButton = ({ title, url }: ShareButtonProps) => {
   return (
     <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger
-        aria-label="Compartilhar"
-        className="flex size-10 items-center justify-center rounded-lg bg-canvas text-ink transition-colors hover:bg-brand hover:text-brand-ink"
+        aria-label={ariaLabel}
+        className={cn(
+          'flex items-center justify-center rounded-lg bg-canvas text-ink transition-colors hover:bg-brand hover:text-brand-ink',
+          size === 'sm' ? 'size-8' : 'size-10',
+        )}
       >
-        <Share2Icon className="size-4" />
+        <Share2Icon className={size === 'sm' ? 'size-3.5' : 'size-4'} />
       </PopoverTrigger>
       <PopoverContent
         align="end"
