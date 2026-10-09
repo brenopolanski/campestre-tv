@@ -10,7 +10,7 @@
 <p align="center">
   <a href="https://campestre.tv">Website</a>
   <span>&nbsp;•&nbsp;</span>
-  <a href="https://youtube.com/@campestre-tv">YouTube</a>
+  <a href="https://youtube.com/@campestre-tv?sub_confirmation=1">YouTube</a>
 </p>
 
 <p align="center">
