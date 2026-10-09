@@ -48,9 +48,7 @@ describe('YouTube API client', () => {
 
     expect(fetchMock).toHaveBeenCalledOnce()
     const requestUrl = new URL(String(fetchMock.mock.calls[0]?.[0]))
-    expect(requestUrl.origin + requestUrl.pathname).toBe(
-      'https://www.googleapis.com/youtube/v3/videos',
-    )
+    expect(requestUrl.origin + requestUrl.pathname).toBe('https://googleapis.com/youtube/v3/videos')
     expect(requestUrl.searchParams.get('part')).toBe(
       'snippet,liveStreamingDetails,statistics,status',
     )

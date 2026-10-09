@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { readCourtName } from './court-name'
+import { readCourtName } from './courtName'
 
 describe('readCourtName', () => {
   it('reads the court from a stream title', () => {

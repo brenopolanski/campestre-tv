@@ -1,6 +1,6 @@
 import { getYouTubeVideos, YouTubeApiError } from './api'
 import { fetchYouTubePlaylistItems } from './client'
-import { readCourtName } from './court-name'
+import { readCourtName } from './courtName'
 import type { YouTubeChannelBroadcasts, YouTubeLiveStatus } from './types'
 
 const CHANNEL_ID_PATTERN = /^UC[\w-]{22}$/

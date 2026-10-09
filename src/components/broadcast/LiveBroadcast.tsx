@@ -7,7 +7,7 @@ import { YouTubeLivePlayer } from '@/components/youtube/YouTubeLivePlayer'
 import type { BroadcastCourt } from '@/lib/courts'
 import { courts, featuredCourt } from '@/lib/courts'
 import { generateReactKey } from '@/lib/utils'
-import { fetchYouTubeChannel } from '@/lib/youtube/fetch-channel'
+import { fetchYouTubeChannel } from '@/lib/youtube/fetchChannel'
 import { canEmbedLiveVideo, getYouTubeWatchUrl } from '@/lib/youtube/playback'
 import type { YouTubeChannelVideo } from '@/lib/youtube/types'
 

@@ -49,7 +49,7 @@ describe('YouTubeLivePlayer', () => {
 
     expect(screen.queryByTestId('youtube-player')).toBeNull()
     const link = screen.getByRole('link', { name: /Assista no YouTube/ })
-    expect(link.getAttribute('href')).toBe('https://www.youtube.com/watch?v=abcdefghijk')
+    expect(link.getAttribute('href')).toBe('https://youtube.com/watch?v=abcdefghijk')
     expect(link.getAttribute('target')).toBe('_blank')
     expect(screen.getByText(/Não foi possível reproduzir esta transmissão/)).toBeTruthy()
   })

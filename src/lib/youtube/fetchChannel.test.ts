@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { fetchYouTubeChannel } from './fetch-channel'
+import { fetchYouTubeChannel } from './fetchChannel'
 
 describe('fetchYouTubeChannel', () => {
   afterEach(() => {

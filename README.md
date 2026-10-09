@@ -107,7 +107,7 @@ GET /api/youtube/videos?ids=VIDEO_ID_1,VIDEO_ID_2
 
 Pass up to 50 video ids, separated by commas. The response is not cached, so a later client can poll it. A 30–60 second interval is enough for concurrent viewer counts. `videos.list` costs 1 quota unit per request. The default daily quota is 10,000 units.
 
-`fetchYouTubeVideos` in `src/lib/youtube/fetch-videos.ts` is the same call from the browser.
+`fetchYouTubeVideos` in `src/lib/youtube/fetchVideos.ts` is the same call from the browser.
 
 `live.status` is `live`, `upcoming`, `completed`, or `none`. Counts and live times are omitted when YouTube does not send them. A missing count is not `0`. Videos that are private, deleted, or unknown are left out.
 
@@ -127,7 +127,7 @@ Discovery uses public data only. The uploads playlist id is the channel id with 
 
 The response keeps broadcasts whose status is `live`, `upcoming`, or `completed`, with live streams first. Ordinary uploads are left out. `liveCount` is the number of videos currently live. `courtName` is set only when the title contains exactly one `Quadra N`, for example `Campestre TV - Quadra 1` becomes `Quadra 1`. Otherwise `courtName` is `null`.
 
-`fetchYouTubeChannel` in `src/lib/youtube/fetch-channel.ts` calls this endpoint from the browser.
+`fetchYouTubeChannel` in `src/lib/youtube/fetchChannel.ts` calls this endpoint from the browser.
 
 ## License
 

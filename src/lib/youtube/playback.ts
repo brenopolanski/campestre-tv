@@ -1,7 +1,7 @@
 import type { YouTubeChannelVideo } from './types'
 
 export const getYouTubeWatchUrl = (videoId: string): string => {
-  return `https://www.youtube.com/watch?v=${encodeURIComponent(videoId)}`
+  return `https://youtube.com/watch?v=${encodeURIComponent(videoId)}`
 }
 
 export const canEmbedLiveVideo = (

@@ -1,6 +1,6 @@
 import type { YouTubePlaylistItemsResponse, YouTubeVideoListResponse } from './types'
 
-const YOUTUBE_API_BASE = 'https://www.googleapis.com/youtube/v3'
+const YOUTUBE_API_BASE = 'https://googleapis.com/youtube/v3'
 const YOUTUBE_VIDEO_PARTS = 'snippet,liveStreamingDetails,statistics,status'
 
 export type YouTubeErrorCode =
