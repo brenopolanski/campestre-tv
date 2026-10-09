@@ -5,7 +5,7 @@
 <h1 align="center">
   Campestre TV
 </h1>
-<p align="center">Live tennis from the Campestre club courts.</p>
+<p align="center">Live tennis from the <a href="https://clubecampestrecg.com.br">Campestre club</a> courts.</p>
 
 <p align="center">
   <a href="https://campestre.tv">Website</a>
