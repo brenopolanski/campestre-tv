@@ -4,7 +4,7 @@ import { canEmbedLiveVideo, getYouTubeWatchUrl } from './playback'
 
 describe('getYouTubeWatchUrl', () => {
   it('builds the public watch URL', () => {
-    expect(getYouTubeWatchUrl('abcdefghijk')).toBe('https://youtube.com/watch?v=abcdefghijk')
+    expect(getYouTubeWatchUrl('abcdefghijk')).toBe('https://www.youtube.com/watch?v=abcdefghijk')
   })
 })
 

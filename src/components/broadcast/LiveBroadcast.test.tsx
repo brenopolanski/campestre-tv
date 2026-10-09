@@ -98,7 +98,7 @@ describe('LiveBroadcast', () => {
 
     expect(screen.queryByTestId('youtube-player')).toBeNull()
     const link = screen.getByRole('link', { name: /Assistir no YouTube/ })
-    expect(link.getAttribute('href')).toBe('https://youtube.com/watch?v=lmnopqrstuv')
+    expect(link.getAttribute('href')).toBe('https://www.youtube.com/watch?v=lmnopqrstuv')
     expect(link.getAttribute('target')).toBe('_blank')
     expect(screen.queryByRole('heading', { name: 'Quadra 1' })).toBeNull()
   })
