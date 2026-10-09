@@ -10,7 +10,7 @@ export const LiveBadge = ({ onDark = false }: LiveBadgeProps) => {
   return (
     <span className={cn('flex items-center gap-2 label-caps', onDark ? 'text-ink' : 'text-live')}>
       <span className="relative flex size-2">
-        <span className="absolute inline-flex size-full animate-ping rounded-full bg-live opacity-70" />
+        <span className="absolute inline-flex size-full animate-ping rounded-full border-0 bg-live opacity-70 outline-none" />
         <span className="relative inline-flex size-2 rounded-full bg-live" />
       </span>
       Ao vivo

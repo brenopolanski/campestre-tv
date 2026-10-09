@@ -94,7 +94,7 @@ describe('LiveBroadcast', () => {
     expect(player.getAttribute('data-video-id')).toBe('abcdefghijk')
     expect(screen.getAllByTestId('youtube-player')).toHaveLength(1)
 
-    fireEvent.click(screen.getByRole('button', { name: 'Transmissão especial' }))
+    fireEvent.click(screen.getByRole('button', { name: /^Transmissão especial/ }))
 
     expect(screen.queryByTestId('youtube-player')).toBeNull()
     const link = screen.getByRole('link', { name: /Assistir no YouTube/ })
@@ -124,7 +124,7 @@ describe('LiveBroadcast', () => {
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Quadra 8' })).toBeTruthy()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Quadra 6' }))
+    fireEvent.click(screen.getByRole('button', { name: /^Quadra 6/ }))
 
     expect(screen.getByRole('heading', { level: 1, name: 'Quadra 6' })).toBeTruthy()
     expect(screen.getByTestId('youtube-player').getAttribute('data-video-id')).toBe('quadra6vid00')

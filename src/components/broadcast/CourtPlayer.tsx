@@ -27,9 +27,10 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
               <Image
                 alt={court.alt}
                 className="aspect-video h-auto w-full object-cover"
+                fetchPriority="high"
                 height={court.height}
                 loading="eager"
-                sizes="(min-width: 768px) 70vw, 100vw"
+                sizes="(min-width: 1280px) 54.8rem, (min-width: 768px) calc(79vw - 8.4rem), calc(100vw - 4rem)"
                 src={court.image}
                 width={court.width}
               />

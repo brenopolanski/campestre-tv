@@ -22,12 +22,7 @@ const readCourtNumber = (name: string) => {
 export const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) => {
   return (
     <li className="relative w-[66%] shrink-0 snap-start rounded-lg bg-surface p-4 md:w-[21cqw]">
-      <button
-        aria-label={court.name}
-        className="group grid w-full gap-4 text-left"
-        type="button"
-        onClick={onWatch}
-      >
+      <button className="group grid w-full gap-4 text-left" type="button" onClick={onWatch}>
         <Image
           alt={court.alt}
           className={cn(
@@ -36,7 +31,7 @@ export const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) =>
           )}
           height={court.height}
           loading="eager"
-          sizes="(min-width: 768px) min(21vw, 16.8rem), 66vw"
+          sizes="(min-width: 1280px) 14.8rem, (min-width: 768px) calc(21vw - 2rem), calc(66vw - 3.32rem)"
           src={court.image}
           width={court.width}
         />
