@@ -31,7 +31,7 @@ interface BroadcastShellProps {
 
 const BroadcastShell = ({ cards, player }: BroadcastShellProps) => {
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col md:flex-row">
+    <div className="@container mx-auto flex w-full max-w-7xl flex-col md:flex-row">
       <div className="w-full min-w-0 md:flex-1">{player}</div>
       <nav aria-label="Quadras" className="border-t border-surface md:border-t-0 md:border-l">
         <ul className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain p-4 md:flex-col md:overflow-visible md:p-[1.4rem]">
