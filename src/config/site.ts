@@ -6,17 +6,24 @@ export const siteConfig = {
   tagline: siteTagline,
   title: `${siteName} - ${siteTagline}`,
   description:
-    'Assista às partidas das quadras do Campestre ao vivo, 24 horas por dia. Três quadras, transmissão contínua e gratuita.',
-  shortDescription: 'Transmissão ao vivo das quadras de tênis do Campestre.',
-  url: 'https://campestre.tv',
+    'Assista às partidas de tênis das quadras do Campestre ao vivo, 24 horas por dia. Três quadras, transmissão contínua e gratuita.',
+  url: 'https://www.campestre.tv',
   themeColor: {
     light: '#FFFFFF',
     dark: '#242424',
   },
-  email: '', // TODO: add email
+  email: 'breno.polanski@gmail.com',
   links: {
-    youtube: 'https://youtube.com/@campestre-tv',
+    youtube: 'https://www.youtube.com/@campestre-tv',
     youtubeChannelId: 'UCdWZMGfre33FZdDgcd1dz-A',
+  },
+  author: {
+    name: siteName,
+    x: '@brenopolanski',
+    url: 'https://brenopolanski.com',
+    emails: {
+      personal: 'breno.polanski@gmail.com',
+    },
   },
   keywords: [
     siteName,

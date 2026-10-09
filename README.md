@@ -8,9 +8,9 @@
 <p align="center">Live tennis from the <a href="https://clubecampestrecg.com.br">Campestre club</a> courts.</p>
 
 <p align="center">
-  <a href="https://campestre.tv">Website</a>
+  <a href="https://www.campestre.tv">Website</a>
   <span>&nbsp;•&nbsp;</span>
-  <a href="https://youtube.com/@campestre-tv?sub_confirmation=1">YouTube</a>
+  <a href="https://www.youtube.com/@campestre-tv?sub_confirmation=1">YouTube</a>
 </p>
 
 <p align="center">
