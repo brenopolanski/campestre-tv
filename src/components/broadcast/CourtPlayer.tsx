@@ -2,22 +2,18 @@
 
 import Image from 'next/image'
 
-import { PlayIcon, Share2Icon } from '@/components/shared/Icons'
+import { PlayIcon } from '@/components/shared/Icons'
+import { siteConfig } from '@/config/site'
 import type { BroadcastCourt } from '@/lib/courts'
 
 import { LiveStatus } from './LiveStatus'
+import { ShareButton } from './ShareButton'
 
 interface CourtPlayerProps {
   court: BroadcastCourt
   externalWatchUrl?: string
   playback?: React.ReactNode
   onWatch?: () => void
-}
-
-const copyPageUrl = () => {
-  const write = navigator.clipboard?.writeText(window.location.href)
-
-  void write?.catch(() => {})
 }
 
 export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayerProps) => {
@@ -67,14 +63,7 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
             <h1 className="text-[1.25rem] font-bold text-brand uppercase">{court.name}</h1>
             <LiveStatus live={court.live} viewers={court.viewers} onDark />
           </div>
-          <button
-            aria-label="Compartilhar"
-            className="flex size-10 items-center justify-center rounded-lg bg-canvas text-ink transition-colors hover:bg-brand hover:text-brand-ink"
-            type="button"
-            onClick={copyPageUrl}
-          >
-            <Share2Icon className="size-4" />
-          </button>
+          <ShareButton title={`${court.name} - ${siteConfig.name}`} />
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 
 import { LiveBroadcast, LiveBroadcastFallback } from '@/components/broadcast/LiveBroadcast'
-import { Header } from '@/components/navigation/header/Header'
+import { Header } from '@/components/navigation/Header'
 
 const Home = () => {
   return (
