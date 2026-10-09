@@ -1,15 +1,14 @@
 'use client'
 
-import { Play, Share2 } from 'lucide-react'
 import Image from 'next/image'
-import type { ReactNode } from 'react'
 
+import { PlayIcon, Share2Icon } from '@/components/shared/Icons'
 import type { BroadcastCourt } from '@/lib/courts'
 
 interface CourtPlayerProps {
   court: BroadcastCourt
   externalWatchUrl?: string
-  playback?: ReactNode
+  playback?: React.ReactNode
   onWatch?: () => void
 }
 
@@ -19,7 +18,7 @@ const copyPageUrl = () => {
   void write?.catch(() => {})
 }
 
-const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayerProps) => {
+export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayerProps) => {
   return (
     <section className="w-full p-4 md:p-[1.4rem]">
       <div className="rounded-lg bg-surface p-4 pb-0 md:p-[1.4rem] md:pb-0">
@@ -55,7 +54,7 @@ const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayer
                   type="button"
                   onClick={onWatch}
                 >
-                  <Play className="size-10 fill-white text-white" />
+                  <PlayIcon className="size-10 fill-white text-white" />
                 </button>
               ) : null}
             </>
@@ -65,16 +64,14 @@ const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: CourtPlayer
           <h1 className="py-4 text-[1.25rem] font-bold text-brand uppercase">{court.name}</h1>
           <button
             aria-label="Compartilhar"
-            className="flex size-10 items-center justify-center rounded-[0.25rem] bg-canvas text-ink transition-colors hover:bg-brand hover:text-brand-ink"
+            className="flex size-10 items-center justify-center rounded-lg bg-canvas text-ink transition-colors hover:bg-brand hover:text-brand-ink"
             type="button"
             onClick={copyPageUrl}
           >
-            <Share2 className="size-4" />
+            <Share2Icon className="size-4" />
           </button>
         </div>
       </div>
     </section>
   )
 }
-
-export { CourtPlayer }

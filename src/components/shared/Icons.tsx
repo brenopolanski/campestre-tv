@@ -1,5 +1,5 @@
 import type { LucideProps } from 'lucide-react'
-import { MoonIcon, SunIcon } from 'lucide-react'
+import { MoonIcon, PlayIcon, Share2Icon, SunIcon, UserIcon } from 'lucide-react'
 
 const YoutubeIcon = (props: LucideProps) => (
   <svg
@@ -15,4 +15,4 @@ const YoutubeIcon = (props: LucideProps) => (
   </svg>
 )
 
-export { MoonIcon, SunIcon, YoutubeIcon }
+export { MoonIcon, PlayIcon, Share2Icon, SunIcon, UserIcon, YoutubeIcon }

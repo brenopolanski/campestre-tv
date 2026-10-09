@@ -1,5 +1,4 @@
-import { User } from 'lucide-react'
-
+import { UserIcon } from '@/components/shared/Icons'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 
@@ -31,7 +30,7 @@ interface ViewersProps {
 const Viewers = ({ count }: ViewersProps) => {
   return (
     <span className="flex items-center gap-2 text-sm text-muted-foreground tabular-nums">
-      <User aria-hidden="true" className="size-4" />
+      <UserIcon aria-hidden="true" className="size-4" />
       {count}
     </span>
   )
