@@ -14,6 +14,7 @@ import { UiIcon } from '../icons/UiIcon'
 import { motionTokens } from '../theme/motion'
 import { getTheme } from '../theme/weatherThemes'
 import { conditionLabel } from '../weather/format'
+import { CLUB_PLACE } from '../weather/location'
 import { searchPlaces } from '../weather/openMeteo'
 import { toUnit, type ForecastEntry, type TemperatureUnit } from '../weather/store'
 import type { Place } from '../weather/types'
@@ -204,7 +205,7 @@ function Sheet({
                     </span>
                   </button>
                   <AnimatePresence>
-                    {editing && places.length > 1 && (
+                    {editing && places.length > 1 && p.id !== CLUB_PLACE.id && (
                       <motion.button
                         type="button"
                         className="city-row__remove"

@@ -9,6 +9,15 @@ import type { Place } from './types'
 
 export const HERE_ID = 'here'
 
+/** Clube Campestre — cidade padrão do /clima. */
+export const CLUB_PLACE: Place = {
+  id: 'campestre',
+  name: 'Campina Grande',
+  region: 'Paraíba, Brasil',
+  latitude: -7.248611,
+  longitude: -35.874167,
+}
+
 // fusos do Brasil → capital / cidade de referência
 const TIMEZONE_CITIES: Record<string, Omit<Place, 'id'>> = {
   'America/Sao_Paulo': {

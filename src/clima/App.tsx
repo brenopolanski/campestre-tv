@@ -33,15 +33,7 @@ import { motionTokens } from './theme/motion'
 import { applyTheme, getTheme } from './theme/weatherThemes'
 import { conditionLabel } from './weather/format'
 import { liveForecast } from './weather/live'
-import {
-  HERE_ID,
-  locateUser,
-  locationPermission,
-  placeAt,
-  resolveTimezonePlace,
-  timezonePlace,
-  watchUser,
-} from './weather/location'
+import { CLUB_PLACE, HERE_ID, locateUser } from './weather/location'
 import { precipitationOutlook } from './weather/outlook'
 import { applySimulation, simulationFromUrl, type Simulation } from './weather/simulate'
 import { markSeen, readHere, useForecasts, usePlaces, useUnit, writeHere } from './weather/store'
@@ -61,24 +53,14 @@ const SIMULATOR = process.env.NODE_ENV === 'development'
 export default function App() {
   const reduced = useReducedMotion() ?? false
   const { places: saved, addPlace, removePlace } = usePlaces()
-  // a cidade do usuário: última localização conhecida; enquanto não há, a cidade do fuso
+  // localização do aparelho, quando a pessoa pede; senão abre no Clube Campestre
   const [here, setHere] = useState<Place | null>(readHere)
-  const [fallback, setFallback] = useState(timezonePlace)
-  useEffect(() => {
-    let alive = true
-    resolveTimezonePlace()
-      .then((p) => alive && p && setFallback(p))
-      .catch(() => {
-        // sem rede: fica a cidade padrão até a localização chegar
-      })
-    return () => {
-      alive = false
-    }
-  }, [])
-  const places = useMemo(
-    () => (here ? [here, ...saved] : saved.length ? saved : [fallback]),
-    [here, saved, fallback],
-  )
+  const places = useMemo(() => {
+    const extras = saved.filter((p) => p.id !== CLUB_PLACE.id && p.id !== here?.id)
+    return here && here.id !== CLUB_PLACE.id
+      ? [here, CLUB_PLACE, ...extras]
+      : [CLUB_PLACE, ...extras]
+  }, [here, saved])
   const { entries, refresh } = useForecasts(places)
   const [unit, setUnit] = useUnit()
 
@@ -375,47 +357,15 @@ export default function App() {
     return () => window.clearTimeout(t)
   }, [notice])
 
-  // ao entrar: pede a localização (primeira visita) ou atualiza em silêncio (se já permitida)
-  const hereRef = useRef(here)
   const applyHere = useCallback(
     (place: Place, select: boolean) => {
-      hereRef.current = place
       setHere(place)
       writeHere(place)
-      void refresh(place) // coordenadas novas: busca o clima de onde a pessoa está agora
+      void refresh(place)
       if (select) setIndex(0)
     },
     [refresh],
   )
-  useEffect(() => {
-    let cancelled = false
-    let stopWatch = () => {}
-    void (async () => {
-      const permission = await locationPermission()
-      // a cada abertura do app: a cidade é sempre a de onde a pessoa está
-      if (permission === 'denied') return
-      try {
-        const place = await locateUser()
-        if (cancelled) return
-        applyHere(place, true)
-        // tempo real: se a pessoa se desloca, a cidade muda junto
-        stopWatch = watchUser(
-          () => hereRef.current,
-          (lat, lon) => {
-            void placeAt(lat, lon).then((p) => {
-              if (!cancelled) applyHere(p, false)
-            })
-          },
-        )
-      } catch {
-        // negada ou indisponível: fica a cidade do fuso (ou a última conhecida)
-      }
-    })()
-    return () => {
-      cancelled = true
-      stopWatch()
-    }
-  }, [applyHere])
 
   // botão de localização: busca de novo e vai para a cidade do usuário
   const locate = async () => {
@@ -595,6 +545,7 @@ export default function App() {
             onSelect={selectPlace}
             onAdd={addPlace}
             onRemove={(id) => {
+              if (id === CLUB_PLACE.id) return
               if (id === HERE_ID) {
                 setHere(null)
                 writeHere(null)
