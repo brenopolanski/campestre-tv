@@ -49,7 +49,7 @@ const PlayerRow = ({ game, player, rank, scores, serve = false }: PlayerRowProps
           '[text-shadow:-0.05rem_-0.05rem_rgb(6_0_0/75%)]',
           "after:absolute after:inset-0 after:-z-10 after:bg-linear-to-r after:from-[rgb(65_92_100/75%)] after:to-[#060000] after:to-75% after:content-['']",
           serve &&
-            "before:absolute before:right-4 before:size-0 before:border-y-[0.375rem] before:border-r-[0.375rem] before:border-y-transparent before:border-r-[#f4b400] before:content-['']",
+            "before:absolute before:right-4 before:size-0 before:border-y-[0.4rem] before:border-r-[0.4rem] before:border-y-transparent before:border-r-[#f4b400] before:content-['']",
         )}
       >
         <span className="px-2 text-[0.6em]">{rank}</span>
@@ -88,7 +88,7 @@ const NotFound = () => {
     <div className="flex min-h-dvh flex-col">
       <Header />
       <section className="relative flex-1 overflow-x-hidden overflow-y-hidden bg-canvas bg-[url('/court.avif')] bg-cover bg-bottom-left bg-no-repeat text-[clamp(20px,3vw,32px)]">
-        <div className="pointer-events-none absolute -top-40 right-0 bottom-0 left-0 z-10 flex items-center justify-center px-4 landscape:hidden">
+        <div className="pointer-events-none absolute -top-40 right-0 bottom-0 left-0 z-10 flex items-center justify-center px-4 max-md:landscape:hidden">
           <div className="pointer-events-auto flex flex-col items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-8 py-8 text-center text-white shadow-[0_8px_32px_rgb(6_0_0/30%)] backdrop-blur-md [text-shadow:0_0.15rem_0.6rem_rgb(6_0_0/65%)] sm:px-12 sm:py-10">
             <p className="text-6xl font-semibold tracking-tight sm:text-8xl">404</p>
             <h1 className="text-xl font-medium sm:text-3xl">Página não encontrada</h1>
