@@ -54,19 +54,34 @@ const PlayerRow = ({ game, player, rank, scores, serve = false }: PlayerRowProps
     <div className="mb-[-0.1rem] flex w-max last:mb-0">
       <div
         className={cn(
-          'relative z-0 mr-[-0.1rem] flex w-[12em] items-center border-[0.1rem] border-[#060000] bg-linear-to-b from-[rgb(65_92_100/50%)] to-[rgb(8_39_47/50%)] py-1 text-white',
+          'relative z-0 mr-[-0.1rem] flex w-[13em] items-center border-[0.1rem] border-[#060000] bg-linear-to-b from-[rgb(65_92_100/50%)] to-[rgb(8_39_47/50%)] py-1 text-white',
           '[text-shadow:-0.05rem_-0.05rem_rgb(6_0_0/75%)]',
           "after:absolute after:inset-0 after:-z-10 after:bg-linear-to-r after:from-[rgb(65_92_100/75%)] after:to-[#060000] after:to-75% after:content-['']",
-          serve &&
-            "before:absolute before:right-4 before:size-0 before:border-y-[0.4rem] before:border-r-[0.4rem] before:border-y-transparent before:border-r-[#f4b400] before:content-['']",
         )}
       >
-        <span className="px-2 text-[0.6em]">{rank}</span>
-        <span className="flex min-w-0 flex-1">
+        <span className="inline-flex w-[2em] shrink-0 items-center justify-center text-[0.6em] leading-none">
+          {rank}
+        </span>
+        <span className="flex w-[8em] min-w-0 shrink-0 items-center leading-none">
           <span className="mr-1 shrink-0">{player.name}</span>
           <span className="min-w-0 truncate">{player.surname}</span>
         </span>
-        <span className="mr-8 ml-1 px-2 text-[0.6em]">{player.nationality}</span>
+        <div className="flex w-full items-center justify-center">
+          <span
+            className={cn(
+              'inline-flex shrink-0 items-center justify-start pl-2 text-[0.6em] leading-none',
+              !serve && 'mr-8',
+            )}
+          >
+            {player.nationality}
+          </span>
+          {serve && (
+            <span
+              className="mr-4 ml-2 size-0 shrink-0 border-y-[0.4rem] border-r-[0.4rem] border-y-transparent border-r-[#f4b400]"
+              aria-hidden
+            />
+          )}
+        </div>
       </div>
       <div className="order-2 flex w-max shrink-0">
         {scores.map((score, index) => (
