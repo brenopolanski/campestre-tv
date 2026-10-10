@@ -85,7 +85,7 @@ const NotFound = () => {
   const [leader, server] = pickPair()
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-dvh flex-col">
       <Header />
       <section className="relative flex-1 overflow-x-hidden bg-canvas bg-[url('/court.avif')] bg-cover bg-bottom-left bg-no-repeat text-[clamp(20px,3vw,32px)]">
         <div className="pointer-events-none absolute -top-40 right-0 bottom-0 left-0 z-10 flex items-center justify-center px-4">
