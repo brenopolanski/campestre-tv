@@ -1,0 +1,1341 @@
+/* ================================================================
+   Base
+   ================================================================ */
+
+/* o Climinha foi desenhado sobre os padrões do navegador: dentro dele, desfaz o reset
+   do Tailwind (camada base) sem tocar nos atributos de apresentação dos SVGs */
+:where(.clima) *,
+:where(.clima) *::before,
+:where(.clima) *::after {
+  margin: revert;
+  padding: revert;
+  border: revert;
+  outline-color: revert;
+}
+
+:where(.clima) :is(h1, h2, h3, h4, h5, h6) {
+  font-size: revert;
+  font-weight: revert;
+}
+
+:where(.clima) a {
+  color: revert;
+  text-decoration: revert;
+}
+
+:where(.clima) :is(ol, ul, menu) {
+  list-style: revert;
+}
+
+:where(.clima) :is(img, svg, video, canvas) {
+  display: revert;
+  vertical-align: revert;
+}
+
+:where(.clima) :is(img, video) {
+  max-width: revert;
+}
+
+:where(.clima) :is(button, input, select, textarea) {
+  font: revert;
+  letter-spacing: revert;
+  color: revert;
+  border-radius: revert;
+  background-color: revert;
+  opacity: revert;
+  appearance: revert;
+}
+
+:where(.clima) ::placeholder {
+  opacity: revert;
+  color: revert;
+}
+
+:where(.clima) textarea {
+  resize: revert;
+}
+
+:where(.clima),
+:where(.clima) *,
+:where(.clima) *::before,
+:where(.clima) *::after {
+  box-sizing: border-box;
+}
+
+html:has(.clima) {
+  /* declara que o site já é escuro/claro por conta própria: impede o "modo escuro"
+     forçado de navegadores Android (Samsung Internet, Chrome) de escurecer tudo */
+  color-scheme: dark light;
+  scrollbar-width: none;
+}
+
+html:has(.clima[data-scheme='dark-on-light']) {
+  color-scheme: light dark;
+}
+
+html:has(.clima) body {
+  overflow-x: hidden;
+}
+
+.clima {
+  color-scheme: dark light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  --precip: #8fd0ff;
+  --track: rgba(0, 10, 30, 0.22);
+  --hover: rgba(255, 255, 255, 0.12);
+  --pressed: rgba(255, 255, 255, 0.2);
+  --field: rgba(255, 255, 255, 0.14);
+
+  min-height: 100dvh;
+  background: var(--sky-top);
+  color: var(--fg);
+  font-family: var(--font-system);
+  font-size: var(--type-secondary);
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
+}
+
+.clima[data-scheme='dark-on-light'] {
+  color-scheme: light dark;
+  --precip: #1d64b8;
+  --track: rgba(20, 30, 45, 0.12);
+  --hover: rgba(20, 30, 45, 0.06);
+  --pressed: rgba(20, 30, 45, 0.1);
+  --field: rgba(255, 255, 255, 0.5);
+}
+
+html:has(.clima)::-webkit-scrollbar,
+html:has(.clima) body::-webkit-scrollbar {
+  display: none;
+}
+
+body[data-sheet-open] {
+  overflow: hidden;
+}
+
+:where(.clima) :is(h1, h2, p) {
+  margin: 0;
+}
+
+:where(.clima) button {
+  font: inherit;
+  color: inherit;
+}
+
+:where(.clima) :focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+/* ================================================================
+   Materiais
+   ================================================================ */
+
+.glass {
+  /* "seixo": superfície sólida escura, traço de tinta e sombra de adesivo — sem vidro */
+  --fg: #fbf8f1;
+  --fg-2: rgba(251, 248, 241, 0.78);
+  --fg-3: rgba(251, 248, 241, 0.55);
+  --hover: rgba(251, 248, 241, 0.1);
+  --pressed: rgba(251, 248, 241, 0.16);
+  --separator: rgba(251, 248, 241, 0.12);
+  position: relative;
+  color: var(--fg);
+  /* vidro escuro translúcido, estilo Apple */
+  background: rgba(10, 12, 18, 0.5);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-button {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  color: var(--fg);
+}
+
+.plain-icon-button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: background-color var(--motion-system-fast) var(--ease-system);
+}
+
+.plain-icon-button[aria-pressed='true'] {
+  background: var(--pressed);
+}
+
+@media (hover: hover) {
+  .plain-icon-button:hover,
+  .glass-button:hover {
+    background-color: var(--hover);
+  }
+}
+
+.pill-button {
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  font-size: var(--type-secondary);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+
+.text-button {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--fg);
+  font-size: 17px;
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+
+/* ================================================================
+   Página
+   ================================================================ */
+
+.page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: calc(var(--content-max) + var(--gutter) * 2);
+  margin: 0 auto;
+  padding: calc(var(--safe-top) + 56px) calc(var(--gutter) + var(--safe-right))
+    calc(var(--safe-bottom) + 108px) calc(var(--gutter) + var(--safe-left));
+}
+
+/* ================================================================
+   Hero
+   ================================================================ */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* ocupa a primeira tela, deixando os primeiros dias da previsão inteiros acima da barra */
+  min-height: max(400px, calc(100svh - 390px));
+  text-align: center;
+  padding: var(--space-4) 0 var(--space-8);
+  text-shadow: 0 1px 14px var(--text-shadow);
+}
+
+.hero__location {
+  font-family: var(--font-brand);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+}
+
+.hero__character {
+  --cw: clamp(120px, 32vw, 160px);
+  width: var(--cw);
+  aspect-ratio: 240 / 182;
+  /* o desenho tem folga vazia em cima e embaixo (sombra e gotas): desconta para
+     o Climinha ficar perto da temperatura e da condição */
+  margin: calc(var(--cw) * 0.04) 0 calc(var(--cw) * -0.08);
+}
+
+.hero__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Climinha que acompanha o scroll (camada acima do conteúdo, abaixo da navegação) */
+.traveler {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 15;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.traveler .climinha--interactive {
+  pointer-events: auto;
+}
+
+.content__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.details > .reveal {
+  display: flex;
+  min-width: 0;
+}
+
+.details > .reveal > .card {
+  flex: 1;
+}
+
+.details > .reveal:has(> .card--wind),
+.details > .reveal:has(> .card--sun) {
+  grid-column: span 2;
+}
+
+.hero__readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__temp {
+  position: relative;
+  font-family: var(--font-brand);
+  font-size: var(--type-temperature);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* "30°" centralizado como um bloco, no mesmo eixo da cidade; o recuo à esquerda
+   compensa opticamente o grau, que é mais leve que os números */
+.hero__temp {
+  padding-left: 0.12em;
+}
+
+.hero__temp-degree {
+  letter-spacing: 0;
+}
+
+.hero__condition {
+  margin-top: var(--space-2);
+  font-size: var(--type-condition);
+  font-weight: var(--weight-medium);
+}
+
+.hero__range {
+  margin-top: var(--space-1);
+  font-size: var(--type-secondary);
+  font-weight: 700;
+  color: var(--fg-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hero__temp--placeholder {
+  color: var(--fg-3);
+}
+
+.hero__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.hero__error-text {
+  font-size: 17px;
+  color: var(--fg-2);
+}
+
+.stale-banner {
+  display: block;
+  margin: calc(var(--space-2) * -1) auto var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--type-footnote);
+  cursor: pointer;
+}
+
+.skeleton {
+  display: block;
+  border-radius: var(--radius-pill);
+  background: var(--card-bg);
+}
+
+.skeleton--line {
+  height: 14px;
+}
+
+.skeleton-card {
+  opacity: 0.7;
+}
+
+.skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ================================================================
+   Conteúdo e cards
+   ================================================================ */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.content__columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.card {
+  position: relative;
+  min-width: 0;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  border: 0.5px solid var(--card-border);
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--fg-3);
+}
+
+.card__title {
+  font-size: var(--type-card-title);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.card--hourly .card__header,
+.card--daily .card__header {
+  padding-bottom: var(--space-2);
+}
+
+.card__summary {
+  padding: var(--space-2) 0 var(--space-3);
+  border-top: 0.5px solid var(--separator);
+  border-bottom: 0.5px solid var(--separator);
+  font-size: var(--type-secondary);
+}
+
+/* ---------- por hora ---------- */
+.hourly {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  margin: 0 calc(var(--space-4) * -1);
+  padding: var(--space-3) var(--space-2) 0;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 14px,
+    #000 calc(100% - 14px),
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+}
+
+.hourly::-webkit-scrollbar {
+  display: none;
+}
+
+.hourly:focus-visible {
+  outline-offset: -2px;
+}
+
+.hourly__item {
+  flex: 0 0 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hourly__item:first-child .hourly__label {
+  font-weight: var(--weight-semibold);
+}
+
+.hourly__label {
+  font-size: var(--type-secondary);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.hourly__icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+}
+
+.hourly__pop,
+.daily__pop {
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  color: var(--precip);
+  line-height: 1.1;
+}
+
+.hourly__temp {
+  font-size: var(--type-data);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.hourly__caption {
+  font-size: 12px;
+  font-weight: var(--weight-medium);
+  color: var(--fg-2);
+  white-space: nowrap;
+}
+
+/* ---------- 10 dias ---------- */
+.daily {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.daily__row {
+  display: grid;
+  grid-template-columns: 50px 34px 34px 1fr 34px;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 52px;
+  border-top: 0.5px solid var(--separator);
+  font-size: var(--type-data);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+
+.daily__icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.daily__min {
+  text-align: right;
+  color: var(--fg-3);
+}
+
+.daily__max {
+  text-align: left;
+}
+
+.daily__track {
+  position: relative;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--track);
+}
+
+.daily__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+}
+
+.daily__now {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 10, 30, 0.35);
+}
+
+/* ---------- chuva próxima ---------- */
+.precip__text {
+  padding: var(--space-2) 0 var(--space-3);
+  border-top: 0.5px solid var(--separator);
+  margin-top: var(--space-2);
+  font-size: 17px;
+  font-weight: var(--weight-medium);
+}
+
+.precip__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 52px;
+}
+
+.precip__bar {
+  flex: 1;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--precip);
+  transform-origin: bottom;
+}
+
+.precip__bar[data-dry] {
+  opacity: 0.3;
+}
+
+.precip__axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: 12px;
+  font-weight: var(--weight-medium);
+  color: var(--fg-3);
+}
+
+/* ---------- detalhes ---------- */
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.details .card {
+  display: flex;
+  flex-direction: column;
+  min-height: 168px;
+}
+
+.details .card__header {
+  margin-bottom: var(--space-2);
+}
+
+.card--wind,
+.card--sun {
+  grid-column: span 2;
+}
+
+.sun {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.sun__stats {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.sun .sun-arc {
+  width: min(58%, 200px);
+  margin: 0;
+}
+
+.detail__value {
+  font-family: var(--font-display);
+  font-size: var(--type-data-large);
+  font-weight: 500;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.detail__unit {
+  margin-left: 4px;
+  font-size: var(--type-secondary);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-2);
+}
+
+.detail__label {
+  margin-top: 2px;
+  font-size: var(--type-data);
+  font-weight: var(--weight-medium);
+}
+
+.detail__spacer {
+  flex: 1;
+  min-height: var(--space-3);
+}
+
+.detail__note {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-size: var(--type-footnote);
+  color: var(--fg-2);
+}
+
+.uv-scale {
+  position: relative;
+  display: block;
+  height: 5px;
+  margin-top: var(--space-3);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, #5fd16b, #e3d94a 30%, #f5a23a 55%, #ef5a3f 78%, #b06ae0);
+}
+
+.uv-scale__dot {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 10, 30, 0.35);
+}
+
+.wind {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.wind__stats {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.compass {
+  flex: none;
+  width: 108px;
+  height: 108px;
+}
+
+.compass__ring {
+  fill: none;
+  stroke: var(--separator);
+  stroke-width: 1;
+}
+
+.compass__tick {
+  stroke: var(--fg-3);
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.compass__tick--major {
+  stroke: var(--fg);
+  stroke-width: 1.6;
+  opacity: 1;
+}
+
+.compass__label {
+  fill: var(--fg-2);
+  font-size: 9px;
+  font-weight: 600;
+  text-anchor: middle;
+}
+
+.compass__needle {
+  stroke: var(--fg);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.compass__head,
+.compass__tail {
+  fill: var(--fg);
+}
+
+.sun-arc {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: var(--space-3) 0 0;
+  overflow: visible;
+}
+
+.sun-arc__path {
+  fill: none;
+  stroke: var(--fg-3);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.sun-arc__horizon {
+  stroke: var(--separator);
+  stroke-width: 1;
+}
+
+.sun-arc__sun {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 5px rgba(255, 236, 170, 0.9));
+}
+
+.sun-arc__sun--down {
+  fill: var(--fg-3);
+  filter: none;
+}
+
+/* ================================================================
+   Menu de ajustes
+   ================================================================ */
+
+/* ---------- menu ---------- */
+.menu-anchor {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: 52px;
+  z-index: 30;
+  min-width: 232px;
+  max-height: calc(100dvh - 120px);
+  overflow-y: auto;
+  padding: 6px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--sky-top) 45%, var(--glass-bg));
+}
+
+.menu__label {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: 12px;
+  font-weight: var(--weight-semibold);
+  color: var(--fg-3);
+}
+
+.menu__item {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu__item:hover,
+.menu__item:focus-visible {
+  background: var(--hover);
+  outline: none;
+}
+
+.menu__separator {
+  height: 0.5px;
+  margin: var(--space-1) var(--space-2);
+  background: var(--separator);
+}
+
+/* ================================================================
+   Navegação flutuante
+   ================================================================ */
+
+.floatnav {
+  /* escura e translúcida em qualquer clima: ícones sempre claros */
+  --fg: #ffffff;
+  --fg-2: rgba(255, 255, 255, 0.78);
+  --fg-3: rgba(255, 255, 255, 0.55);
+  --hover: rgba(255, 255, 255, 0.1);
+  --pressed: rgba(255, 255, 255, 0.16);
+  --separator: rgba(255, 255, 255, 0.12);
+  color: var(--fg);
+  background: rgba(10, 12, 18, 0.52);
+  -webkit-backdrop-filter: blur(26px) saturate(160%);
+  backdrop-filter: blur(26px) saturate(160%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--safe-bottom) + var(--space-4));
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: max-content;
+  max-width: calc(100vw - var(--gutter) * 2);
+  margin: 0 auto;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-2);
+  overflow: hidden;
+}
+
+.pager__dot {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.pager__mark {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.pager__glyph {
+  display: grid;
+  place-items: center;
+}
+
+.toast {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--safe-bottom) + 84px);
+  z-index: 25;
+  width: max-content;
+  max-width: calc(100vw - var(--gutter) * 2);
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--type-secondary);
+  font-weight: var(--weight-medium);
+}
+
+/* ================================================================
+   Sheet de cidades
+   ================================================================ */
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  /* acima de tudo da tela (inclusive o Climinha), abaixo só da intro */
+  z-index: 119;
+  background: rgba(0, 6, 18, 0.3);
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  max-width: 560px;
+  margin: 0 auto;
+  border-radius: 34px 40px 0 0 / 30px 36px 0 0;
+  border-bottom: 0;
+  /* bem translúcida: o céu do clima aparece por trás */
+  background: color-mix(in srgb, var(--ink) 28%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  padding-bottom: var(--safe-bottom);
+  outline: none;
+}
+
+.sheet__grabber {
+  position: relative;
+  flex: none;
+  height: 22px;
+  touch-action: none;
+  cursor: grab;
+}
+
+.sheet__grabber::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 36px;
+  height: 5px;
+  margin-left: -18px;
+  border-radius: 3px;
+  background: var(--fg-3);
+}
+
+.sheet__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2) var(--space-2) var(--space-5);
+  touch-action: none;
+}
+
+.sheet__title {
+  flex: 1;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sheet__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 44px;
+  margin: 0 var(--space-4) var(--space-3);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--field);
+  color: var(--fg-2);
+  transition:
+    margin var(--motion-system-default) var(--ease-system),
+    height var(--motion-system-default) var(--ease-system),
+    background-color var(--motion-system-default) var(--ease-system);
+}
+
+.search:focus-within {
+  height: 48px;
+  margin-inline: var(--space-3);
+  background: var(--pressed);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  color: var(--fg);
+  font: inherit;
+  font-size: 17px;
+}
+
+.search input::placeholder {
+  color: var(--fg-3);
+}
+
+.search input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+.sheet__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--space-4) var(--space-6);
+}
+
+.city-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.city-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.city-row {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 104px;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: 22px;
+  background: var(--card-bg);
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  text-shadow: 0 1px 8px rgba(0, 10, 30, 0.2);
+  transition: transform var(--motion-system-fast) var(--ease-system);
+}
+
+.city-row:active {
+  transform: scale(0.98);
+}
+
+.city-row[data-scheme='dark-on-light'] {
+  color: #18212c;
+  text-shadow: none;
+}
+
+.city-row__main,
+.city-row__side {
+  display: flex;
+  flex-direction: column;
+}
+
+.city-row__side {
+  align-items: flex-end;
+}
+
+.city-row__name {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.city-row__region {
+  font-size: var(--type-footnote);
+  opacity: 0.85;
+}
+
+.city-row__condition {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  font-size: var(--type-footnote);
+  font-weight: var(--weight-medium);
+}
+
+.city-row__temp {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.city-row__range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  font-size: var(--type-footnote);
+  font-weight: var(--weight-medium);
+}
+
+.city-row__remove {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #ff453a;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.results__item {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.results__item[data-active] {
+  background: var(--hover);
+}
+
+.results__name {
+  font-size: 17px;
+  font-weight: var(--weight-medium);
+}
+
+.results__region {
+  font-size: var(--type-footnote);
+  color: var(--fg-2);
+}
+
+.results__empty {
+  padding: var(--space-4) var(--space-3);
+  color: var(--fg-2);
+}
+
+/* ================================================================
+   Responsivo
+   ================================================================ */
+
+/* tablet: cards mais largos, detalhes em 3 colunas */
+@media (min-width: 700px) {
+  .hero__character {
+    width: 170px;
+  }
+
+  .details {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .card--sun .detail__value,
+  .card--wind .detail__value {
+    font-size: 30px;
+  }
+
+  .card--wind,
+  .card--sun,
+  .details > .reveal:has(> .card--wind),
+  .details > .reveal:has(> .card--sun) {
+    grid-column: span 1;
+  }
+
+  .card--wind .compass {
+    width: 84px;
+    height: 84px;
+  }
+
+  .card--sun .sun {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card--sun .sun-arc {
+    width: 100%;
+    order: -1;
+  }
+}
+
+/* desktop: mesma narrativa vertical, coluna central contida; a atmosfera ocupa o resto */
+@media (min-width: 1024px) {
+  .page {
+    padding-top: calc(var(--safe-top) + 48px);
+  }
+
+  .hero {
+    padding-bottom: var(--space-10);
+  }
+
+  .hero__character {
+    --cw: 210px;
+  }
+
+  .content {
+    gap: var(--space-4);
+  }
+
+  .content__columns,
+  .details {
+    gap: var(--space-4);
+  }
+}
+
+/* ---------- ajustes (abre para cima, a partir da barra) ---------- */
+.floatnav .menu {
+  top: auto;
+  bottom: 56px;
+  right: -4px;
+  background: rgba(16, 18, 26, 0.78);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  backdrop-filter: blur(28px) saturate(160%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+.floatnav .menu::before {
+  display: none;
+}
+
+.menu__footnote {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  font-size: 12px;
+  color: var(--fg-3);
+}
+
+.menu__footnote a {
+  color: inherit;
+}
+
+/* ================================================================
+   Abertura
+   ================================================================ */
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.splash__sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--sky-top) 0%,
+    var(--sky-mid) 52%,
+    var(--sky-bottom) 100%
+  );
+}
+
+.splash__stage {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  overflow: hidden;
+  pointer-events: none;
+  /* bem perto: maior que a tela, com os olhos no centro */
+  --w: max(230vw, 150vh);
+}
+
+.splash__drift {
+  position: absolute;
+  left: calc(50vw - var(--w) * 0.567);
+  top: calc(50dvh - var(--w) * 0.358);
+  width: var(--w);
+}
+
+.splash__character {
+  width: 100%;
+}
+
+/* o close-up é desenhado uma vez e só se move por transform (composição na GPU) */
+.splash__drift,
+.splash__float {
+  will-change: transform;
+}
+
+/* a página é arrastável para os lados (troca de cidade); o scroll vertical continua nativo */
+.page {
+  /* camada própria: arrastar para o lado só move a camada, sem repintar */
+  will-change: transform;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.page[data-swipe] {
+  cursor: grab;
+}
+
+.page[data-swipe]:active {
+  cursor: grabbing;
+}

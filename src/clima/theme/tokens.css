@@ -1,0 +1,194 @@
+/*
+ * Design tokens estáticos. As cores vivem em WeatherTheme (weatherThemes.ts) e
+ * são aplicadas como custom properties em .clima por applyTheme().
+ * As propriedades registradas com @property interpolam quando o clima muda.
+ */
+
+@property --sky-top {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #3d7fd1;
+}
+@property --sky-mid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #6aa6e6;
+}
+@property --sky-bottom {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #a8d0f4;
+}
+@property --fg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --fg-2 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.78);
+}
+@property --fg-3 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.6);
+}
+@property --card-bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(18, 60, 120, 0.2);
+}
+@property --card-border {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.12);
+}
+@property --separator {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.16);
+}
+@property --glass-bg {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.16);
+}
+@property --glass-border {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.22);
+}
+@property --glass-highlight {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.35);
+}
+@property --glass-shadow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(10, 30, 60, 0.12);
+}
+@property --accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #8fd0ff;
+}
+@property --horizon-glow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 240, 220, 0.2);
+}
+@property --cloud-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --cloud-shade {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #d4e2f2;
+}
+@property --text-shadow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(0, 30, 80, 0.18);
+}
+
+.clima {
+  /* Spacing — base 4 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --gutter: 16px;
+  --content-max: 840px;
+
+  /* Radius */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-card: 24px;
+  --radius-large: 30px;
+  --radius-pill: 999px;
+
+  /* Typography */
+  /* fonte do sistema em tudo (estilo Apple); a Fredoka arredondada é a marca do
+     Climinha e aparece só na cidade e na temperatura */
+  --font-system:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI',
+    system-ui, Roboto, sans-serif;
+  --font-display:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable Display', 'Segoe UI',
+    system-ui, Roboto, sans-serif;
+  --font-brand: var(--font-fredoka), 'Fredoka Variable', 'Fredoka', system-ui, sans-serif;
+
+  /* base escura das superfícies (lista de cidades) */
+  --ink: #131925;
+  --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  --type-location: 17px;
+  --type-temperature: clamp(60px, 17vw, 72px);
+  --type-condition: 20px;
+  --type-secondary: 15px;
+  --type-card-title: 12px;
+  --type-data: 17px;
+  --type-data-large: 34px;
+  --type-footnote: 13px;
+
+  --weight-thin: 200;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Motion (para transições CSS; springs ficam em motion.ts) */
+  --motion-system-fast: 160ms;
+  --motion-system-default: 280ms;
+  --ease-system: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-weather-transition: 1400ms;
+  --ease-weather: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Glass */
+  --glass-blur: 24px;
+
+  /* Safe areas */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  --nav-height: 56px;
+
+  /* sem transição de variáveis aqui: animar custom properties herdadas na raiz
+     recalcula o estilo da página inteira a cada quadro. O céu interpola no próprio
+     elemento (.env__sky) e cada superfície anima só a sua cor de fundo. */
+}
+
+@media (min-width: 390px) {
+  .clima {
+    --gutter: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .clima {
+    --gutter: 32px;
+    --type-temperature: 84px;
+    --type-location: 17px;
+    --type-condition: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clima {
+    /* cor ainda cruza suavemente; só encurta */
+    --motion-weather-transition: 500ms;
+    --motion-system-default: 1ms;
+  }
+}

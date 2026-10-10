@@ -1,0 +1,59 @@
+.clima {
+  --wi-cloud: #ffffff;
+  --wi-cloud-back: rgba(255, 255, 255, 0.62);
+  --wi-sun: #ffd24d;
+  --wi-moon: #eef0fa;
+  --wi-rain: #63b4ff;
+  --wi-bolt: #ffd24d;
+  --wi-fog: rgba(255, 255, 255, 0.8);
+}
+
+.clima[data-scheme='dark-on-light'] {
+  --wi-cloud: #7d8a9c;
+  --wi-cloud-back: #a9b4c2;
+  --wi-sun: #f2b01e;
+  --wi-rain: #2f86e0;
+  --wi-fog: #7d8a9c;
+  --wi-moon: #7d8a9c;
+}
+
+.wi {
+  display: block;
+  flex: none;
+  overflow: visible;
+}
+
+.wi-cloud {
+  fill: var(--wi-cloud);
+}
+.wi-cloud-back {
+  fill: var(--wi-cloud-back);
+}
+.wi-sun {
+  stroke: var(--wi-sun);
+}
+.wi-sun-fill {
+  fill: var(--wi-sun);
+}
+.wi-moon {
+  fill: var(--wi-moon);
+}
+.wi-rain {
+  stroke: var(--wi-rain);
+}
+.wi-bolt {
+  fill: var(--wi-bolt);
+}
+.wi-fog {
+  stroke: var(--wi-fog);
+}
+
+.ui-icon {
+  display: block;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

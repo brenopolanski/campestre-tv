@@ -1,0 +1,302 @@
+.env {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+  transition:
+    --cloud-color var(--motion-weather-transition) var(--ease-weather),
+    --cloud-shade var(--motion-weather-transition) var(--ease-weather),
+    --horizon-glow var(--motion-weather-transition) var(--ease-weather);
+}
+
+.env__sky {
+  position: absolute;
+  inset: 0;
+  transition:
+    --sky-top var(--motion-weather-transition) var(--ease-weather),
+    --sky-mid var(--motion-weather-transition) var(--ease-weather),
+    --sky-bottom var(--motion-weather-transition) var(--ease-weather);
+  background: linear-gradient(
+    180deg,
+    var(--sky-top) 0%,
+    var(--sky-mid) 52%,
+    var(--sky-bottom) 100%
+  );
+}
+
+.env__horizon {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 55% at 50% 105%, var(--horizon-glow), transparent 70%);
+}
+
+/* ---------- sol ---------- */
+.env__sun {
+  position: absolute;
+  top: -18vmin;
+  right: -16vmin;
+  width: 90vmin;
+  height: 90vmin;
+  will-change: transform, opacity;
+}
+
+.env__sun-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 246, 214, 0.75) 0%,
+    rgba(255, 228, 170, 0.32) 30%,
+    rgba(255, 220, 160, 0.1) 60%,
+    transparent 100%
+  );
+}
+
+.env__sun-disc {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20vmin;
+  height: 20vmin;
+  min-width: 84px;
+  min-height: 84px;
+  margin: max(-10vmin, -42px) 0 0 max(-10vmin, -42px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 40%, #fffdf3 0%, #fff1c2 45%, #ffd98a 100%);
+  box-shadow: 0 0 40px 10px rgba(255, 226, 150, 0.45);
+  filter: blur(1.5px);
+}
+
+/* ---------- noite ---------- */
+.env__night {
+  position: absolute;
+  inset: 0;
+}
+
+.env__star {
+  position: absolute;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.env__star--twinkle {
+  animation: star-twinkle 5s ease-in-out infinite;
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.env__moon {
+  position: absolute;
+  top: calc(var(--safe-top) + 12vh);
+  right: 12vw;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  box-shadow:
+    inset -13px 7px 0 0 #f3efe2,
+    0 0 0 0 transparent;
+  filter: drop-shadow(0 0 18px rgba(230, 230, 255, 0.35));
+  transform: rotate(-18deg);
+}
+
+/* ---------- nuvens ---------- */
+.env__clouds {
+  position: absolute;
+  inset: -10vh 0 -10vh 0;
+  will-change: transform;
+}
+
+.env__clouds--far {
+  --speed: 1;
+  --blur: 22px;
+  --layer-opacity: 0.5;
+}
+
+.env__clouds--mid {
+  --speed: 1.4;
+  --blur: 12px;
+  --layer-opacity: 0.6;
+}
+
+.env__clouds--near {
+  --speed: 1.8;
+  --blur: 7px;
+  --layer-opacity: 0.85;
+}
+
+.env__cloud-track {
+  position: absolute;
+  left: 0;
+  width: var(--w);
+  --duration: calc(var(--cloud-seconds) / var(--speed));
+  animation: cloud-drift var(--duration) linear infinite;
+  animation-delay: calc(var(--delay) * var(--duration) * -1);
+  transition:
+    opacity var(--motion-weather-transition) var(--ease-weather),
+    visibility 0s linear var(--motion-weather-transition);
+  will-change: transform;
+}
+
+.env__cloud-track[style*='visible'] {
+  transition-delay: 0s;
+}
+
+.env__cloud {
+  width: 100%;
+  aspect-ratio: 2.6 / 1;
+  opacity: var(--layer-opacity);
+  /* maciez só por gradiente: sem filter, a GPU compõe a camada sem redesenhar */
+  background:
+    radial-gradient(
+      34% 50% at 30% 58%,
+      var(--cloud-color) 0%,
+      color-mix(in srgb, var(--cloud-color) 55%, transparent) 40%,
+      transparent 78%
+    ),
+    radial-gradient(
+      30% 56% at 52% 42%,
+      var(--cloud-color) 0%,
+      color-mix(in srgb, var(--cloud-color) 55%, transparent) 42%,
+      transparent 80%
+    ),
+    radial-gradient(
+      28% 44% at 72% 56%,
+      var(--cloud-color) 0%,
+      color-mix(in srgb, var(--cloud-color) 55%, transparent) 40%,
+      transparent 78%
+    ),
+    radial-gradient(
+      54% 34% at 50% 74%,
+      var(--cloud-shade) 0%,
+      color-mix(in srgb, var(--cloud-shade) 40%, transparent) 36%,
+      transparent 80%
+    );
+}
+
+@keyframes cloud-drift {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100vw, 0, 0);
+  }
+}
+
+/* ---------- névoa ---------- */
+.env__fog {
+  position: absolute;
+  inset: 0;
+}
+
+.env__fog-band {
+  position: absolute;
+  left: -50vw;
+  width: 200vw;
+  height: 40vh;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    color-mix(in srgb, var(--cloud-color) 70%, transparent),
+    transparent 70%
+  );
+  animation: fog-drift 70s ease-in-out infinite alternate;
+}
+
+.env__fog-band--1 {
+  top: 8vh;
+}
+.env__fog-band--2 {
+  top: 42vh;
+  animation-duration: 90s;
+  animation-direction: alternate-reverse;
+}
+.env__fog-band--3 {
+  top: 70vh;
+  height: 50vh;
+  animation-duration: 110s;
+}
+
+@keyframes fog-drift {
+  from {
+    transform: translate3d(-12vw, 0, 0);
+  }
+  to {
+    transform: translate3d(12vw, 0, 0);
+  }
+}
+
+/* ---------- contraste ---------- */
+.env__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      70% 34% at 50% 26%,
+      color-mix(in srgb, var(--sky-top) 48%, transparent),
+      transparent 75%
+    ),
+    linear-gradient(180deg, color-mix(in srgb, var(--sky-top) 30%, transparent), transparent 40%);
+}
+
+@media (min-width: 1024px) {
+  .env__scrim {
+    background:
+      radial-gradient(
+        42% 30% at 55% 28%,
+        color-mix(in srgb, var(--sky-top) 52%, transparent),
+        transparent 75%
+      ),
+      linear-gradient(180deg, color-mix(in srgb, var(--sky-top) 30%, transparent), transparent 40%);
+  }
+}
+
+/* ---------- papel ---------- */
+.env__grain {
+  position: absolute;
+  inset: 0;
+  background-image: var(--paper-grain);
+  background-size: 180px 180px;
+  /* mistura normal: mix-blend-mode exige composição cara em GPUs móveis */
+  opacity: 0.07;
+}
+
+/* ---------- chuva / relâmpago ---------- */
+.env__rain {
+  position: absolute;
+  inset: 0;
+  transition: opacity var(--motion-weather-transition) var(--ease-weather);
+}
+
+.env__rain-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.env__lightning {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    70% 50% at var(--flash-x, 50%) 0%,
+    rgba(200, 214, 255, 0.6),
+    transparent 72%
+  );
+}
+
+/* movimento reduzido: atmosfera vira imagem estática */
+.env[data-reduced] .env__cloud-track,
+.env[data-reduced] .env__fog-band,
+.env[data-reduced] .env__star--twinkle {
+  animation-play-state: paused;
+}

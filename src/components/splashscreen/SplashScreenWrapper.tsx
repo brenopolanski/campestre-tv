@@ -1,7 +1,9 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { paths } from '@/config/paths'
 import { cn } from '@/lib/utils'
 
 import { SplashScreen } from './SplashScreen'
@@ -22,7 +24,9 @@ export const SplashScreenWrapper = ({
   durationMs = DEFAULT_DURATION_MS,
   fadeMs = DEFAULT_FADE_MS,
 }: SplashScreenWrapperProps) => {
+  const pathname = usePathname()
   const [phase, setPhase] = useState<SplashPhase>('visible')
+  const showSplash = phase !== 'hidden' && pathname !== paths.clima
 
   useEffect(() => {
     const exitTimer = setTimeout(() => setPhase('exiting'), durationMs)
@@ -37,7 +41,7 @@ export const SplashScreenWrapper = ({
   return (
     <>
       {children}
-      {phase !== 'hidden' && (
+      {showSplash && (
         <div
           aria-hidden={phase === 'exiting'}
           className={cn(
