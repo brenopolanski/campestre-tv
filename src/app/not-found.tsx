@@ -57,7 +57,7 @@ const PlayerRow = ({ game, player, rank, scores, serve = false }: PlayerRowProps
           <span className="mr-1 shrink-0">{player.name}</span>
           <span className="min-w-0 truncate">{player.surname}</span>
         </span>
-        <span className="mr-8 ml-auto px-2 text-[0.6em]">{player.nationality}</span>
+        <span className="mr-8 ml-1 px-2 text-[0.6em]">{player.nationality}</span>
       </div>
       <div className="order-2 flex w-max shrink-0">
         {scores.map((score, index) => (
