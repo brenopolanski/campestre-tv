@@ -18,10 +18,19 @@ interface ScoreboardPlayer {
 
 const players: ScoreboardPlayer[] = [
   { name: 'Breno', nationality: 'BRA', surname: 'Polanski' },
-  { name: 'Heberth', nationality: 'BRA', surname: 'Domingos' },
-  { name: 'Flavio', nationality: 'BRA', surname: 'Ribeiro' },
+  { name: 'Carlos', nationality: 'ESP', surname: 'Alcaraz' },
   { name: 'Felipe', nationality: 'BRA', surname: 'Ribeiro' },
+  { name: 'Flavio', nationality: 'BRA', surname: 'Ribeiro' },
+  { name: 'Gustavo', nationality: 'BRA', surname: 'Kuerten' },
+  { name: 'Heberth', nationality: 'BRA', surname: 'Domingos' },
+  { name: 'Jannik', nationality: 'ITA', surname: 'Sinner' },
+  { name: 'João', nationality: 'BRA', surname: 'Fonseca' },
+  { name: 'Lee', nationality: 'BRA', surname: 'Tavares' },
+  { name: 'Milito', nationality: 'BRA', surname: 'Farias' },
   { name: 'Mirko', nationality: 'BRA', surname: 'Perkusich' },
+  { name: 'Novak', nationality: 'SRB', surname: 'Djokovic' },
+  { name: 'Rafael', nationality: 'ESP', surname: 'Nadal' },
+  { name: 'Roger', nationality: 'SUI', surname: 'Federer' },
 ]
 
 const pickPair = (): [ScoreboardPlayer, ScoreboardPlayer] => {
@@ -42,7 +51,7 @@ interface PlayerRowProps {
 
 const PlayerRow = ({ game, player, rank, scores, serve = false }: PlayerRowProps) => {
   return (
-    <div className="mb-[-0.1rem] flex w-max">
+    <div className="mb-[-0.1rem] flex w-max last:mb-0">
       <div
         className={cn(
           'relative z-0 mr-[-0.1rem] flex w-[12em] items-center border-[0.1rem] border-[#060000] bg-linear-to-b from-[rgb(65_92_100/50%)] to-[rgb(8_39_47/50%)] py-1 text-white',
