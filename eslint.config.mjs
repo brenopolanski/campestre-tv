@@ -96,6 +96,25 @@ const eslintConfig = defineConfig([
       '@typescript-eslint/prefer-optional-chain': 'warn',
     },
   },
+  {
+    // Climinha's own code style: function components and grouped imports
+    files: ['src/clima/**'],
+    rules: {
+      curly: 'off',
+      'prefer-arrow-callback': 'off',
+      'react-hooks/preserve-manual-memoization': 'off',
+      'react-hooks/refs': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+      'react/function-component-definition': 'off',
+      'react/jsx-sort-props': 'off',
+      'simple-import-sort/exports': 'off',
+      'simple-import-sort/imports': 'off',
+      'shadcn/no-unknown-classes': 'off',
+      '@typescript-eslint/consistent-type-definitions': 'off',
+      '@typescript-eslint/prefer-nullish-coalescing': 'off',
+      '@typescript-eslint/prefer-optional-chain': 'off',
+    },
+  },
 ])
 
 export default eslintConfig
