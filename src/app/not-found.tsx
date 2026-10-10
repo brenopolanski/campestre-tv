@@ -21,6 +21,7 @@ const players: ScoreboardPlayer[] = [
   { name: 'Heberth', nationality: 'BRA', surname: 'Domingos' },
   { name: 'Flavio', nationality: 'BRA', surname: 'Ribeiro' },
   { name: 'Felipe', nationality: 'BRA', surname: 'Ribeiro' },
+  { name: 'Mirko', nationality: 'BRA', surname: 'Perkusich' },
 ]
 
 const pickPair = (): [ScoreboardPlayer, ScoreboardPlayer] => {
