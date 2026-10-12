@@ -1,5 +1,18 @@
 import type { LucideProps } from 'lucide-react'
-import { LinkIcon, MoonIcon, PlayIcon, Share2Icon, SunIcon, UserIcon } from 'lucide-react'
+import {
+  CloudFogIcon,
+  CloudIcon,
+  CloudLightningIcon,
+  CloudMoonIcon,
+  CloudRainIcon,
+  CloudSunIcon,
+  LinkIcon,
+  MoonIcon,
+  PlayIcon,
+  Share2Icon,
+  SunIcon,
+  UserIcon,
+} from 'lucide-react'
 
 const TelegramIcon = (props: LucideProps) => (
   <svg
@@ -44,6 +57,12 @@ const YoutubeIcon = (props: LucideProps) => (
 )
 
 export {
+  CloudFogIcon,
+  CloudIcon,
+  CloudLightningIcon,
+  CloudMoonIcon,
+  CloudRainIcon,
+  CloudSunIcon,
   LinkIcon,
   MoonIcon,
   PlayIcon,
