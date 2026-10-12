@@ -18,6 +18,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type ReactNode,
 } from 'react'
 import type { CliminhaPhase } from './climinha/Climinha'
 import { NEUTRAL_STATE, climinhaFor, type Mood } from './climinha/states'
@@ -53,7 +54,7 @@ const SIMULATOR = process.env.NODE_ENV === 'development'
 /** intro do Climinha: desligada por enquanto */
 const SHOW_SPLASH = false
 
-export default function App() {
+export default function App({ header }: { header: ReactNode }) {
   const reduced = useReducedMotion() ?? false
   const { places: saved, addPlace, removePlace } = usePlaces()
   // localização do aparelho, quando a pessoa pede; senão abre no Clube Campestre
@@ -410,6 +411,7 @@ export default function App() {
 
   return (
     <FirstRunContext.Provider value={firstRun}>
+      <div className="campestre-header sticky top-0 z-[16]">{header}</div>
       <Environment theme={theme} onLightning={() => react('surprised', 650)} />
 
       <motion.main

@@ -4,9 +4,10 @@
 
 /* o Climinha foi desenhado sobre os padrões do navegador: dentro dele, desfaz o reset
    do Tailwind (camada base) sem tocar nos atributos de apresentação dos SVGs */
-:where(.clima) *,
-:where(.clima) *::before,
-:where(.clima) *::after {
+/* .campestre-header é o header do Campestre: as classes do Tailwind valem nele */
+:where(.clima) :where(:not(.campestre-header, .campestre-header *)),
+:where(.clima) :where(:not(.campestre-header, .campestre-header *))::before,
+:where(.clima) :where(:not(.campestre-header, .campestre-header *))::after {
   margin: revert;
   padding: revert;
   border: revert;
@@ -18,7 +19,7 @@
   font-weight: revert;
 }
 
-:where(.clima) a {
+:where(.clima) a:where(:not(.campestre-header a)) {
   color: revert;
   text-decoration: revert;
 }
@@ -27,7 +28,7 @@
   list-style: revert;
 }
 
-:where(.clima) :is(img, svg, video, canvas) {
+:where(.clima) :is(img, svg, video, canvas):where(:not(.campestre-header *)) {
   display: revert;
   vertical-align: revert;
 }

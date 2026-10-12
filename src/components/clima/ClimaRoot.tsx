@@ -20,7 +20,11 @@ const App = dynamic(
   { ssr: false },
 )
 
-export const ClimaRoot = () => {
+interface ClimaRootProps {
+  header: React.ReactNode
+}
+
+export const ClimaRoot = ({ header }: ClimaRootProps) => {
   useEffect(
     () => () => {
       document.documentElement.style.removeProperty('background-color')
@@ -34,7 +38,7 @@ export const ClimaRoot = () => {
     // `clima` scopes the Climinha stylesheets in src/clima
     // eslint-disable-next-line shadcn/no-unknown-classes
     <div className={cn('clima', fredoka.variable)}>
-      <App />
+      <App header={header} />
     </div>
   )
 }
