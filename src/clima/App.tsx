@@ -50,6 +50,9 @@ const CitiesSheet = lazy(() =>
 /** simulador de clima: só no ambiente local */
 const SIMULATOR = process.env.NODE_ENV === 'development'
 
+/** intro do Climinha: desligada por enquanto */
+const SHOW_SPLASH = false
+
 export default function App() {
   const reduced = useReducedMotion() ?? false
   const { places: saved, addPlace, removePlace } = usePlaces()
@@ -118,7 +121,7 @@ export default function App() {
 
   // abertura em tela cheia: fica no mínimo um instante e sai quando há dados
   // (ou depois de um limite, para não prender o usuário sem conexão)
-  const [splash, setSplash] = useState(true)
+  const [splash, setSplash] = useState(SHOW_SPLASH)
   const [splashMinDone, setSplashMinDone] = useState(false)
   useEffect(() => {
     const min = window.setTimeout(() => setSplashMinDone(true), reduced ? 500 : SPLASH_MIN_MS)
@@ -513,7 +516,7 @@ export default function App() {
 
       <Splash
         visible={splash}
-        characterVisible={splash || !travelerReady}
+        characterVisible={SHOW_SPLASH && (splash || !travelerReady)}
         characterRef={splashCharacterRef}
       />
 
