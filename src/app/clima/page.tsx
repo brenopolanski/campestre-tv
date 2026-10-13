@@ -1,14 +1,45 @@
 import type { Metadata, Viewport } from 'next'
 
+import { CLUB_PLACE } from '@/clima/weather/location'
 import { ClimaRoot } from '@/components/clima/ClimaRoot'
 import { Header } from '@/components/navigation/Header'
+import { paths } from '@/config/paths'
+import { siteConfig } from '@/config/site'
 
-const description =
-  'Previsão do tempo em que o céu é o ambiente e uma pequena nuvem, o Climinha, sente o clima com você.'
+const title = 'Clima'
+const description = `Previsão do tempo em ${CLUB_PLACE.name}`
+const socialTitle = `${title} · ${siteConfig.name}`
+
+const ogImage = {
+  url: '/og.jpg',
+  width: 1200,
+  height: 630,
+  alt: socialTitle,
+  type: 'image/jpeg',
+} as const
 
 export const metadata: Metadata = {
-  title: 'Clima',
+  title,
   description,
+  alternates: {
+    canonical: paths.clima,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: siteConfig.name,
+    url: paths.clima,
+    title: socialTitle,
+    description,
+    images: [ogImage],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: siteConfig.author.x,
+    title: socialTitle,
+    description,
+    images: [ogImage.url],
+  },
   other: { 'darkreader-lock': '' },
 }
 
@@ -18,6 +49,11 @@ export const viewport: Viewport = {
   colorScheme: 'dark light',
 }
 
-const ClimaPage = () => <ClimaRoot header={<Header />} />
+const ClimaPage = () => (
+  <>
+    <h1 className="sr-only">Clima em {CLUB_PLACE.name}</h1>
+    <ClimaRoot header={<Header />} />
+  </>
+)
 
 export default ClimaPage

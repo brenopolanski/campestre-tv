@@ -49,9 +49,9 @@ export function Hero({ place, data, unit, anchorRef, revealed, direction, error,
     <header className="hero">
       <motion.div className="hero__top" style={reduced ? undefined : { opacity: fade }}>
         <div key={`loc-${place.id}`}>
-          <motion.h1 className="hero__location" {...enter(entrance.location)}>
+          <motion.p className="hero__location" {...enter(entrance.location)}>
             {place.name}
-          </motion.h1>
+          </motion.p>
         </div>
         <div key={`t-${place.id}-${data ? 1 : 0}`}>
           {data ? (
