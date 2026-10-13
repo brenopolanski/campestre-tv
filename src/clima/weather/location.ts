@@ -12,7 +12,8 @@ export const HERE_ID = 'here'
 /** Clube Campestre — cidade padrão do /clima. */
 export const CLUB_PLACE: Place = {
   id: 'campestre',
-  name: 'Campina Grande',
+  // name: 'Campina Grande',
+  name: 'Clube Campestre',
   region: 'Paraíba, Brasil',
   latitude: -7.248611,
   longitude: -35.874167,
