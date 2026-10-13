@@ -49,7 +49,7 @@ export const HeaderWeather = async () => {
   return (
     <Link
       aria-label={`Clima em ${weather.place}, ${weather.temperature} graus, ${weather.label.toLowerCase()}`}
-      className="flex items-center gap-2 rounded-md px-2 py-1 text-lg font-medium tabular-nums transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
+      className="flex items-center gap-2 rounded-md px-2 py-1 font-sans text-lg font-medium tabular-nums transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
       href={paths.clima}
     >
       <WeatherIcon className="size-6" isDay={weather.isDay} kind={weather.kind} aria-hidden />
