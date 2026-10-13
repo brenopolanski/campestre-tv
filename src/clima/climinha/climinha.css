@@ -27,6 +27,123 @@
   overflow: visible;
 }
 
+.tennis-ball {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 2.25rem;
+  height: 2.25rem;
+  transform: translate(0.4rem, -50%);
+  pointer-events: none;
+}
+
+.tennis-ball__body {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #cc0 0%, #a3a300 100%);
+  transform: rotate(30deg);
+}
+
+.tennis-ball__body::before,
+.tennis-ball__body::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border: solid 0.15rem #fff;
+  border-radius: 50%;
+}
+
+.tennis-ball__body::before {
+  right: 70%;
+}
+
+.tennis-ball__body::after {
+  left: 70%;
+}
+
+.tennis-ball__shadow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: -1;
+  width: 80%;
+  height: 22%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.22);
+  filter: blur(1px);
+  transform: translate(-50%, 55%);
+}
+
+.is-bouncing .tennis-ball__body {
+  animation: tennis-bounce 0.7s cubic-bezier(0.3, 0.6, 0.4, 1);
+}
+
+.is-bouncing .tennis-ball__shadow {
+  animation: tennis-shadow 0.7s cubic-bezier(0.3, 0.6, 0.4, 1);
+}
+
+@keyframes tennis-bounce {
+  0% {
+    transform: translateY(0) rotate(30deg);
+  }
+  38% {
+    transform: translateY(-1.15rem) rotate(150deg);
+  }
+  62% {
+    transform: translateY(0) rotate(210deg) scale(1.08, 0.86);
+  }
+  78% {
+    transform: translateY(-0.32rem) rotate(260deg);
+  }
+  100% {
+    transform: translateY(0) rotate(390deg);
+  }
+}
+
+@keyframes tennis-shadow {
+  0%,
+  100% {
+    transform: translate(-50%, 55%) scaleX(1);
+    opacity: 0.7;
+  }
+  38% {
+    transform: translate(-50%, 55%) scaleX(0.4);
+    opacity: 0.25;
+  }
+  62% {
+    transform: translate(-50%, 55%) scaleX(1.08);
+    opacity: 0.75;
+  }
+  78% {
+    transform: translate(-50%, 55%) scaleX(0.65);
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 699px) {
+  .tennis-ball {
+    width: 1.5rem;
+    height: 1.5rem;
+    transform: translate(0.25rem, -50%);
+  }
+
+  .tennis-ball__body::before,
+  .tennis-ball__body::after {
+    border-width: 0.1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-bouncing .tennis-ball__body,
+  .is-bouncing .tennis-ball__shadow {
+    animation: none;
+  }
+}
+
 /* a cor do corpo comunica o clima — cruza lentamente, no ritmo do ambiente */
 .climinha__stop {
   transition:
