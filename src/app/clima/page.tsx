@@ -7,7 +7,8 @@ import { paths } from '@/config/paths'
 import { siteConfig } from '@/config/site'
 
 const title = 'Clima'
-const description = `Previsão do tempo em ${CLUB_PLACE.name}`
+const description =
+  'Previsão do tempo no Clube Campestre, em Campina Grande. Veja a temperatura, a condição do céu e os próximos dias com o Climinha.'
 const socialTitle = `${title} · ${siteConfig.name}`
 
 const ogImage = {
@@ -51,7 +52,7 @@ export const viewport: Viewport = {
 
 const ClimaPage = () => (
   <>
-    <h1 className="sr-only">Clima em {CLUB_PLACE.name}</h1>
+    <h1 className="sr-only">Clima no {CLUB_PLACE.name}</h1>
     <ClimaRoot header={<Header />} />
   </>
 )
