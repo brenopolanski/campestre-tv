@@ -63,6 +63,7 @@ export function TravelingCliminha({
   swipeX,
 }: Props) {
   const reduced = useReducedMotion() ?? false
+  const [bounce, setBounce] = useState(0)
   const { scrollY } = useScroll()
   const [geo, setGeo] = useState<Geometry | null>(null)
 
@@ -247,9 +248,16 @@ export function TravelingCliminha({
             moodOverride={moodOverride}
             lean={lean}
             perceive
-            onTap={() => {}}
+            onTap={() => {
+              if (!reduced) setBounce((n) => n + 1)
+            }}
           />
-          <div className="tennis-ball" aria-hidden="true" />
+          <div className="tennis-ball" aria-hidden="true">
+            <div key={bounce} className={bounce ? 'is-bouncing' : undefined}>
+              <div className="tennis-ball__shadow" />
+              <div className="tennis-ball__body" />
+            </div>
+          </div>
         </motion.div>
       </motion.div>
     </motion.div>
