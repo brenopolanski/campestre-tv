@@ -249,6 +249,7 @@ export function TravelingCliminha({
             perceive
             onTap={() => {}}
           />
+          <div className="tennis-ball" aria-hidden="true" />
         </motion.div>
       </motion.div>
     </motion.div>

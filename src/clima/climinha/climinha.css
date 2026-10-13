@@ -27,6 +27,52 @@
   overflow: visible;
 }
 
+.tennis-ball {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 2.25rem;
+  height: 2.25rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #cc0 0%, #a3a300 100%);
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  transform: translate(0.4rem, -50%) rotate(30deg);
+  pointer-events: none;
+}
+
+.tennis-ball::before,
+.tennis-ball::after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  border: solid 0.15rem #fff;
+  border-radius: 50%;
+}
+
+.tennis-ball::before {
+  right: 70%;
+}
+
+.tennis-ball::after {
+  left: 70%;
+}
+
+@media (max-width: 699px) {
+  .tennis-ball {
+    width: 1.5rem;
+    height: 1.5rem;
+    transform: translate(0.25rem, -50%) rotate(30deg);
+  }
+
+  .tennis-ball::before,
+  .tennis-ball::after {
+    border-width: 0.1rem;
+  }
+}
+
 /* a cor do corpo comunica o clima — cruza lentamente, no ritmo do ambiente */
 .climinha__stop {
   transition:
