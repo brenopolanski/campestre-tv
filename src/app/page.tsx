@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 
 import { LiveBroadcast, LiveBroadcastFallback } from '@/components/broadcast/LiveBroadcast'
+import { Footer } from '@/components/navigation/Footer'
 import { Header } from '@/components/navigation/Header'
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
           <LiveBroadcast />
         </Suspense>
       </main>
+      <Footer />
     </div>
   )
 }
