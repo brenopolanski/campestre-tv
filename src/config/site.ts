@@ -14,6 +14,7 @@ export const siteConfig = {
   },
   email: 'breno.polanski@gmail.com',
   links: {
+    clubecampestre: 'https://clubecampestrecg.com.br',
     youtube: 'https://www.youtube.com/@campestre-tv',
     youtubeChannelId: 'UCdWZMGfre33FZdDgcd1dz-A',
   },

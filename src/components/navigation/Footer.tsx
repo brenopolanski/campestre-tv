@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { LogoIcon } from '@/components/logo/LogoIcon'
-import { YoutubeIcon } from '@/components/shared/Icons'
+import { ClubeCampestreIcon, YoutubeIcon } from '@/components/shared/Icons'
 import { paths } from '@/config/paths'
 import { siteConfig } from '@/config/site'
 
@@ -22,17 +22,28 @@ const Copyright = () => {
 export const Footer = () => {
   return (
     <footer className="bg-surface font-sans font-semibold text-ink">
-      <div className="mx-auto flex w-full max-w-7xl flex-row items-center justify-between px-4 md:px-[1.4rem]">
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between px-4 sm:flex-row md:px-[1.4rem]">
         <Copyright />
-        <a
-          aria-label="YouTube"
-          className="py-4 transition-colors hover:text-white/70"
-          href={`${siteConfig.links.youtube}?sub_confirmation=1`}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <YoutubeIcon className="size-6" />
-        </a>
+        <div className="flex flex-row items-center gap-2">
+          <a
+            aria-label="Se inscreva no canal do YouTube"
+            className="pb-4 transition-colors hover:text-white/70 sm:py-4"
+            href={`${siteConfig.links.youtube}?sub_confirmation=1`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <YoutubeIcon className="size-6" />
+          </a>
+          <a
+            aria-label="Clube Campestre"
+            className="pb-4 transition-colors hover:text-white/70 sm:py-4"
+            href={siteConfig.links.clubecampestre}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <ClubeCampestreIcon className="size-6" />
+          </a>
+        </div>
       </div>
     </footer>
   )
