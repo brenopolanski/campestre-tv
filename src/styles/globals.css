@@ -144,10 +144,3 @@
     cursor: pointer;
   }
 }
-
-@utility label-caps {
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  line-height: 1;
-  text-transform: uppercase;
-}

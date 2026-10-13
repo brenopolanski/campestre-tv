@@ -1,18 +1,9 @@
-import { UserIcon } from '@/components/shared/Icons'
-import { Separator } from '@/components/ui/separator'
-import { cn } from '@/lib/utils'
+import { RadioIcon, UserIcon } from '@/components/shared/Icons'
 
-interface LiveBadgeProps {
-  onDark?: boolean
-}
-
-export const LiveBadge = ({ onDark = false }: LiveBadgeProps) => {
+export const LiveBadge = () => {
   return (
-    <span className={cn('flex items-center gap-2 label-caps', onDark ? 'text-ink' : 'text-live')}>
-      <span className="relative flex size-2">
-        <span className="absolute inline-flex size-full animate-ping rounded-full border-0 bg-live opacity-70 outline-none" />
-        <span className="relative inline-flex size-2 rounded-full bg-live" />
-      </span>
+    <span className="pointer-events-none absolute right-2 bottom-2 flex items-center gap-1 rounded-sm bg-live px-1.5 py-0.5 text-xs font-semibold text-white uppercase">
+      <RadioIcon className="size-3.5" aria-hidden />
       Ao vivo
     </span>
   )
@@ -25,32 +16,8 @@ interface ViewersProps {
 export const Viewers = ({ count }: ViewersProps) => {
   return (
     <span className="flex items-center gap-2 text-sm text-muted-foreground tabular-nums">
-      <UserIcon aria-hidden="true" className="size-4" />
+      <UserIcon className="size-4" aria-hidden />
       {count}
     </span>
-  )
-}
-
-interface LiveStatusProps {
-  live?: boolean
-  onDark?: boolean
-  viewers?: number
-}
-
-export const LiveStatus = ({ live = false, onDark = false, viewers }: LiveStatusProps) => {
-  if (!live) {
-    return null
-  }
-
-  return (
-    <div className="flex items-center gap-5">
-      <LiveBadge onDark={onDark} />
-      {typeof viewers === 'number' && (
-        <>
-          <Separator className="h-5 bg-ink" orientation="vertical" />
-          <Viewers count={viewers} />
-        </>
-      )}
-    </div>
   )
 }

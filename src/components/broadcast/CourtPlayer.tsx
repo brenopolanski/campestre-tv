@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site'
 import { ANALYTICS_EVENTS, trackEvent } from '@/lib/analytics'
 import type { BroadcastCourt } from '@/lib/courts'
 
-import { LiveStatus } from './LiveStatus'
+import { LiveBadge, Viewers } from './LiveStatus'
 import { ShareButton } from './ShareButton'
 
 interface CourtPlayerProps {
@@ -62,11 +62,12 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
               )}
             </>
           )}
+          {court.live && <LiveBadge />}
         </figure>
         <div className="flex items-start justify-between gap-4 py-4">
           <div className="grid gap-2">
             <h1 className="text-[1.25rem] font-bold text-brand uppercase">{court.name}</h1>
-            <LiveStatus live={court.live} viewers={court.viewers} onDark />
+            {court.live && typeof court.viewers === 'number' && <Viewers count={court.viewers} />}
           </div>
           <ShareButton title={`${court.name} - ${siteConfig.name}`} />
         </div>

@@ -4,7 +4,7 @@ import { siteConfig } from '@/config/site'
 import type { BroadcastCourt } from '@/lib/courts'
 import { cn } from '@/lib/utils'
 
-import { LiveStatus } from './LiveStatus'
+import { LiveBadge, Viewers } from './LiveStatus'
 import { ShareButton } from './ShareButton'
 
 interface CourtCardProps {
@@ -23,18 +23,23 @@ export const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) =>
   return (
     <li className="relative w-[66%] shrink-0 snap-start rounded-lg bg-surface p-4 md:w-[21cqw]">
       <button className="group grid w-full gap-4 text-left" type="button" onClick={onWatch}>
-        <Image
-          alt={court.alt}
+        <div
           className={cn(
-            'aspect-video w-full rounded-lg object-cover outline-4 outline-transparent transition-[outline-color] duration-300 group-hover:outline-brand',
+            'relative overflow-hidden rounded-lg outline-4 outline-transparent transition-[outline-color] duration-300 group-hover:outline-brand',
             active && 'outline-brand',
           )}
-          height={court.height}
-          loading="eager"
-          sizes="(min-width: 1280px) 14.8rem, (min-width: 768px) calc(21vw - 2rem), calc(66vw - 3.32rem)"
-          src={court.image}
-          width={court.width}
-        />
+        >
+          <Image
+            alt={court.alt}
+            className="aspect-video w-full object-cover"
+            height={court.height}
+            loading="eager"
+            sizes="(min-width: 1280px) 14.8rem, (min-width: 768px) calc(21vw - 2rem), calc(66vw - 3.32rem)"
+            src={court.image}
+            width={court.width}
+          />
+          {court.live && <LiveBadge />}
+        </div>
         <div className="grid gap-2 pr-12">
           <h2
             className={cn(
@@ -44,7 +49,7 @@ export const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) =>
           >
             {court.name}
           </h2>
-          <LiveStatus live={court.live} viewers={court.viewers} onDark />
+          {court.live && typeof court.viewers === 'number' && <Viewers count={court.viewers} />}
         </div>
       </button>
       <div className="absolute right-4 bottom-4">
