@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+
+# Local captures and intermediate images. ranking.json is intentionally not ignored.
+*.mp4
+*.mov
+*.m4v
+frames/
+tmp/
+debug/
+*.tmp

@@ -1,0 +1,681 @@
+{
+  "updatedAt": "2026-10-14T19:40:07Z",
+  "source": "tweener",
+  "athletes": [
+    {
+      "position": 1,
+      "name": "Edval Matheus Santana",
+      "points": 2000
+    },
+    {
+      "position": 2,
+      "name": "Mirko Perkusich",
+      "points": 1950
+    },
+    {
+      "position": 3,
+      "name": "Lee Tavares",
+      "points": 1899
+    },
+    {
+      "position": 4,
+      "name": "Heberth Domingos",
+      "points": 1732
+    },
+    {
+      "position": 5,
+      "name": "Alberto Catão",
+      "points": 1619
+    },
+    {
+      "position": 6,
+      "name": "Gustavo Farias",
+      "points": 1613
+    },
+    {
+      "position": 7,
+      "name": "João Pedro Amorim",
+      "points": 1610
+    },
+    {
+      "position": 8,
+      "name": "Giovani Barbosa",
+      "points": 1608
+    },
+    {
+      "position": 9,
+      "name": "Guilerme Barbosa",
+      "points": 1577
+    },
+    {
+      "position": 10,
+      "name": "Flavio Ribeiro",
+      "points": 1571
+    },
+    {
+      "position": 11,
+      "name": "lucas machado",
+      "points": 1560
+    },
+    {
+      "position": 12,
+      "name": "carlos Andrey",
+      "points": 1554
+    },
+    {
+      "position": 13,
+      "name": "Bruno Barros",
+      "points": 1551
+    },
+    {
+      "position": 14,
+      "name": "Vinícius Leandro",
+      "points": 1547
+    },
+    {
+      "position": 15,
+      "name": "Matias Porto",
+      "points": 1538
+    },
+    {
+      "position": 16,
+      "name": "Gabriel Santana",
+      "points": 1537
+    },
+    {
+      "position": 17,
+      "name": "João Victor Nunes",
+      "points": 1535
+    },
+    {
+      "position": 18,
+      "name": "Germano Montenegro",
+      "points": 1520
+    },
+    {
+      "position": 19,
+      "name": "Andrey Wanderley",
+      "points": 1513
+    },
+    {
+      "position": 20,
+      "name": "Milito Farias",
+      "points": 1511
+    },
+    {
+      "position": 21,
+      "name": "Italo Bem",
+      "points": 1507
+    },
+    {
+      "position": 22,
+      "name": "Hervé Laborde",
+      "points": 1505
+    },
+    {
+      "position": 23,
+      "name": "Neto Pedrosa",
+      "points": 1500
+    },
+    {
+      "position": 24,
+      "name": "Caio Aires",
+      "points": 1480
+    },
+    {
+      "position": 25,
+      "name": "Thiago Dias",
+      "points": 1462
+    },
+    {
+      "position": 26,
+      "name": "Fabrício Medeiros",
+      "points": 1455
+    },
+    {
+      "position": 27,
+      "name": "Elson Dantas",
+      "points": 1443
+    },
+    {
+      "position": 28,
+      "name": "Thiago Freitas",
+      "points": 1440
+    },
+    {
+      "position": 29,
+      "name": "Fábio Júnior Meinha",
+      "points": 1439
+    },
+    {
+      "position": 30,
+      "name": "Hélio Tavares",
+      "points": 1426
+    },
+    {
+      "position": 31,
+      "name": "Italo Lima",
+      "points": 1423
+    },
+    {
+      "position": 32,
+      "name": "Gilvan Rangel",
+      "points": 1405
+    },
+    {
+      "position": 33,
+      "name": "Edênio Olegário",
+      "points": 1401
+    },
+    {
+      "position": 34,
+      "name": "Ricardo Soares Gomez",
+      "points": 1390
+    },
+    {
+      "position": 35,
+      "name": "Andre Melo",
+      "points": 1389
+    },
+    {
+      "position": 36,
+      "name": "Rennan Tarradt Rocha",
+      "points": 1376
+    },
+    {
+      "position": 37,
+      "name": "Walter Cartaxo",
+      "points": 1364
+    },
+    {
+      "position": 38,
+      "name": "Tiago Lima",
+      "points": 1361
+    },
+    {
+      "position": 39,
+      "name": "Carlos Arthur Sousa ...",
+      "points": 1359
+    },
+    {
+      "position": 40,
+      "name": "Jader Brito",
+      "points": 1355
+    },
+    {
+      "position": 41,
+      "name": "Sanderson Neves",
+      "points": 1345
+    },
+    {
+      "position": 42,
+      "name": "Allan Brilhante",
+      "points": 1340
+    },
+    {
+      "position": 43,
+      "name": "Igo Paulino",
+      "points": 1338
+    },
+    {
+      "position": 44,
+      "name": "Gean Coura",
+      "points": 1334
+    },
+    {
+      "position": 45,
+      "name": "Thiago Borba",
+      "points": 1318
+    },
+    {
+      "position": 46,
+      "name": "wagner Jatobá",
+      "points": 1313
+    },
+    {
+      "position": 47,
+      "name": "Ricardo Galdino",
+      "points": 1310
+    },
+    {
+      "position": 48,
+      "name": "Jefferson Oliveira",
+      "points": 1305
+    },
+    {
+      "position": 49,
+      "name": "Pedro Borborema",
+      "points": 1303
+    },
+    {
+      "position": 50,
+      "name": "PABLO COSTA",
+      "points": 1298
+    },
+    {
+      "position": 51,
+      "name": "Helder Aires",
+      "points": 1296
+    },
+    {
+      "position": 52,
+      "name": "Eduardo Henrique Ca...",
+      "points": 1271
+    },
+    {
+      "position": 53,
+      "name": "Bruno Agra",
+      "points": 1260
+    },
+    {
+      "position": 54,
+      "name": "Matheus Jatobá",
+      "points": 1260
+    },
+    {
+      "position": 55,
+      "name": "Dínis Vasconcelos",
+      "points": 1254
+    },
+    {
+      "position": 56,
+      "name": "celino Neto",
+      "points": 1248
+    },
+    {
+      "position": 57,
+      "name": "Felipe Fernandes",
+      "points": 1241
+    },
+    {
+      "position": 58,
+      "name": "Alan Bezerra",
+      "points": 1232
+    },
+    {
+      "position": 59,
+      "name": "zecaviturino Viturino",
+      "points": 1231
+    },
+    {
+      "position": 60,
+      "name": "Bruno Andrade Porto ...",
+      "points": 1225
+    },
+    {
+      "position": 61,
+      "name": "Jefferson Brenno",
+      "points": 1220
+    },
+    {
+      "position": 62,
+      "name": "Felipe Robalinho",
+      "points": 1206
+    },
+    {
+      "position": 63,
+      "name": "Paula Moura",
+      "points": 1205
+    },
+    {
+      "position": 64,
+      "name": "Jonny Patrício",
+      "points": 1205
+    },
+    {
+      "position": 65,
+      "name": "Túlio Araújo",
+      "points": 1203
+    },
+    {
+      "position": 66,
+      "name": "Diego Tavares",
+      "points": 1200
+    },
+    {
+      "position": 67,
+      "name": "Matheus Guerra",
+      "points": 1194
+    },
+    {
+      "position": 68,
+      "name": "Romero Guimaraes",
+      "points": 1189
+    },
+    {
+      "position": 69,
+      "name": "Diego César",
+      "points": 1185
+    },
+    {
+      "position": 71,
+      "name": "Januário Ferreira",
+      "points": 1180
+    },
+    {
+      "position": 72,
+      "name": "Livia Tavares",
+      "points": 1175
+    },
+    {
+      "position": 73,
+      "name": "Hélio Fernandes",
+      "points": 1162
+    },
+    {
+      "position": 74,
+      "name": "Genivaldo Dantas de...",
+      "points": 1151
+    },
+    {
+      "position": 75,
+      "name": "trigueiro Jr",
+      "points": 1145
+    },
+    {
+      "position": 76,
+      "name": "Kildery Ramos",
+      "points": 1140
+    },
+    {
+      "position": 77,
+      "name": "João Vitor Souza",
+      "points": 1110
+    },
+    {
+      "position": 78,
+      "name": "Gustavo Esteves",
+      "points": 1070
+    },
+    {
+      "position": 79,
+      "name": "Lucas Pereira",
+      "points": 1060
+    },
+    {
+      "position": 80,
+      "name": "Thiago Leite Cavalca...",
+      "points": 1060
+    },
+    {
+      "position": 81,
+      "name": "Thyago Filho",
+      "points": 1055
+    },
+    {
+      "position": 82,
+      "name": "Gustavo Kremer",
+      "points": 1054
+    },
+    {
+      "position": 83,
+      "name": "Karcius Marcelus",
+      "points": 1054
+    },
+    {
+      "position": 84,
+      "name": "dvaldeban Silva",
+      "points": 1052
+    },
+    {
+      "position": 85,
+      "name": "Felipe Paulo",
+      "points": 1050
+    },
+    {
+      "position": 86,
+      "name": "Lailsa Oliveira",
+      "points": 1050
+    },
+    {
+      "position": 87,
+      "name": "André Salvador",
+      "points": 1047
+    },
+    {
+      "position": 88,
+      "name": "Eduardo Rodrigues de...",
+      "points": 1046
+    },
+    {
+      "position": 89,
+      "name": "Breno Polanski",
+      "points": 1035
+    },
+    {
+      "position": 90,
+      "name": "Rodrigo Nobre",
+      "points": 1035
+    },
+    {
+      "position": 91,
+      "name": "Rodrigo R.",
+      "points": 1035
+    },
+    {
+      "position": 92,
+      "name": "Erick Costa",
+      "points": 1015
+    },
+    {
+      "position": 93,
+      "name": "THYAGO DANTAS",
+      "points": 1012
+    },
+    {
+      "position": 94,
+      "name": "arilton bacellar",
+      "points": 1012
+    },
+    {
+      "position": 95,
+      "name": "Wemilly Lucena",
+      "points": 1010
+    },
+    {
+      "position": 96,
+      "name": "Walter Guedes",
+      "points": 1000
+    },
+    {
+      "position": 97,
+      "name": "Victor Virgolino",
+      "points": 1000
+    },
+    {
+      "position": 98,
+      "name": "João Pedro Almeida",
+      "points": 995
+    },
+    {
+      "position": 99,
+      "name": "Caio Vidal",
+      "points": 985
+    },
+    {
+      "position": 100,
+      "name": "Renato Gaudard",
+      "points": 975
+    },
+    {
+      "position": 101,
+      "name": "THIAGO SILVA JANUÁR",
+      "points": 970
+    },
+    {
+      "position": 102,
+      "name": "André Germano",
+      "points": 935
+    },
+    {
+      "position": 103,
+      "name": "Carlos Gadêlha",
+      "points": 935
+    },
+    {
+      "position": 104,
+      "name": "Daniel Ferreira",
+      "points": 920
+    },
+    {
+      "position": 105,
+      "name": "Olivia Maria Leite",
+      "points": 900
+    },
+    {
+      "position": 106,
+      "name": "Zito Pontes",
+      "points": 900
+    },
+    {
+      "position": 107,
+      "name": "Davy Jones",
+      "points": 875
+    },
+    {
+      "position": 108,
+      "name": "Felipe Amaral",
+      "points": 865
+    },
+    {
+      "position": 109,
+      "name": "Sarisa Machado",
+      "points": 855
+    },
+    {
+      "position": 110,
+      "name": "Lucas Pires cavalcanti",
+      "points": 815
+    },
+    {
+      "position": 111,
+      "name": "Marcelo Barros",
+      "points": 795
+    },
+    {
+      "position": 112,
+      "name": "Adolfo Savio",
+      "points": 772
+    },
+    {
+      "position": 113,
+      "name": "Mauricio Celino",
+      "points": 710
+    },
+    {
+      "position": 114,
+      "name": "Arthur Leão",
+      "points": 700
+    },
+    {
+      "position": 115,
+      "name": "Vitor C. Nobre",
+      "points": 700
+    },
+    {
+      "position": 116,
+      "name": "Tiago Barroso",
+      "points": 685
+    },
+    {
+      "position": 117,
+      "name": "João Gabriel",
+      "points": 655
+    },
+    {
+      "position": 118,
+      "name": "Matheus Matos",
+      "points": 650
+    },
+    {
+      "position": 119,
+      "name": "Taderson Brandão",
+      "points": 635
+    },
+    {
+      "position": 120,
+      "name": "anacleto Batista",
+      "points": 635
+    },
+    {
+      "position": 121,
+      "name": "Vagner Maia",
+      "points": 634
+    },
+    {
+      "position": 122,
+      "name": "Bruno Jorge",
+      "points": 625
+    },
+    {
+      "position": 123,
+      "name": "Karolina Celi",
+      "points": 610
+    },
+    {
+      "position": 124,
+      "name": "Ney Formiga",
+      "points": 600
+    },
+    {
+      "position": 125,
+      "name": "Pedro Alves",
+      "points": 600
+    },
+    {
+      "position": 126,
+      "name": "Sasha Lima",
+      "points": 535
+    },
+    {
+      "position": 127,
+      "name": "Daniel Soares",
+      "points": 530
+    },
+    {
+      "position": 128,
+      "name": "Gabriel Pessoa",
+      "points": 485
+    },
+    {
+      "position": 129,
+      "name": "Hades Sampaio",
+      "points": 430
+    },
+    {
+      "position": 130,
+      "name": "Renê Gusmão",
+      "points": 410
+    },
+    {
+      "position": 131,
+      "name": "Pedro Celino",
+      "points": 335
+    },
+    {
+      "position": 132,
+      "name": "Deyvid Felinto",
+      "points": 270
+    },
+    {
+      "position": 133,
+      "name": "Thiago Torres",
+      "points": 200
+    },
+    {
+      "position": 134,
+      "name": "Pablo Porto",
+      "points": 150
+    },
+    {
+      "position": 135,
+      "name": "Graco Miranda",
+      "points": 125
+    },
+    {
+      "position": 136,
+      "name": "Hamilton Agra",
+      "points": 110
+    }
+  ]
+}
