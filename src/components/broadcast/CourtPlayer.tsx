@@ -62,7 +62,7 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
               )}
             </>
           )}
-          {court.live && <LiveBadge />}
+          {court.live && !playback && <LiveBadge />}
         </figure>
         <div className="flex items-start justify-between gap-4 py-4">
           <div className="grid gap-2">
