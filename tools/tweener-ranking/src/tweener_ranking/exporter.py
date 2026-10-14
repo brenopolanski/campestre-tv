@@ -61,8 +61,8 @@ def validate_ranking(athletes: list[Athlete], conflicts: list[str]) -> str | Non
             return f"Athlete name {athlete.name!r} is empty or corrupted."
         if isinstance(athlete.points, bool) or not isinstance(athlete.points, (int, float)):
             return "A points value is missing."
-        if athlete.points <= 0:
-            return f"Points for position {athlete.position} are not a positive number."
+        if athlete.points < 0:
+            return f"Points for position {athlete.position} are negative."
     return None
 
 

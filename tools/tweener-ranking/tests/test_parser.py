@@ -66,6 +66,15 @@ def test_accepts_decimal_points_and_thousands_separator():
     assert grouped is not None and grouped.points == 2450
 
 
+def test_keeps_a_score_of_zero():
+    observation = observation_from_fields("138", "Luca Lira", "0", 0.9)
+
+    assert observation is not None
+    assert observation.position == 138
+    assert observation.name == "Luca Lira"
+    assert observation.points == 0
+
+
 def test_rejects_an_empty_position_or_points_field():
     assert observation_from_fields("5", "Carlos", "", 0.9) is None
     assert observation_from_fields("abc", "Carlos", "20", 0.9) is None

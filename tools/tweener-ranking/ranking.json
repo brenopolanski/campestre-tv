@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-14T19:40:07Z",
+  "updatedAt": "2026-10-14T21:29:06Z",
   "source": "tweener",
   "athletes": [
     {
@@ -319,7 +319,7 @@
     },
     {
       "position": 64,
-      "name": "Jonny Patrício",
+      "name": "Jonny Patricio",
       "points": 1205
     },
     {
@@ -348,6 +348,11 @@
       "points": 1185
     },
     {
+      "position": 70,
+      "name": "Thiago Martins Moreira",
+      "points": 1182
+    },
+    {
       "position": 71,
       "name": "Januário Ferreira",
       "points": 1180
@@ -364,7 +369,7 @@
     },
     {
       "position": 74,
-      "name": "Genivaldo Dantas de...",
+      "name": "Genivaldo Dantas de ...",
       "points": 1151
     },
     {
@@ -676,6 +681,16 @@
       "position": 136,
       "name": "Hamilton Agra",
       "points": 110
+    },
+    {
+      "position": 137,
+      "name": "Marcelo Azevedo Jr",
+      "points": 100
+    },
+    {
+      "position": 138,
+      "name": "Luca Lira",
+      "points": 0
     }
   ]
 }

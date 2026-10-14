@@ -70,9 +70,38 @@ def read_digit_options(image, modes: tuple[int, ...] = (8, 7)) -> list[tuple[str
             matched.append((text, confidence))
     if matched:
         return matched
+    # A line reading of "111" often comes back as "1" or "1117". Each ink
+    # glyph is read on its own, and the result is kept only when the number
+    # of characters matches the number of glyphs.
+    per_glyph = _read_glyphs(image)
+    if per_glyph is not None and per_glyph[0] not in seen and (glyphs == 0 or len(per_glyph[0]) == glyphs):
+        return [per_glyph]
     if fallback is None:
         return []
     return [fallback]
+
+
+def _read_glyphs(image: np.ndarray) -> tuple[str, float] | None:
+    ink = ((image < 128).astype(np.uint8)) * 255
+    contours, _ = cv2.findContours(ink, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    glyphs = [contour for contour in contours if cv2.contourArea(contour) > 40]
+    if not glyphs:
+        return None
+    glyphs.sort(key=lambda contour: cv2.boundingRect(contour)[0])
+    characters: list[str] = []
+    confidences: list[float] = []
+    for contour in glyphs:
+        x, y, width, height = cv2.boundingRect(contour)
+        crop = image[max(0, y - 8) : y + height + 8, max(0, x - 8) : x + width + 8]
+        if crop.size == 0:
+            return None
+        padded = cv2.copyMakeBorder(crop, 16, 16, 16, 16, cv2.BORDER_CONSTANT, value=255)
+        text, confidence = read_line(padded, "eng", 10, whitelist="0123456789")
+        if len(text) != 1:
+            return None
+        characters.append(text)
+        confidences.append(confidence)
+    return "".join(characters), sum(confidences) / len(confidences)
 
 
 def _glyph_count(image: np.ndarray) -> int:

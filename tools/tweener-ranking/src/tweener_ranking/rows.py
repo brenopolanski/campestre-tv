@@ -31,6 +31,12 @@ class RowCapture:
     observation: Observation | None
 
 
+def _sharpness(image: np.ndarray | None) -> float:
+    if image is None or image.size == 0:
+        return 0.0
+    return float(cv2.Laplacian(image, cv2.CV_64F).var())
+
+
 def read_frame(frame: np.ndarray, lang: str = "por+eng") -> list[RowCapture]:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) if frame.ndim == 3 else frame
     scale = scale_for(gray.shape[1], gray.shape[0])
@@ -40,7 +46,8 @@ def read_frame(frame: np.ndarray, lang: str = "por+eng") -> list[RowCapture]:
     for row_index, center_y in enumerate(detect_badge_centers(gray, scale)):
         position_image = badge_digit(gray, center_y, scale)
         name = name_image(gray, center_y, scale)
-        points_image = points_digit(gray, center_y, scale)
+        points_crop = points_digit(gray, center_y, scale)
+        points_image = None if points_crop is None else points_crop.image
         position_options: list[tuple[str, float]] = []
         name_text, name_confidence = ("", 0.0)
         points_text, points_confidence = ("", 0.0)
@@ -48,10 +55,13 @@ def read_frame(frame: np.ndarray, lang: str = "por+eng") -> list[RowCapture]:
             position_options = read_digit_options(position_image, modes=(8, 7))
         if name is not None:
             name_text, name_confidence = read_line(name, lang, psm=7)
-        if points_image is not None:
-            points_text, points_confidence = read_digits(points_image, modes=(7, 6))
+        points_occluded = False
+        if points_crop is not None:
+            points_text, points_confidence = read_digits(points_crop.image, modes=(7, 6))
+            points_occluded = points_crop.occluded
         position_text = "|".join(text for text, _confidence in position_options)
         observations: list[Observation] = []
+        sharpness = _sharpness(name)
         for text, position_confidence in position_options:
             confidences = [
                 value
@@ -59,7 +69,14 @@ def read_frame(frame: np.ndarray, lang: str = "por+eng") -> list[RowCapture]:
                 if value > 0
             ]
             confidence = sum(confidences) / len(confidences) if confidences else 0.0
-            observation = observation_from_fields(text, name_text, points_text, confidence)
+            observation = observation_from_fields(
+                text,
+                name_text,
+                points_text,
+                confidence,
+                sharpness=sharpness,
+                points_occluded=points_occluded,
+            )
             if observation is not None:
                 observations.append(observation)
         if observations:

@@ -29,6 +29,8 @@ class Observation:
     name: str
     points: float
     confidence: float
+    sharpness: float = 1.0
+    points_occluded: bool = False
 
 
 @dataclass(frozen=True)
@@ -39,7 +41,30 @@ class Athlete:
 
 
 @dataclass(frozen=True)
+class ReadingEvidence:
+    """One competing value and the observations behind it."""
+
+    value: str
+    count: int
+    mean_confidence: float
+    mean_sharpness: float
+    occluded_count: int
+
+
+@dataclass(frozen=True)
+class Review:
+    """A position whose readings were resolved, or still need a person."""
+
+    position: int
+    field: str
+    status: str
+    message: str
+    readings: list[ReadingEvidence]
+
+
+@dataclass(frozen=True)
 class Consolidation:
     athletes: list[Athlete]
     conflicts: list[str]
     warnings: list[str]
+    reviews: list[Review]

@@ -11,8 +11,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from tweener_ranking.debug import save_frame_debug  # noqa: E402
 from tweener_ranking.deduplication import consolidate  # noqa: E402
-from tweener_ranking.exporter import ExportError, save_ranking  # noqa: E402
+from tweener_ranking.exporter import ExportError  # noqa: E402
 from tweener_ranking.ocr import OcrError  # noqa: E402
+from tweener_ranking.report import candidate_path, publish, report_path  # noqa: E402
 from tweener_ranking.rows import read_frame  # noqa: E402
 from tweener_ranking.video import FrameSampler, VideoError  # noqa: E402
 
@@ -47,6 +48,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="Skip a settled frame that repeats the previous one. Default: 3.",
     )
     parser.add_argument(
+        "--blur-ratio",
+        type=float,
+        default=0.55,
+        help="Reject a frame softer than this fraction of the recent sharp frames. Default: 0.55.",
+    )
+    parser.add_argument(
+        "--row-advance",
+        type=float,
+        default=1.5,
+        help="Rows of scroll between kept frames. Sharp frames are still read while the list moves. Default: 1.5.",
+    )
+    parser.add_argument(
         "--lang",
         default="por+eng",
         help="Tesseract languages for athlete names. Default: por+eng.",
@@ -67,6 +80,8 @@ def run(argv: list[str] | None = None) -> int:
             args.interval,
             motion_threshold=args.motion_threshold,
             still_threshold=args.still_threshold,
+            blur_ratio=args.blur_ratio,
+            row_advance_rows=args.row_advance,
         )
         details = sampler.open()
     except VideoError as error:
@@ -77,7 +92,9 @@ def run(argv: list[str] | None = None) -> int:
         f"Video: {details.width}x{details.height}, {details.fps:.2f} fps, "
         f"{details.duration_seconds:.1f}s"
     )
-    print(f"Sampling every {args.interval:g}s, keeping frames after the list stops")
+    print(
+        f"Sampling every {args.interval:g}s, keeping a sharp frame every {args.row_advance:g} rows of scroll"
+    )
 
     debug_dir = ROOT / "debug" if args.debug else None
     observations = []
@@ -93,8 +110,9 @@ def run(argv: list[str] | None = None) -> int:
 
     result = consolidate(observations)
     print(
-        f"Analyzed {sampler.analyzed} settled frames "
-        f"(skipped {sampler.skipped_motion} moving, {sampler.skipped_similar} repeated)"
+        f"Analyzed {sampler.analyzed} sharp frames "
+        f"(skipped {sampler.skipped_blurry} blurry, {sampler.skipped_similar} repeated, "
+        f"{sampler.skipped_motion} waiting for the next row)"
     )
     print(f"Observations: {len(observations)}")
     for warning in result.warnings:
@@ -103,12 +121,32 @@ def run(argv: list[str] | None = None) -> int:
         print(f"Conflict: {conflict}", file=sys.stderr)
 
     try:
-        save_ranking(args.output, result.athletes, result.conflicts, datetime.now(timezone.utc))
+        published, reasons = publish(
+            args.output,
+            result.athletes,
+            result.conflicts,
+            result.reviews,
+            observations,
+            details,
+            sampler.analyzed,
+            sampler.skipped_blurry,
+            sampler.skipped_similar,
+            sampler.skipped_motion,
+            datetime.now(timezone.utc),
+        )
     except ExportError as error:
         print(error, file=sys.stderr)
         return 2
 
     print(f"Extracted {len(result.athletes)} athletes")
+    print(f"Wrote {report_path(args.output).resolve()}")
+    if not published:
+        for reason in reasons:
+            print(reason, file=sys.stderr)
+        print(f"Wrote {candidate_path(args.output).resolve()}", file=sys.stderr)
+        print(f"Refusing to replace {args.output.resolve()}.", file=sys.stderr)
+        return 2
+
     print(f"Wrote {args.output.resolve()}")
     return 0
 

@@ -89,6 +89,19 @@ def test_a_corrupted_name_does_not_replace_an_existing_file(tmp_path: Path):
     assert destination.read_text(encoding="utf-8") == original
 
 
+def test_a_score_of_zero_is_written(tmp_path: Path):
+    destination = tmp_path / "ranking.json"
+    save_ranking(
+        destination,
+        [athlete(137, "Marcelo Azevedo Jr", 100), athlete(138, "Luca Lira", 0)],
+        conflicts=[],
+        updated_at=UPDATED,
+    )
+
+    document = json.loads(destination.read_text(encoding="utf-8"))
+    assert document["athletes"][1] == {"position": 138, "name": "Luca Lira", "points": 0}
+
+
 def test_duplicate_positions_are_not_written(tmp_path: Path):
     destination = tmp_path / "ranking.json"
     with pytest.raises(ExportError, match="Duplicate"):

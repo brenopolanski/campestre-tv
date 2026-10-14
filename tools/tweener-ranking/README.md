@@ -84,23 +84,24 @@ A normal run prints:
 - how many athletes were written
 - the absolute path of `ranking.json`
 
-`Conflict:` lines mean the same ranking position had two readings with similar support. That position is left out, and the JSON is not written.
+`Conflict:` lines mean the same ranking position had two readings with similar support. That position is left out of the production file. A candidate and a diagnostic report are still written.
 
 ## 9. Unrecognized athletes and inconsistencies
 
-- No athletes, unresolved conflicts, a corrupted name, or a duplicate position: the command exits with code 2 and does not write a file. An existing `ranking.json` is left untouched.
+- No athletes, unresolved conflicts, a corrupted name, a duplicate position, or a missing position: the command exits with code 2. It writes `ranking.candidate.json` and `ranking.report.json` next to the output path. An existing `ranking.json` is left untouched.
+- The report lists the video size and frame rate, frames kept and skipped, observations, missing positions, each conflicting value with its confidence, sharpness, and occlusion count, and truncated or low-confidence names.
 - A missing video exits with code 1.
-- Warnings do not stop the run. A gap between positions is reported and left as a gap. Positions are not invented to fill it.
+- Positions are not invented to fill a gap. A gap blocks publication. The candidate still contains every athlete that was read consistently.
 
 ## 10. Frame sampling
 
-The recording is a portrait list that flicks and then rests. `--interval` (default `0.35` seconds) is how often a candidate frame is considered. A candidate that is still moving is skipped. The first frame after the list stops is read. A later frame of that same resting screen is skipped.
+The recording is a portrait list. `--interval` (default `0.35` seconds) is how often a candidate frame is considered. A candidate is read when the name band is sharp and the list has moved about `--row-advance` rows (default `1.5`) since the previous read. A new resting screen is read too. A soft frame is skipped even if the list moved. A later frame of the same resting screen is skipped.
 
 ```bash
 python process_ranking.py ./ranking.mp4 --interval 0.35
 ```
 
-`--motion-threshold` (default `8`) is the mean absolute difference, on a 98×212 grayscale copy, above which a candidate is treated as still scrolling. `--still-threshold` (default `3`) is how similar a settled frame must be to the previous settled frame before it is skipped.
+`--motion-threshold` (default `8`) is the mean absolute difference, on a 98×212 grayscale copy, above which a candidate is still scrolling and is held until the list advances another row. `--still-threshold` (default `3`) is how similar a settled frame must be to the previous kept frame before it is skipped. `--blur-ratio` (default `0.55`) rejects a frame whose name band is softer than that fraction of the recent sharp frames.
 
 ## 11. Ranking regions
 
@@ -114,7 +115,7 @@ The regions were measured on a 392×850 recording of the Tweener standings. They
 | Rank change    | about 282–297                      | Colored arrow and a small number. It is not a position and not points.     |
 | Points pill    | about 306–352, searched in 248–372 | The only source of the points value.                                       |
 
-Badge centers are accepted from y 90 to y 785. Above that is the status bar and header. Below that the row is cut off by the home indicator.
+Badge centers are accepted from y 90 to y 815 when the whole badge sits inside the frame. Above that is the status bar and header. A row cut off by the home indicator is left out. Crop coordinates are fractions of the reference frame, so a 1080×2340 recording uses the same regions as a 392×850 recording. OCR images are resized back to the reference glyph size.
 
 ```bash
 python process_ranking.py ./ranking.mp4 --debug

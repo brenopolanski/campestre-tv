@@ -73,6 +73,8 @@ def observation_from_fields(
     name_text: str,
     points_text: str,
     confidence: float,
+    sharpness: float = 1.0,
+    points_occluded: bool = False,
 ) -> Observation | None:
     """Build one observation from the three column readings.
 
@@ -86,7 +88,7 @@ def observation_from_fields(
         return None
     if position != int(position) or int(position) < 1:
         return None
-    if points <= 0:
+    if points < 0:
         return None
     name = clean_athlete_name(name_text)
     if name is None:
@@ -96,6 +98,8 @@ def observation_from_fields(
         name=name,
         points=points,
         confidence=confidence,
+        sharpness=sharpness,
+        points_occluded=points_occluded,
     )
 
 
