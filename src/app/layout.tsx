@@ -8,6 +8,7 @@ import { SplashScreenWrapper } from '@/components/splashscreen/SplashScreenWrapp
 import { fontVariables } from '@/lib/fonts'
 import { getSiteJsonLd } from '@/lib/jsonld'
 import { cn } from '@/lib/utils'
+import { Providers } from '@/providers/Providers'
 
 import { metadata, viewport } from './metadata'
 
@@ -25,9 +26,11 @@ const RootLayout = ({ children }: RootLayoutProps) => {
       suppressHydrationWarning
     >
       <body>
-        <SplashScreenWrapper>
-          <NuqsAdapter>{children}</NuqsAdapter>
-        </SplashScreenWrapper>
+        <Providers>
+          <SplashScreenWrapper>
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </SplashScreenWrapper>
+        </Providers>
         <JsonLd data={getSiteJsonLd()} />
         <Analytics />
       </body>

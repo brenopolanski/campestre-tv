@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import { Header } from '@/components/navigation/Header'
+import { Header } from '@/components/navigation/header/Header'
 import { buttonVariants } from '@/components/ui/button'
 import { paths } from '@/config/paths'
 import { cn } from '@/lib/utils'

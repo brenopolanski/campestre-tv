@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 
 import { CLUB_PLACE } from '@/clima/weather/location'
 import { ClimaRoot } from '@/components/clima/ClimaRoot'
-import { Header } from '@/components/navigation/Header'
+import { Header } from '@/components/navigation/header/Header'
 import { paths } from '@/config/paths'
 import { siteConfig } from '@/config/site'
 

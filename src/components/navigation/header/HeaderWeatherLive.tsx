@@ -1,3 +1,6 @@
+'use client'
+
+import { useQuery } from '@tanstack/react-query'
 import type { LucideProps } from 'lucide-react'
 import Link from 'next/link'
 
@@ -13,7 +16,7 @@ import {
   SunIcon,
 } from '@/components/shared/Icons'
 import { paths } from '@/config/paths'
-import { fetchClubWeather } from '@/lib/weather/clubWeather'
+import { type ClubWeather, fetchClubWeather } from '@/lib/weather/clubWeather'
 
 interface WeatherIconProps extends LucideProps {
   isDay: boolean
@@ -39,21 +42,35 @@ const WeatherIcon = ({ isDay, kind, ...props }: WeatherIconProps) => {
   }
 }
 
-export const HeaderWeather = async () => {
-  const weather = await fetchClubWeather()
+interface HeaderWeatherLiveProps {
+  initial: ClubWeather
+}
 
-  if (!weather) {
-    return null
-  }
+export const HeaderWeatherLive = ({ initial }: HeaderWeatherLiveProps) => {
+  const { data } = useQuery({
+    initialData: initial,
+    queryFn: async () => {
+      const weather = await fetchClubWeather()
+
+      if (!weather) {
+        throw new Error('Could not load club weather.')
+      }
+
+      return weather
+    },
+    queryKey: ['club-weather'],
+    refetchOnWindowFocus: true,
+    staleTime: 0,
+  })
 
   return (
     <Link
-      aria-label={`Clima em ${weather.place}, ${weather.temperature} graus, ${weather.label.toLowerCase()}`}
+      aria-label={`Clima em ${data.place}, ${data.temperature} graus, ${data.label.toLowerCase()}`}
       className="flex items-center gap-2 rounded-md px-2 py-1 font-sans text-lg font-medium tabular-nums transition-colors hover:bg-brand hover:text-brand-ink focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
       href={paths.clima}
     >
-      <WeatherIcon className="size-6" isDay={weather.isDay} kind={weather.kind} aria-hidden />
-      <span>{weather.temperature}°</span>
+      <WeatherIcon className="size-6" isDay={data.isDay} kind={data.kind} aria-hidden />
+      <span>{data.temperature}°</span>
     </Link>
   )
 }
