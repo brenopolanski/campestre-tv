@@ -49,19 +49,19 @@ export const DataTable = <TData extends RowData>({ columns, data }: DataTablePro
     <div>
       <div className="flex items-center py-4">
         <Input
-          className="max-w-sm"
+          className="max-w-sm border-white/15 bg-white/5 text-white placeholder:text-zinc-400"
           placeholder="Buscar atleta"
           value={typeof filterValue === 'string' ? filterValue : ''}
           onChange={(event) => nameColumn?.setFilterValue(event.target.value)}
         />
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="border-white/10 hover:bg-transparent">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-zinc-300">
                     {header.isPlaceholder ? null : <table.FlexRender header={header} />}
                   </TableHead>
                 ))}
@@ -71,7 +71,7 @@ export const DataTable = <TData extends RowData>({ columns, data }: DataTablePro
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className="border-white/10 hover:bg-white/5">
                   {row.getAllCells().map((cell) => (
                     <TableCell key={cell.id}>
                       <table.FlexRender cell={cell} />
@@ -81,7 +81,7 @@ export const DataTable = <TData extends RowData>({ columns, data }: DataTablePro
               ))
             ) : (
               <TableRow>
-                <TableCell className="h-24 text-center" colSpan={columns.length}>
+                <TableCell className="h-24 text-center text-zinc-300" colSpan={columns.length}>
                   Nenhum atleta encontrado.
                 </TableCell>
               </TableRow>

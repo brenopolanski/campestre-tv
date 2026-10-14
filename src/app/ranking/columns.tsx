@@ -6,6 +6,8 @@ import { ArrowUpDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 import type { DataTableFeatures } from './data-table-features'
+import { formatPoints } from './format'
+import { RankBadge } from './rank-badge'
 
 export interface Athlete {
   position: number
@@ -15,8 +17,6 @@ export interface Athlete {
 
 const columnHelper = createColumnHelper<DataTableFeatures, Athlete>()
 
-const pointsFormat = new Intl.NumberFormat('pt-BR')
-
 interface SortableHeaderProps<TValue> {
   column: Column<DataTableFeatures, Athlete, TValue>
   label: string
@@ -25,7 +25,11 @@ interface SortableHeaderProps<TValue> {
 
 const SortableHeader = <TValue,>({ align, column, label }: SortableHeaderProps<TValue>) => (
   <Button
-    className={align === 'end' ? 'ml-auto' : undefined}
+    className={
+      align === 'end'
+        ? 'ml-auto text-zinc-300 hover:bg-white/10 hover:text-white'
+        : 'text-zinc-300 hover:bg-white/10 hover:text-white'
+    }
     size="sm"
     variant="ghost"
     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
@@ -38,18 +42,25 @@ const SortableHeader = <TValue,>({ align, column, label }: SortableHeaderProps<T
 export const columns = columnHelper.columns([
   columnHelper.accessor('position', {
     header: ({ column }) => <SortableHeader column={column} label="Posição" />,
-    cell: ({ getValue }) => <span className="tabular-nums">{getValue()}</span>,
+    cell: ({ getValue }) => <RankBadge position={getValue()} />,
     sortFn: 'basic',
   }),
   columnHelper.accessor('name', {
     header: ({ column }) => <SortableHeader column={column} label="Atleta" />,
+    cell: ({ getValue }) => (
+      <span className="block max-w-48 truncate sm:max-w-md">{getValue()}</span>
+    ),
     filterFn: 'includesString',
     sortFn: 'text',
   }),
   columnHelper.accessor('points', {
     header: ({ column }) => <SortableHeader align="end" column={column} label="Pontos" />,
     cell: ({ getValue }) => (
-      <div className="text-right font-medium tabular-nums">{pointsFormat.format(getValue())}</div>
+      <div className="text-right">
+        <span className="inline-flex min-w-14 justify-center rounded-full bg-zinc-700 px-3 py-1 text-sm font-medium text-zinc-50 tabular-nums">
+          {formatPoints(getValue())}
+        </span>
+      </div>
     ),
     sortFn: 'basic',
   }),

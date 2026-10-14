@@ -7,6 +7,7 @@ import { siteConfig } from '@/config/site'
 import ranking from '../../../tools/tweener-ranking/ranking.json'
 import { columns } from './columns'
 import { DataTable } from './data-table'
+import { Podium } from './podium'
 
 const title = 'Ranking'
 const description =
@@ -67,7 +68,10 @@ const RankingPage = () => {
       <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-8 md:px-[1.4rem]">
         <h1 className="text-2xl font-semibold tracking-tight">Ranking</h1>
         <p className="mt-1 text-sm text-muted-foreground">Atualizado em {updatedAt}</p>
-        <DataTable columns={columns} data={ranking.athletes} />
+        <div className="mt-6 overflow-hidden rounded-xl bg-zinc-950 px-4 py-6 text-zinc-50 sm:px-6">
+          <Podium athletes={ranking.athletes} />
+          <DataTable columns={columns} data={ranking.athletes} />
+        </div>
       </main>
     </div>
   )
