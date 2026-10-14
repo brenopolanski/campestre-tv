@@ -1,7 +1,8 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { parseAsInteger, useQueryState } from 'nuqs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { YouTubeLivePlayer } from '@/components/youtube/YouTubeLivePlayer'
 import { ANALYTICS_EVENTS, trackEvent } from '@/lib/analytics'
@@ -76,36 +77,18 @@ export const LiveBroadcastFallback = () => {
 }
 
 export const LiveBroadcast = () => {
-  const [liveVideos, setLiveVideos] = useState<YouTubeChannelVideo[] | null>(null)
+  const { data } = useQuery({
+    queryFn: () => fetchYouTubeChannel(),
+    queryKey: ['youtube-channel'],
+    refetchInterval: 60_000,
+    retry: false,
+  })
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null)
   const [liveCourt, setLiveCourt] = useQueryState(
     'live',
     parseAsInteger.withOptions({ history: 'replace', scroll: false }),
   )
-
-  useEffect(() => {
-    let active = true
-
-    void fetchYouTubeChannel()
-      .then((channel) => {
-        if (!active) {
-          return
-        }
-
-        setLiveVideos(channel.videos.filter((video) => video.live.status === 'live'))
-      })
-      .catch(() => {
-        if (!active) {
-          return
-        }
-
-        setLiveVideos([])
-      })
-
-    return () => {
-      active = false
-    }
-  }, [])
+  const liveVideos = data?.videos.filter((video) => video.live.status === 'live')
 
   if (!liveVideos || liveVideos.length === 0) {
     return <LiveBroadcastFallback />

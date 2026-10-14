@@ -1,10 +1,30 @@
 /** @vitest-environment jsdom */
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { LiveBroadcast } from './LiveBroadcast'
+
+const renderLiveBroadcast = (nuqsOptions?: Parameters<typeof withNuqsTestingAdapter>[0]) => {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  })
+  const NuqsAdapter = withNuqsTestingAdapter(nuqsOptions)
+
+  return render(<LiveBroadcast />, {
+    wrapper: ({ children }) => (
+      <QueryClientProvider client={client}>
+        <NuqsAdapter>{children}</NuqsAdapter>
+      </QueryClientProvider>
+    ),
+  })
+}
 
 vi.mock('next/image', () => ({
   default: ({ alt }: { alt: string }) => <span role="img">{alt}</span>,
@@ -84,7 +104,7 @@ describe('LiveBroadcast', () => {
   })
 
   it('plays the selected embeddable court and links out when embedding is disabled', async () => {
-    render(<LiveBroadcast />, { wrapper: withNuqsTestingAdapter() })
+    renderLiveBroadcast()
 
     expect(String(vi.mocked(fetch).mock.calls[0]?.[0])).toBe('/api/youtube/channel')
 
@@ -94,7 +114,7 @@ describe('LiveBroadcast', () => {
     expect(player.getAttribute('data-video-id')).toBe('abcdefghijk')
     expect(screen.getAllByTestId('youtube-player')).toHaveLength(1)
 
-    fireEvent.click(screen.getByRole('button', { name: /^Transmissão especial/ }))
+    fireEvent.click(screen.getByRole('heading', { name: 'Transmissão especial' }))
 
     expect(screen.queryByTestId('youtube-player')).toBeNull()
     const link = screen.getByRole('link', { name: /Assistir no YouTube/ })
@@ -118,13 +138,11 @@ describe('LiveBroadcast', () => {
     )
     const onUrlUpdate = vi.fn()
 
-    render(<LiveBroadcast />, {
-      wrapper: withNuqsTestingAdapter({ hasMemory: true, onUrlUpdate, searchParams: '?live=8' }),
-    })
+    renderLiveBroadcast({ hasMemory: true, onUrlUpdate, searchParams: '?live=8' })
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Quadra 8' })).toBeTruthy()
 
-    fireEvent.click(screen.getByRole('button', { name: /^Quadra 6/ }))
+    fireEvent.click(screen.getByRole('heading', { name: 'Quadra 6' }))
 
     expect(screen.getByRole('heading', { level: 1, name: 'Quadra 6' })).toBeTruthy()
     expect(screen.getByTestId('youtube-player').getAttribute('data-video-id')).toBe('quadra6vid00')
