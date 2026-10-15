@@ -1,10 +1,11 @@
+import './environment.css'
+
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 import { memo, useEffect, useRef } from 'react'
 import { motionTokens } from '../theme/motion'
 import type { WeatherTheme } from '../theme/weatherThemes'
 import { RainCanvas } from './RainCanvas'
-import './environment.css'
 
 /**
  * Edge-to-edge weather environment, behind everything.

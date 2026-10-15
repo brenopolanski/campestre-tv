@@ -1,3 +1,5 @@
+import './climinha.css'
+
 import {
   motion,
   useAnimationControls,
@@ -13,7 +15,6 @@ import { motionTokens } from '../theme/motion'
 import { STATIC_BODY_PATH, eyeLeanOffset, fluidBodyPath } from './fluidBody'
 import { NEUTRAL_STATE, drowsyEyes, eyesFor } from './states'
 import type { CliminhaState, EyeShape, Mood } from './states'
-import './climinha.css'
 
 /**
  * Provisional Climinha in SVG + Motion.

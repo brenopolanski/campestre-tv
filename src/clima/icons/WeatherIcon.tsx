@@ -1,5 +1,6 @@
-import type { WeatherKind } from '../weather/types'
 import './icons.css'
+
+import type { WeatherKind } from '../weather/types'
 
 /**
  * Climinha's own weather icons: filled, two colors,

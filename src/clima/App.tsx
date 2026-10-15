@@ -1,5 +1,7 @@
 'use client'
 
+import './app.css'
+
 import {
   AnimatePresence,
   animate,
@@ -41,7 +43,6 @@ import { applySimulation, simulationFromUrl } from './weather/simulate'
 import type { Simulation } from './weather/simulate'
 import { markSeen, readHere, useForecasts, usePlaces, useUnit, writeHere } from './weather/store'
 import type { Place } from './weather/types'
-import './app.css'
 
 const LOADING_THEME = getTheme('clear', true)
 
