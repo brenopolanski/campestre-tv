@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 
 import { Header } from '@/components/navigation/header/Header'
-import { LeaderboardPodium } from '@/components/ui/leaderboard-podium'
+import { LeaderboardCard } from '@/components/ui/leaderboard-card'
 import { paths } from '@/config/paths'
 import { siteConfig } from '@/config/site'
 
 import ranking from '../../../tools/tweener-ranking/ranking.json'
-import { columns } from './columns'
-import { DataTable } from './data-table'
 
 const title = 'Ranking'
 const description =
@@ -59,14 +57,14 @@ export const viewport: Viewport = {
   colorScheme: 'dark light',
 }
 
-const podiumRankings = ranking.athletes
-  .filter((athlete) => athlete.position <= 3)
-  .map((athlete) => ({
-    userId: String(athlete.position),
-    userName: athlete.name,
-    rank: athlete.position,
-    value: athlete.points,
-  }))
+const rankings = ranking.athletes.map((athlete) => ({
+  userId: String(athlete.position),
+  userName: athlete.name,
+  rank: athlete.position,
+  value: athlete.points,
+}))
+
+const podiumRankings = rankings.filter((athlete) => athlete.rank <= 3)
 
 const RankingPage = () => {
   const updatedAt = updatedAtFormat.format(new Date(ranking.updatedAt))
@@ -74,13 +72,10 @@ const RankingPage = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-8 md:px-[1.4rem]">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-4 py-8 md:px-[1.4rem]">
         <h1 className="text-2xl font-semibold tracking-tight">Ranking</h1>
         <p className="mt-1 text-sm text-muted-foreground">Atualizado em {updatedAt}</p>
-        <div className="mt-6 overflow-hidden rounded-xl bg-zinc-950 px-4 py-6 text-zinc-50 sm:px-6">
-          <LeaderboardPodium medalStyle="minimal" rankings={podiumRankings} showAvatar={false} />
-          <DataTable columns={columns} data={ranking.athletes} />
-        </div>
+        <LeaderboardCard className="mt-6" podiumRankings={podiumRankings} rankings={rankings} />
       </main>
     </div>
   )
