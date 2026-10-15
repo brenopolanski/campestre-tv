@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 
+import { ExternalLink } from '@/components/shared/ExternalLink'
 import { PlayIcon } from '@/components/shared/Icons'
 import { siteConfig } from '@/config/site'
 import { ANALYTICS_EVENTS, trackEvent } from '@/lib/analytics'
@@ -35,11 +36,9 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
                 width={court.width}
               />
               {externalWatchUrl && (
-                <a
+                <ExternalLink
                   className="absolute inset-0 flex items-center justify-center bg-black/25 focus-visible:outline-2 focus-visible:outline-offset-2"
                   href={externalWatchUrl}
-                  rel="noopener noreferrer"
-                  target="_blank"
                   onClick={() => {
                     trackEvent(ANALYTICS_EVENTS.youtubeWatch, { court: court.name })
                   }}
@@ -48,7 +47,7 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
                     Assistir no YouTube
                     <span className="sr-only"> (abre em uma nova aba)</span>
                   </span>
-                </a>
+                </ExternalLink>
               )}
               {onWatch && (
                 <button

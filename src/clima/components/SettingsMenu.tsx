@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
+import { ExternalLink } from '@/components/shared/ExternalLink'
 import { UiIcon } from '../icons/UiIcon'
 import { motionTokens } from '../theme/motion'
 import type { TemperatureUnit } from '../weather/store'
@@ -148,9 +149,7 @@ export function SettingsMenu({
             <div className="menu__separator" />
             <p className="menu__footnote">
               Dados meteorológicos:{' '}
-              <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">
-                Open-Meteo
-              </a>
+              <ExternalLink href="https://open-meteo.com">Open-Meteo</ExternalLink>
             </p>
           </motion.div>
         )}

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { LogoIcon } from '@/components/logo/LogoIcon'
+import { ExternalLink } from '@/components/shared/ExternalLink'
 import { ClubeCampestreIcon, YoutubeIcon } from '@/components/shared/Icons'
 import { paths } from '@/config/paths'
 import { siteConfig } from '@/config/site'
@@ -25,24 +26,20 @@ export const Footer = () => {
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between px-4 sm:flex-row md:px-[1.4rem]">
         <Copyright />
         <div className="flex flex-row items-center gap-2">
-          <a
+          <ExternalLink
             aria-label="Se inscreva no canal do YouTube"
             className="pb-4 transition-colors hover:text-white/70 sm:py-4"
             href={`${siteConfig.links.youtube}?sub_confirmation=1`}
-            rel="noopener noreferrer"
-            target="_blank"
           >
             <YoutubeIcon className="size-6" />
-          </a>
-          <a
+          </ExternalLink>
+          <ExternalLink
             aria-label="Clube Campestre"
             className="pb-4 transition-colors hover:text-white/70 sm:py-4"
             href={siteConfig.links.clubecampestre}
-            rel="noopener noreferrer"
-            target="_blank"
           >
             <ClubeCampestreIcon className="size-6" />
-          </a>
+          </ExternalLink>
         </div>
       </div>
     </footer>

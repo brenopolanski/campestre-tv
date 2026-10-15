@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import YouTube from 'react-youtube'
 
+import { ExternalLink } from '@/components/shared/ExternalLink'
 import { getYouTubeWatchUrl } from '@/lib/youtube/playback'
 
 interface YouTubeLivePlayerProps {
@@ -36,15 +37,10 @@ export const YouTubeLivePlayer = ({ title, videoId }: YouTubeLivePlayerProps) =>
       <div className="flex aspect-video w-full max-w-full items-center justify-center bg-foreground/5 px-6 text-center">
         <p className="max-w-md text-sm text-foreground">
           Não foi possível reproduzir esta transmissão.{' '}
-          <a
-            className="underline underline-offset-4"
-            href={watchUrl}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <ExternalLink className="underline underline-offset-4" href={watchUrl}>
             Assista no YouTube
             <span className="sr-only"> (abre em uma nova aba)</span>
-          </a>
+          </ExternalLink>
           .
         </p>
       </div>
