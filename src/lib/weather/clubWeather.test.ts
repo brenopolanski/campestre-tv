@@ -25,7 +25,7 @@ describe('fetchClubWeather', () => {
       isDay: false,
       kind: 'partly',
       label: 'Parcialmente nublado',
-      place: 'Campina Grande',
+      place: 'Clube Campestre',
       temperature: 23,
     })
 
