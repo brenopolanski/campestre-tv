@@ -1,5 +1,6 @@
 import './climinha.css'
 
+import type { MotionValue, Transition } from 'motion/react'
 import {
   motion,
   useAnimationControls,
@@ -9,12 +10,12 @@ import {
   useSpring,
   useTransform,
 } from 'motion/react'
-import type { MotionValue, Transition } from 'motion/react'
 import { useEffect, useId, useRef, useState } from 'react'
+
 import { motionTokens } from '../theme/motion'
-import { STATIC_BODY_PATH, eyeLeanOffset, fluidBodyPath } from './fluidBody'
-import { NEUTRAL_STATE, drowsyEyes, eyesFor } from './states'
+import { eyeLeanOffset, fluidBodyPath, STATIC_BODY_PATH } from './fluidBody'
 import type { CliminhaState, EyeShape, Mood } from './states'
+import { drowsyEyes, eyesFor, NEUTRAL_STATE } from './states'
 
 /**
  * Provisional Climinha in SVG + Motion.

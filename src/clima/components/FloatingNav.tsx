@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+
 import { UiIcon } from '../icons/UiIcon'
 import { motionTokens } from '../theme/motion'
 import type { Place } from '../weather/types'

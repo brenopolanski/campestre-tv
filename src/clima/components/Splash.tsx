@@ -1,8 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useState } from 'react'
+
 import { Climinha } from '../climinha/Climinha'
-import { NEUTRAL_STATE } from '../climinha/states'
 import type { Mood } from '../climinha/states'
+import { NEUTRAL_STATE } from '../climinha/states'
 import { motionTokens } from '../theme/motion'
 
 /**

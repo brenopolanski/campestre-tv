@@ -1,14 +1,15 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { useMemo } from 'react'
+
 import { SunEventIcon, WeatherIcon } from '../icons/WeatherIcon'
 import { motionTokens } from '../theme/motion'
 import { isWet } from '../weather/conditions'
 import { clockLabel, dayLabel, hourLabel, hourlySummary } from '../weather/format'
-import { toUnit } from '../weather/store'
-import type { TemperatureUnit } from '../weather/store'
 import type { PrecipitationOutlook } from '../weather/outlook'
-import type { Forecast } from '../weather/types'
 import { RAIN_THRESHOLD } from '../weather/outlook'
+import type { TemperatureUnit } from '../weather/store'
+import { toUnit } from '../weather/store'
+import type { Forecast } from '../weather/types'
 import { Card } from './primitives'
 
 /* ------------------------------------------------------------------ */

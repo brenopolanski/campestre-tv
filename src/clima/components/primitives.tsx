@@ -1,8 +1,9 @@
-import { motion, useReducedMotion } from 'motion/react'
 import type { HTMLMotionProps } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { forwardRef, useContext } from 'react'
-import { UiIcon } from '../icons/UiIcon'
+
 import type { UiIconName } from '../icons/UiIcon'
+import { UiIcon } from '../icons/UiIcon'
 import { entrance, motionTokens, pressScale } from '../theme/motion'
 import { FirstRunContext } from './firstRun'
 import { Reveal } from './Reveal'

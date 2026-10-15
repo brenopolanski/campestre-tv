@@ -1,10 +1,11 @@
 import { motion, useReducedMotion } from 'motion/react'
+
+import { motionTokens } from '../theme/motion'
 import { compassLabel, uvCategory } from '../weather/conditions'
 import { clockLabel, minutesOf } from '../weather/format'
-import { toUnit } from '../weather/store'
 import type { TemperatureUnit } from '../weather/store'
+import { toUnit } from '../weather/store'
 import type { Forecast } from '../weather/types'
-import { motionTokens } from '../theme/motion'
 import { Card } from './primitives'
 
 interface Props {

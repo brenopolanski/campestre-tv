@@ -1,4 +1,4 @@
-import { REPRESENTATIVE_CODE, isWet } from './conditions'
+import { isWet, REPRESENTATIVE_CODE } from './conditions'
 import type { Forecast, WeatherKind } from './types'
 
 export interface Simulation {

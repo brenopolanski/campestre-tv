@@ -3,17 +3,17 @@
 import './app.css'
 
 import {
-  AnimatePresence,
   animate,
+  AnimatePresence,
   motion,
   useMotionValue,
   useReducedMotion,
   useTransform,
 } from 'motion/react'
 import {
-  Suspense,
   lazy,
   startTransition,
+  Suspense,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -21,17 +21,18 @@ import {
   useRef,
   useState,
 } from 'react'
+
 import type { CliminhaPhase } from './climinha/Climinha'
-import { NEUTRAL_STATE, climinhaFor } from './climinha/states'
 import type { Mood } from './climinha/states'
+import { climinhaFor, NEUTRAL_STATE } from './climinha/states'
 import { DetailGrid } from './components/Details'
+import { FirstRunContext } from './components/firstRun'
 import { FloatingNav } from './components/FloatingNav'
 import { DailyCard, HourlyCard, PrecipitationCard } from './components/Forecasts'
-import { Hero } from './components/Hero'
 import type { HeroData } from './components/Hero'
+import { Hero } from './components/Hero'
 import { Splash, SPLASH_MIN_MS } from './components/Splash'
 import { TravelingCliminha } from './components/TravelingCliminha'
-import { FirstRunContext } from './components/firstRun'
 import { Environment } from './environment/Environment'
 import { motionTokens } from './theme/motion'
 import { applyTheme, getTheme } from './theme/weatherThemes'
@@ -39,8 +40,8 @@ import { conditionLabel } from './weather/format'
 import { liveForecast } from './weather/live'
 import { CLUB_PLACE, HERE_ID, locateUser } from './weather/location'
 import { precipitationOutlook } from './weather/outlook'
-import { applySimulation, simulationFromUrl } from './weather/simulate'
 import type { Simulation } from './weather/simulate'
+import { applySimulation, simulationFromUrl } from './weather/simulate'
 import { markSeen, readHere, useForecasts, usePlaces, useUnit, writeHere } from './weather/store'
 import type { Place } from './weather/types'
 

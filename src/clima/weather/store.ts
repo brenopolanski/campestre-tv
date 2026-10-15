@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+
 import { fetchForecast } from './openMeteo'
 import type { Forecast, Place } from './types'
 
