@@ -1,15 +1,16 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { useMemo } from 'react'
 
-import { SunEventIcon, WeatherIcon } from '../icons/WeatherIcon'
-import { motionTokens } from '../theme/motion'
-import { isWet } from '../weather/conditions'
-import { clockLabel, dayLabel, hourLabel, hourlySummary } from '../weather/format'
-import type { PrecipitationOutlook } from '../weather/outlook'
-import { RAIN_THRESHOLD } from '../weather/outlook'
-import type { TemperatureUnit } from '../weather/store'
-import { toUnit } from '../weather/store'
-import type { Forecast } from '../weather/types'
+import { SunEventIcon, WeatherIcon } from '@/clima/icons/WeatherIcon'
+import { motionTokens } from '@/clima/theme/motion'
+import { isWet } from '@/clima/weather/conditions'
+import { clockLabel, dayLabel, hourLabel, hourlySummary } from '@/clima/weather/format'
+import type { PrecipitationOutlook } from '@/clima/weather/outlook'
+import { RAIN_THRESHOLD } from '@/clima/weather/outlook'
+import type { TemperatureUnit } from '@/clima/weather/store'
+import { toUnit } from '@/clima/weather/store'
+import type { Forecast } from '@/clima/weather/types'
+
 import { Card } from './primitives'
 
 /* ------------------------------------------------------------------ */

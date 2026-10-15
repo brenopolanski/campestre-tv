@@ -2,9 +2,10 @@ import type { HTMLMotionProps } from 'motion/react'
 import { motion, useReducedMotion } from 'motion/react'
 import { forwardRef, useContext } from 'react'
 
-import type { UiIconName } from '../icons/UiIcon'
-import { UiIcon } from '../icons/UiIcon'
-import { entrance, motionTokens, pressScale } from '../theme/motion'
+import type { UiIconName } from '@/clima/icons/UiIcon'
+import { UiIcon } from '@/clima/icons/UiIcon'
+import { entrance, motionTokens, pressScale } from '@/clima/theme/motion'
+
 import { FirstRunContext } from './firstRun'
 import { Reveal } from './Reveal'
 

@@ -1,10 +1,10 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useState } from 'react'
 
-import { Climinha } from '../climinha/Climinha'
-import type { Mood } from '../climinha/states'
-import { NEUTRAL_STATE } from '../climinha/states'
-import { motionTokens } from '../theme/motion'
+import { Climinha } from '@/clima/climinha/Climinha'
+import type { Mood } from '@/clima/climinha/states'
+import { NEUTRAL_STATE } from '@/clima/climinha/states'
+import { motionTokens } from '@/clima/theme/motion'
 
 /**
  * Intro: Climinha passes very close to the screen, huge, like a cloud crossing

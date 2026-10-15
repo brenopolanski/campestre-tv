@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react'
 
-import { motionTokens } from '../theme/motion'
+import { motionTokens } from '@/clima/theme/motion'
 
 interface Props {
   children: React.ReactNode

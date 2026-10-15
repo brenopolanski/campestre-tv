@@ -1,11 +1,12 @@
 import { motion, useReducedMotion } from 'motion/react'
 
-import { motionTokens } from '../theme/motion'
-import { compassLabel, uvCategory } from '../weather/conditions'
-import { clockLabel, minutesOf } from '../weather/format'
-import type { TemperatureUnit } from '../weather/store'
-import { toUnit } from '../weather/store'
-import type { Forecast } from '../weather/types'
+import { motionTokens } from '@/clima/theme/motion'
+import { compassLabel, uvCategory } from '@/clima/weather/conditions'
+import { clockLabel, minutesOf } from '@/clima/weather/format'
+import type { TemperatureUnit } from '@/clima/weather/store'
+import { toUnit } from '@/clima/weather/store'
+import type { Forecast } from '@/clima/weather/types'
+
 import { Card } from './primitives'
 
 interface Props {

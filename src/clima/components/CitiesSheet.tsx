@@ -10,16 +10,16 @@ import {
 } from 'motion/react'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import { UiIcon } from '../icons/UiIcon'
-import { WeatherIcon } from '../icons/WeatherIcon'
-import { motionTokens } from '../theme/motion'
-import { getTheme } from '../theme/weatherThemes'
-import { conditionLabel } from '../weather/format'
-import { CLUB_PLACE } from '../weather/location'
-import { searchPlaces } from '../weather/openMeteo'
-import type { ForecastEntry, TemperatureUnit } from '../weather/store'
-import { toUnit } from '../weather/store'
-import type { Place } from '../weather/types'
+import { UiIcon } from '@/clima/icons/UiIcon'
+import { WeatherIcon } from '@/clima/icons/WeatherIcon'
+import { motionTokens } from '@/clima/theme/motion'
+import { getTheme } from '@/clima/theme/weatherThemes'
+import { conditionLabel } from '@/clima/weather/format'
+import { CLUB_PLACE } from '@/clima/weather/location'
+import { searchPlaces } from '@/clima/weather/openMeteo'
+import type { ForecastEntry, TemperatureUnit } from '@/clima/weather/store'
+import { toUnit } from '@/clima/weather/store'
+import type { Place } from '@/clima/weather/types'
 
 interface Props {
   open: boolean

@@ -1,4 +1,4 @@
-import type { WeatherKind } from '../weather/types'
+import type { WeatherKind } from '@/clima/weather/types'
 
 export type EnvironmentId =
   | 'sunny'

@@ -1,14 +1,14 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
+import { UiIcon } from '@/clima/icons/UiIcon'
+import { motionTokens } from '@/clima/theme/motion'
+import type { Simulation } from '@/clima/weather/simulate'
+import type { TemperatureUnit } from '@/clima/weather/store'
+import type { WeatherKind } from '@/clima/weather/types'
+import { WEATHER_KINDS } from '@/clima/weather/types'
 import { ExternalLink } from '@/components/shared/ExternalLink'
 
-import { UiIcon } from '../icons/UiIcon'
-import { motionTokens } from '../theme/motion'
-import type { Simulation } from '../weather/simulate'
-import type { TemperatureUnit } from '../weather/store'
-import type { WeatherKind } from '../weather/types'
-import { WEATHER_KINDS } from '../weather/types'
 import { PlainIconButton } from './primitives'
 
 const KIND_LABEL: Record<WeatherKind, string> = {

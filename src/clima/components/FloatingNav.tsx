@@ -1,8 +1,9 @@
 import { motion } from 'motion/react'
 
-import { UiIcon } from '../icons/UiIcon'
-import { motionTokens } from '../theme/motion'
-import type { Place } from '../weather/types'
+import { UiIcon } from '@/clima/icons/UiIcon'
+import { motionTokens } from '@/clima/theme/motion'
+import type { Place } from '@/clima/weather/types'
+
 import { PlainIconButton } from './primitives'
 import { SettingsMenu } from './SettingsMenu'
 

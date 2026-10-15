@@ -11,10 +11,10 @@ import {
 } from 'motion/react'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import type { CliminhaPhase } from '../climinha/Climinha'
-import { Climinha } from '../climinha/Climinha'
-import type { CliminhaState, Mood } from '../climinha/states'
-import { motionTokens } from '../theme/motion'
+import type { CliminhaPhase } from '@/clima/climinha/Climinha'
+import { Climinha } from '@/clima/climinha/Climinha'
+import type { CliminhaState, Mood } from '@/clima/climinha/states'
+import { motionTokens } from '@/clima/theme/motion'
 
 /**
  * The Climinha that follows the interface.

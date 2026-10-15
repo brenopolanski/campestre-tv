@@ -12,7 +12,8 @@ import {
 } from 'motion/react'
 import { useEffect, useId, useRef, useState } from 'react'
 
-import { motionTokens } from '../theme/motion'
+import { motionTokens } from '@/clima/theme/motion'
+
 import { eyeLeanOffset, fluidBodyPath, STATIC_BODY_PATH } from './fluidBody'
 import type { CliminhaState, EyeShape, Mood } from './states'
 import { drowsyEyes, eyesFor, NEUTRAL_STATE } from './states'
