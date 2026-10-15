@@ -67,7 +67,7 @@ export const HeaderWeatherLive = ({ initial }: HeaderWeatherLiveProps) => {
   return (
     <Link
       aria-label={`Clima em ${data.place}, ${data.temperature} graus, ${data.label.toLowerCase()}`}
-      className="flex items-center gap-2 rounded-md px-2 py-1 font-sans text-lg font-medium tabular-nums transition-colors hover:bg-brand hover:text-brand-ink focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
+      className="flex items-center gap-2 rounded-lg px-2 py-1 font-sans text-lg font-medium tabular-nums transition-colors hover:bg-brand hover:text-brand-ink focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:outline-none"
       href={paths.clima}
     >
       <WeatherIcon className="size-6" isDay={data.isDay} kind={data.kind} aria-hidden />
