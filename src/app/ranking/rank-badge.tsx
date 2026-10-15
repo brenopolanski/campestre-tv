@@ -15,9 +15,9 @@ const scallopPath = (() => {
 })()
 
 const medalTone = {
-  1: { badge: 'text-amber-400', ink: 'text-amber-950' },
-  2: { badge: 'text-zinc-300', ink: 'text-zinc-900' },
-  3: { badge: 'text-orange-400', ink: 'text-orange-950' },
+  1: { badge: 'text-rank-1/60', ink: 'text-rank-1' },
+  2: { badge: 'text-rank-2/30', ink: 'text-rank-2' },
+  3: { badge: 'text-rank-3/50', ink: 'text-rank-3' },
 } as const
 
 const defaultTone = { badge: 'text-zinc-100', ink: 'text-zinc-900' }

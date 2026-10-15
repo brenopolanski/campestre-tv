@@ -116,6 +116,9 @@
   --color-ink: #9a9a9a;
   --color-brand: #4bd573;
   --color-brand-ink: #152d1c;
+  --color-rank-1: #fbbf24;
+  --color-rank-2: #d4d4d8;
+  --color-rank-3: #fb923c;
   /* End custom colors */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);

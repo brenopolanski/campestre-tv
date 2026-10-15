@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from 'next'
 
 import { Header } from '@/components/navigation/header/Header'
+import { LeaderboardPodium } from '@/components/ui/leaderboard-podium'
 import { paths } from '@/config/paths'
 import { siteConfig } from '@/config/site'
 
 import ranking from '../../../tools/tweener-ranking/ranking.json'
 import { columns } from './columns'
 import { DataTable } from './data-table'
-import { Podium } from './podium'
 
 const title = 'Ranking'
 const description =
@@ -59,6 +59,15 @@ export const viewport: Viewport = {
   colorScheme: 'dark light',
 }
 
+const podiumRankings = ranking.athletes
+  .filter((athlete) => athlete.position <= 3)
+  .map((athlete) => ({
+    userId: String(athlete.position),
+    userName: athlete.name,
+    rank: athlete.position,
+    value: athlete.points,
+  }))
+
 const RankingPage = () => {
   const updatedAt = updatedAtFormat.format(new Date(ranking.updatedAt))
 
@@ -69,7 +78,7 @@ const RankingPage = () => {
         <h1 className="text-2xl font-semibold tracking-tight">Ranking</h1>
         <p className="mt-1 text-sm text-muted-foreground">Atualizado em {updatedAt}</p>
         <div className="mt-6 overflow-hidden rounded-xl bg-zinc-950 px-4 py-6 text-zinc-50 sm:px-6">
-          <Podium athletes={ranking.athletes} />
+          <LeaderboardPodium medalStyle="minimal" rankings={podiumRankings} showAvatar={false} />
           <DataTable columns={columns} data={ranking.athletes} />
         </div>
       </main>
