@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
 /**
- * Chuva desenhada fora da linha principal (OffscreenCanvas num Web Worker):
- * o scroll, o arraste e as animações do Climinha não disputam tempo com ela.
+ * Rain drawn off the main thread (OffscreenCanvas in a Web Worker):
+ * scroll, drag, and Climinha animations do not compete with it for time.
  */
 
 interface Drop {

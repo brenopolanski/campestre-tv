@@ -1,6 +1,6 @@
 import type { WeatherKind } from './types'
 
-/** Converte código WMO (Open-Meteo) para a condição do Climinha. */
+/** Maps a WMO code (Open-Meteo) to the Climinha condition. */
 export function kindFromCode(code: number): WeatherKind {
   if (code === 0) return 'sunny'
   if (code === 1) return 'clear'
@@ -10,7 +10,7 @@ export function kindFromCode(code: number): WeatherKind {
   if (code >= 95) return 'storm'
   if (code === 65 || code === 67 || code === 82) return 'heavyRain'
   if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'rain'
-  // neve e granizo são raros no público principal — tratados como nublado
+  // snow and hail are rare for the main audience — treated as cloudy
   return 'cloudy'
 }
 
@@ -50,7 +50,7 @@ export function labelFromCode(code: number, isDay: boolean): string {
   return CODE_LABELS[code] ?? 'Nublado'
 }
 
-/** Código WMO representativo de cada condição — usado na simulação. */
+/** Representative WMO code for each condition — used by the simulator. */
 export const REPRESENTATIVE_CODE: Record<WeatherKind, number> = {
   sunny: 0,
   clear: 1,

@@ -20,9 +20,9 @@ export interface BodyColors {
   light: string
   mid: string
   shade: string
-  /** luz de borda — separa corpos escuros de céus escuros, sem outline */
+  /** rim light — separates dark bodies from dark skies, without an outline */
   rim: string
-  /** halo atmosférico atrás do personagem */
+  /** atmospheric halo behind the character */
   halo: string
   contactShadow: string
 }
@@ -30,18 +30,18 @@ export interface BodyColors {
 export interface CliminhaState {
   mood: Mood
   body: BodyColors
-  /** amplitude (unidades do viewBox) e período (s) da flutuação */
+  /** amplitude (viewBox units) and period (s) of the float */
   float: { amplitude: number; period: number }
-  /** 0 nenhuma · 1 algumas gotas · 2 muitas */
+  /** 0 none · 1 a few drops · 2 many */
   drops: 0 | 1 | 2
   heavy: boolean
-  /** sensação térmica: muda a cor, a expressão e os efeitos (suor, tremor) */
+  /** temperature feel: changes the color, the expression, and the effects (sweat, shiver) */
   temp?: TempFeel
-  /** tempestade: brilho amarelo por dentro e raios saindo do corpo */
+  /** storm: a yellow glow inside and lightning leaving the body */
   storm?: boolean
 }
 
-/** acima de 34° calor · abaixo de 16° frio · abaixo de 5° muito frio */
+/** above 34° hot · below 16° cold · below 5° very cold */
 export type TempFeel = 'hot' | 'cold' | 'freezing'
 
 export function tempFeelFor(celsius: number): TempFeel | undefined {
@@ -52,9 +52,9 @@ export function tempFeelFor(celsius: number): TempFeel | undefined {
 }
 
 /**
- * A cor do corpo comunica o clima:
- * céu limpo branco-frio → ensolarado azul vivo → nublado cinza-azulado →
- * chuva cinza médio → chuva forte grafite → tempestade quase preto.
+ * Body color communicates the weather:
+ * clear sky cold-white → sunny vivid blue → cloudy blue-gray →
+ * rain medium gray → heavy rain graphite → storm almost black.
  */
 const BODY: Record<WeatherKind | 'night', BodyColors> = {
   clear: {
@@ -132,15 +132,15 @@ const BODY: Record<WeatherKind | 'night', BodyColors> = {
 }
 
 /**
- * Regras de humor:
- *  - noite: dorme (a tempestade acorda — aí ele fica com medo)
- *  - sol (limpo / ensolarado / parcialmente nublado de dia): sempre feliz
- *  - chuva: chateado (e cinza)
- *  - raio: com medo
- *  - o resto: humor normal
+ * Mood rules:
+ *  - night: sleeps (a storm wakes him — then he is scared)
+ *  - sun (clear / sunny / partly cloudy by day): always happy
+ *  - rain: annoyed (and gray)
+ *  - lightning: scared
+ *  - the rest: a normal mood
  */
 function moodFor(kind: WeatherKind, isDay: boolean, temp?: TempFeel): Mood {
-  // prioridade: medo do raio > sono > o que a temperatura faz sentir > o clima
+  // priority: fear of lightning > sleep > what the temperature feels like > the weather
   if (kind === 'storm') return 'scared'
   if (!isDay) return 'sleeping'
   if (temp === 'freezing') return 'freezing'
@@ -151,7 +151,7 @@ function moodFor(kind: WeatherKind, isDay: boolean, temp?: TempFeel): Mood {
   return 'neutral'
 }
 
-// tons da temperatura misturados à cor do clima
+// temperature tints mixed into the weather color
 const TINT: Record<
   TempFeel,
   {
@@ -243,7 +243,7 @@ function baseFor(
       return {
         mood,
         body,
-        // dormindo: respiração lenta e baixa
+        // sleeping: slow, low breathing
         float: nightCalm ? { amplitude: 2.5, period: 5.2 } : { amplitude: 5.5, period: 3.2 },
         drops: 0,
         heavy: false,
@@ -251,7 +251,7 @@ function baseFor(
   }
 }
 
-/** Neutro, usado durante o carregamento e no erro. */
+/** Neutral, used while loading and on error. */
 export const NEUTRAL_STATE: CliminhaState = {
   mood: 'neutral',
   body: BODY.clear,
@@ -263,23 +263,23 @@ export const NEUTRAL_STATE: CliminhaState = {
 export interface EyeShape {
   rx: number
   ry: number
-  /** deslocamento vertical do olho */
+  /** vertical offset of the eye */
   dy: number
-  /** altura da pálpebra (y local); acima de -ry = olho aberto */
+  /** eyelid height (local y); above -ry = eye open */
   lid: number
-  /** inclinação da pálpebra; positivo baixa o lado interno */
+  /** eyelid tilt; positive lowers the inner side */
   lidTilt: number
   arc: boolean
-  /** arco virado para baixo: olho fechado dormindo */
+  /** downward arc: eye closed, sleeping */
   closed?: boolean
-  /** curvatura da pálpebra (positivo = pálpebra pesada, arredondada) */
+  /** eyelid curve (positive = heavy, rounded eyelid) */
   curve?: number
-  /** esconde o traço da pálpebra (sono não é irritação) */
+  /** hides the eyelid stroke (sleep is not irritation) */
   noLine?: boolean
 }
 
 /**
- * Sonolento: pálpebras pesadas e arredondadas, caídas para fora (cansaço, não irritação).
+ * Sleepy: heavy, rounded eyelids, drooping outward (tired, not irritated).
  * level 0 → quase aberto; 1 → fechado.
  */
 export function drowsyEyes(level: number): [EyeShape, EyeShape] {
@@ -290,7 +290,7 @@ export function drowsyEyes(level: number): [EyeShape, EyeShape] {
 
 const OPEN = { lid: -30, lidTilt: 0, arc: false, dy: 0 }
 
-/** Formato de cada olho [esquerdo, direito] por humor. */
+/** Shape of each eye [left, right] by mood. */
 export function eyesFor(mood: Mood): [EyeShape, EyeShape] {
   switch (mood) {
     case 'happy':
@@ -299,13 +299,13 @@ export function eyesFor(mood: Mood): [EyeShape, EyeShape] {
         { rx: 9.5, ry: 12.5, ...OPEN, arc: true },
       ]
     case 'curious':
-      // curioso: olhos um pouco maiores e erguidos, iguais dos dois lados
+      // curious: eyes a bit larger and raised, the same on both sides
       return [
         { rx: 10, ry: 13.5, ...OPEN, dy: -2 },
         { rx: 10, ry: 13.5, ...OPEN, dy: -2 },
       ]
     case 'confused':
-      // confuso: pálpebras internas erguidas, iguais dos dois lados
+      // confused: inner eyelids raised, the same on both sides
       return [
         { rx: 9, ry: 12, ...OPEN, lid: -8, lidTilt: -6 },
         { rx: 9, ry: 12, ...OPEN, lid: -8, lidTilt: -6 },
@@ -326,37 +326,37 @@ export function eyesFor(mood: Mood): [EyeShape, EyeShape] {
         { rx: 9.5, ry: 11.5, ...OPEN, lid: -1.5, lidTilt: 3.5 },
       ]
     case 'wink':
-      // piscadinha (única exceção à simetria): a pálpebra direita desce e vira ∩
+      // wink (the only exception to symmetry): the right eyelid drops and becomes ∩
       return [
         { rx: 10, ry: 12.5, ...OPEN },
         { rx: 10, ry: 12.5, ...OPEN, lid: 14, lidTilt: 0, curve: 2, noLine: true, arc: true },
       ]
     case 'sleeping':
-      // olhos fechados em arco para baixo (‿)
+      // eyes closed in a downward arc (‿)
       return [
         { rx: 9.5, ry: 12.5, ...OPEN, arc: true, closed: true },
         { rx: 9.5, ry: 12.5, ...OPEN, arc: true, closed: true },
       ]
     case 'scared':
-      // olhos arregalados, pálpebra interna erguida (preocupado)
+      // wide eyes, inner eyelid raised (worried)
       return [
         { rx: 9, ry: 14.5, ...OPEN, lid: -10.5, lidTilt: -6, dy: -1 },
         { rx: 9, ry: 14.5, ...OPEN, lid: -10.5, lidTilt: -6, dy: -1 },
       ]
     case 'hot':
-      // calor: pálpebras pesadas e caídas, cansado (sem traço — não é irritação)
+      // heat: heavy, drooping eyelids, tired (no stroke — this is not irritation)
       return [
         { rx: 10, ry: 12.5, dy: 1, arc: false, lid: -4, lidTilt: -3, curve: 3.5, noLine: true },
         { rx: 10, ry: 12.5, dy: 1, arc: false, lid: -4, lidTilt: -3, curve: 3.5, noLine: true },
       ]
     case 'cold':
-      // frio: olhos menores e um pouco preocupados
+      // cold: smaller, slightly worried eyes
       return [
         { rx: 8.5, ry: 11.5, dy: 1, arc: false, lid: -8, lidTilt: -5, curve: 0, noLine: false },
         { rx: 8.5, ry: 11.5, dy: 1, arc: false, lid: -8, lidTilt: -5, curve: 0, noLine: false },
       ]
     case 'freezing':
-      // muito frio: olhos apertados, tensos
+      // very cold: squinted, tense eyes
       return [
         { rx: 9, ry: 11, dy: 2, arc: false, lid: 1.5, lidTilt: -6, curve: -1.5, noLine: false },
         { rx: 9, ry: 11, dy: 2, arc: false, lid: 1.5, lidTilt: -6, curve: -1.5, noLine: false },

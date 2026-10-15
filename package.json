@@ -13,6 +13,7 @@
     "email": "breno.polanski@gmail.com",
     "url": "https://github.com/brenopolanski"
   },
+  "packageManager": "pnpm@10.28.1",
   "portless": {
     "name": "campestre-tv",
     "script": "dev:next"

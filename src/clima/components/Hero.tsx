@@ -16,25 +16,25 @@ interface Props {
   place: Place
   data: HeroData | null
   unit: TemperatureUnit
-  /** lugar reservado do Climinha — o TravelingCliminha se posiciona por ele */
+  /** reserved spot for Climinha — TravelingCliminha positions itself from it */
   anchorRef: RefObject<HTMLDivElement | null>
-  /** false enquanto a intro ocupa a tela */
+  /** false while the intro covers the screen */
   revealed: boolean
-  /** direção da última troca de cidade: -1, 0, 1 */
+  /** direction of the last city change: -1, 0, 1 */
   direction: number
-  /** sem dados e sem conexão */
+  /** no data and no connection */
   error?: boolean
   onRetry?: () => void
 }
 
-/** Hero centralizado: cidade · temperatura · Climinha · condição · máx/mín. */
+/** Centered hero: city · temperature · Climinha · condition · max/min. */
 export function Hero({ place, data, unit, anchorRef, revealed, direction, error, onRetry }: Props) {
   const reduced = useReducedMotion() ?? false
   const { scrollY } = useScroll()
-  // o texto do hero some com suavidade; o Climinha segue viagem
+  // the hero text fades out smoothly; Climinha keeps traveling
   const fade = useTransform(scrollY, [0, 220], [1, 0])
 
-  // o texto só entra depois que o Climinha pousa
+  // the text only enters after Climinha lands
   const enter = (delay: number) =>
     reduced
       ? { initial: false as const, animate: { opacity: revealed ? 1 : 0 } }

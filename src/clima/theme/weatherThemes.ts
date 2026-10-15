@@ -17,7 +17,7 @@ export type EnvironmentId =
   | 'nightStorm'
 
 export interface AtmosphereSpec {
-  /** 0–1: quantas nuvens e quão densas */
+  /** 0–1: how many clouds and how dense */
   clouds: number
   cloudColor: string
   cloudShade: string
@@ -25,7 +25,7 @@ export interface AtmosphereSpec {
   stars: boolean
   moon: boolean
   fog: boolean
-  /** 0 nenhuma · 1 chuva · 2 chuva forte */
+  /** 0 none · 1 rain · 2 heavy rain */
   rain: 0 | 1 | 2
   lightning: boolean
 }
@@ -53,9 +53,9 @@ export interface WeatherTheme {
   glassBlur: number
 
   accent: string
-  /** cor do browser chrome (meta theme-color) */
+  /** browser chrome color (meta theme-color) */
   metaColor: string
-  /** esquema da camada de conteúdo — fog diurno usa texto escuro */
+  /** content-layer scheme — daytime fog uses dark text */
   scheme: 'light-on-dark' | 'dark-on-light'
 
   atmosphere: AtmosphereSpec
@@ -441,14 +441,14 @@ export function environmentFor(kind: WeatherKind, isDay: boolean): EnvironmentId
 export function getTheme(kind: WeatherKind, isDay: boolean): WeatherTheme {
   const id = environmentFor(kind, isDay)
   const theme = { id, ...THEMES[id] }
-  // chuva forte à noite mantém a intensidade de partículas
+  // heavy rain at night keeps the particle intensity
   if (!isDay && kind === 'heavyRain') {
     return { ...theme, atmosphere: { ...theme.atmosphere, rain: 2 } }
   }
   return theme
 }
 
-/** Aplica o tema como custom properties em .clima e atualiza o theme-color do browser. */
+/** Applies the theme as custom properties on .clima and updates the browser theme-color. */
 export function applyTheme(theme: WeatherTheme) {
   const root = document.querySelector<HTMLElement>('.clima')
   if (!root) return
@@ -481,8 +481,8 @@ export function applyTheme(theme: WeatherTheme) {
     document.head.appendChild(meta)
   }
   meta.content = theme.metaColor
-  // o Safari do iPhone pinta as faixas do topo e da barra de baixo com a cor de fundo
-  // da página: acompanha o céu (topo = alto do céu, base = horizonte)
+  // iPhone Safari paints the top and bottom bars with the page background:
+  // follow the sky (top = top of the sky, bottom = horizon)
   document.documentElement.style.backgroundColor = theme.skyTop
   document.body.style.backgroundColor = theme.skyBottom
 }

@@ -7,26 +7,26 @@ import type { Mood } from '../climinha/states'
 import { motionTokens } from '../theme/motion'
 
 /**
- * Intro: o Climinha passa bem perto da tela, enorme, como uma nuvem atravessando
- * o céu — olhos abertos. Depois dá uma piscadinha de um olho só e voa até o lugar dele
- * na interface (o TravelingCliminha começa o voo da posição medida aqui).
+ * Intro: Climinha passes very close to the screen, huge, like a cloud crossing
+ * the sky — eyes open. Then he winks one eye and flies to his place
+ * in the interface (TravelingCliminha starts the flight from the position measured here).
  */
 
-/** duração mínima da intro antes de liberar a interface (ms) */
+/** minimum intro duration before releasing the interface (ms) */
 export const SPLASH_MIN_MS = 2700
 
 interface Props {
   visible: boolean
-  /** o personagem da intro só sai quando o da Home já pode recebê-lo */
+  /** the intro character leaves only when the Home one can receive him */
   characterVisible: boolean
-  /** medido pelo Climinha da Home para começar o voo daqui */
+  /** measured by the Home Climinha so the flight can start from here */
   characterRef: RefObject<HTMLDivElement | null>
 }
 
 export function Splash({ visible, characterVisible, characterRef }: Props) {
   const reduced = useReducedMotion() ?? false
 
-  // olhos abertos enquanto passa → piscadinha de um olho só → abre de novo e vai para a tela
+  // eyes open while he passes → a one-eye wink → opens again and goes to the screen
   const [mood, setMood] = useState<Mood>('neutral')
   useEffect(() => {
     if (reduced) return
@@ -50,7 +50,7 @@ export function Splash({ visible, characterVisible, characterRef }: Props) {
             exit={{ opacity: 0 }}
             transition={{ duration: reduced ? 0.25 : 0.5, delay: reduced ? 0 : 0.6 }}
           >
-            {/* o céu da intro sai rápido: o voo até a Home fica visível */}
+            {/* the intro sky leaves quickly: the flight to Home stays visible */}
             <motion.div
               className="splash__sky"
               exit={{ opacity: 0 }}
@@ -62,7 +62,7 @@ export function Splash({ visible, characterVisible, characterRef }: Props) {
 
       {characterVisible && (
         <div className="splash__stage">
-          {/* deriva lateral: ele atravessa a tela devagar, como nuvem */}
+          {/* sideways drift: he crosses the screen slowly, like a cloud */}
           <motion.div
             className="splash__drift"
             initial={reduced ? false : { x: '26vw', y: '3vh', rotate: 3 }}
@@ -76,7 +76,7 @@ export function Splash({ visible, characterVisible, characterRef }: Props) {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
             >
-              {/* flutuação por transform no wrapper: o SVG gigante não é repintado a cada quadro */}
+              {/* float via transform on the wrapper: the huge SVG is not repainted every frame */}
               <motion.div
                 className="splash__float"
                 animate={reduced ? undefined : { y: ['0%', '-1.6%', '0%'] }}

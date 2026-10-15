@@ -1,6 +1,6 @@
 import type { Forecast } from './types'
 
-/** mm por 15 min a partir do qual consideramos chuva */
+/** mm per 15 min from which we count it as rain */
 export const RAIN_THRESHOLD = 0.1
 
 export interface PrecipitationOutlook {
@@ -8,7 +8,7 @@ export interface PrecipitationOutlook {
   text: string
 }
 
-/** Chuva nas próximas 3 h (passos de 15 min). Null quando não há nada a mostrar. */
+/** Rain in the next 3 h (15-minute steps). Null when there is nothing to show. */
 export function precipitationOutlook(forecast: Forecast): PrecipitationOutlook | null {
   const steps = forecast.nowcast.slice(0, 12)
   if (!steps.some((s) => s.precipitation >= RAIN_THRESHOLD)) return null

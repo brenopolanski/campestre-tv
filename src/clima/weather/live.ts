@@ -1,11 +1,11 @@
 import type { Forecast } from './types'
 
-/** depois disso, a condição "agora" passa a vir da previsão para a hora atual */
+/** after this, the "now" condition comes from the forecast for the current hour */
 const CURRENT_STALE_MS = 20 * 60 * 1000
 
 const formatters = new Map<string, Intl.DateTimeFormat>()
 
-/** "YYYY-MM-DDTHH:MM" no fuso da cidade — mesmo formato dos horários da Open-Meteo. */
+/** "YYYY-MM-DDTHH:MM" in the city's timezone — same format as Open-Meteo times. */
 export function localTimeIn(timezone: string, now: Date): string {
   let f = formatters.get(timezone)
   if (!f) {
@@ -25,11 +25,11 @@ export function localTimeIn(timezone: string, now: Date): string {
 }
 
 /**
- * Ajusta a previsão ao relógio real da cidade, mesmo entre uma busca e outra:
- *  - dia/noite pelo nascer e pôr do sol de hoje
- *  - "Agora" e a lista por hora começam na hora atual
- *  - "Hoje" é o dia de hoje no fuso da cidade
- *  - dados velhos: temperatura e condição vêm da previsão para esta hora
+ * Adjusts the forecast to the city's real clock, even between fetches:
+ *  - day/night from today's sunrise and sunset
+ *  - "Agora" and the hourly list start at the current hour
+ *  - "Hoje" is today in the city's timezone
+ *  - stale data: temperature and condition come from the forecast for this hour
  */
 export function liveForecast(f: Forecast, now: Date): Forecast {
   const local = localTimeIn(f.timezone, now)

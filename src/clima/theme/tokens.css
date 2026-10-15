@@ -1,7 +1,7 @@
 /*
- * Design tokens estáticos. As cores vivem em WeatherTheme (weatherThemes.ts) e
- * são aplicadas como custom properties em .clima por applyTheme().
- * As propriedades registradas com @property interpolam quando o clima muda.
+ * Static design tokens. Colors live in WeatherTheme (weatherThemes.ts) and
+ * are applied as custom properties on .clima by applyTheme().
+ * Properties registered with @property interpolate when the weather changes.
  */
 
 @property --sky-top {
@@ -119,8 +119,8 @@
   --radius-pill: 999px;
 
   /* Typography */
-  /* fonte do sistema em tudo (estilo Apple); a Fredoka arredondada é a marca do
-     Climinha e aparece só na cidade e na temperatura */
+  /* system font everywhere (Apple style); rounded Fredoka is the Climinha brand
+     and appears only on the city and the temperature */
   --font-system:
     -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI',
     system-ui, Roboto, sans-serif;
@@ -129,7 +129,7 @@
     system-ui, Roboto, sans-serif;
   --font-brand: var(--font-fredoka), 'Fredoka Variable', 'Fredoka', system-ui, sans-serif;
 
-  /* base escura das superfícies (lista de cidades) */
+  /* dark base for surfaces (city list) */
   --ink: #131925;
   --paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
@@ -147,7 +147,7 @@
   --weight-medium: 500;
   --weight-semibold: 600;
 
-  /* Motion (para transições CSS; springs ficam em motion.ts) */
+  /* Motion (for CSS transitions; springs live in motion.ts) */
   --motion-system-fast: 160ms;
   --motion-system-default: 280ms;
   --ease-system: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -165,9 +165,9 @@
 
   --nav-height: 56px;
 
-  /* sem transição de variáveis aqui: animar custom properties herdadas na raiz
-     recalcula o estilo da página inteira a cada quadro. O céu interpola no próprio
-     elemento (.env__sky) e cada superfície anima só a sua cor de fundo. */
+  /* no variable transition here: animating inherited custom properties on the root
+     restyles the whole page every frame. The sky interpolates on its own
+     element (.env__sky) and each surface animates only its background color. */
 }
 
 @media (min-width: 390px) {
@@ -187,7 +187,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .clima {
-    /* cor ainda cruza suavemente; só encurta */
+    /* color still crosses smoothly; this only shortens it */
     --motion-weather-transition: 500ms;
     --motion-system-default: 1ms;
   }

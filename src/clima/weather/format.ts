@@ -11,7 +11,7 @@ export function hourLabel(time: string) {
   return `${hourOf(time)}h`
 }
 
-/** "05:21" a partir de ISO local */
+/** "05:21" from a local ISO timestamp */
 export function clockLabel(time: string) {
   return time.slice(11, 16)
 }
@@ -22,7 +22,7 @@ export function dayLabel(date: string, index: number) {
   return WEEKDAYS[new Date(y, m - 1, d).getDay()]
 }
 
-/** minutos desde meia-noite de um ISO local */
+/** minutes since midnight of a local ISO timestamp */
 export function minutesOf(time: string) {
   return Number(time.slice(11, 13)) * 60 + Number(time.slice(14, 16))
 }
@@ -31,7 +31,7 @@ export function conditionLabel(f: Forecast) {
   return labelFromCode(f.current.code, f.current.isDay)
 }
 
-/** Resumo de uma linha para o card por hora — só quando há chuva a comunicar. */
+/** One-line summary for the hourly card — only when there is rain to mention. */
 export function hourlySummary(hours: HourPoint[]): string | null {
   const next = hours.slice(0, 24)
   const wetIdx = next.findIndex((h) => h.precipProbability >= 50)

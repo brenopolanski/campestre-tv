@@ -2,14 +2,14 @@ import { searchPlaces } from './openMeteo'
 import type { Place } from './types'
 
 /**
- * Localização do usuário.
- *  - ao entrar, o app pede a localização e mostra a cidade de verdade
- *  - enquanto a resposta não vem (ou se for negada), usa a cidade do fuso do aparelho
+ * The user's location.
+ *  - on entry, the app asks for the location and shows the real city
+ *  - until the answer arrives (or if it is denied), use the city for the device timezone
  */
 
 export const HERE_ID = 'here'
 
-/** Clube Campestre — cidade padrão do /clima. */
+/** Clube Campestre — default city for /clima. */
 export const CLUB_PLACE: Place = {
   id: 'campestre',
   // name: 'Campina Grande',
@@ -19,7 +19,7 @@ export const CLUB_PLACE: Place = {
   longitude: -35.874167,
 }
 
-// fusos do Brasil → capital / cidade de referência
+// Brazil timezones → capital / reference city
 const TIMEZONE_CITIES: Record<string, Omit<Place, 'id'>> = {
   'America/Sao_Paulo': {
     name: 'São Paulo',
@@ -121,7 +121,7 @@ function deviceTimezone() {
   }
 }
 
-// fuso de fora do Brasil → cidade encontrada pela busca (guardada para a próxima visita)
+// timezone outside Brazil → city found by search (saved for the next visit)
 const TZ_PLACE_KEY = 'climinha:tz-place:v1'
 
 function readTimezonePlace(tz: string): Place | null {
@@ -136,7 +136,7 @@ function readTimezonePlace(tz: string): Place | null {
   }
 }
 
-/** Cidade aproximada pelo fuso do aparelho — aparece na hora, sem pedir nada. */
+/** Approximate city from the device timezone — shows immediately, without asking. */
 export function timezonePlace(): Place {
   const tz = deviceTimezone()
   const city = TIMEZONE_CITIES[tz]
@@ -145,8 +145,8 @@ export function timezonePlace(): Place {
 }
 
 /**
- * Fuso de fora do Brasil (ex.: America/Los_Angeles): procura a cidade que dá nome ao fuso.
- * Devolve null quando a cidade do fuso já é conhecida ou a busca não encontra nada.
+ * Timezone outside Brazil (e.g. America/Los_Angeles): looks up the city named by the timezone.
+ * Returns null when that city is already known or the search finds nothing.
  */
 export async function resolveTimezonePlace(): Promise<Place | null> {
   const tz = deviceTimezone()
@@ -159,7 +159,7 @@ export async function resolveTimezonePlace(): Promise<Place | null> {
   try {
     localStorage.setItem(TZ_PLACE_KEY, JSON.stringify({ tz, place }))
   } catch {
-    // sem armazenamento: busca de novo na próxima visita
+    // no storage: search again on the next visit
   }
   return place
 }
@@ -175,7 +175,7 @@ export function getPosition(timeout = 12000): Promise<GeolocationPosition> {
   })
 }
 
-/** Já tem permissão? (para pedir a posição sem mostrar o aviso de novo) */
+/** Already granted? (so we can ask for the position without showing the prompt again) */
 export async function locationPermission(): Promise<PermissionState | 'unknown'> {
   try {
     const status = await navigator.permissions.query({ name: 'geolocation' })
@@ -210,7 +210,7 @@ async function fromBigDataCloud(
     principalSubdivision?: string
     countryName?: string
   }
-  // em capitais o "city" às vezes vem como a região metropolitana: aí o município é o "locality"
+  // in capitals "city" sometimes comes back as the metro area: then the municipality is "locality"
   const regional = /regi[aã]o|metropolitana|microrregi/i
   const name = d.city && !regional.test(d.city) ? d.city : d.locality || d.city
   if (!name) return null
@@ -238,7 +238,7 @@ async function fromNominatim(
   return { name, region: [a.state, a.country].filter(Boolean).join(', ') }
 }
 
-/** Coordenadas → nome da cidade (dois serviços gratuitos, um de reserva). */
+/** Coordinates → city name (two free services, one as a fallback). */
 export async function cityNameAt(
   lat: number,
   lon: number,
@@ -255,7 +255,7 @@ export async function cityNameAt(
   return null
 }
 
-/** Coordenadas → lugar com o nome da cidade. */
+/** Coordinates → a place with the city name. */
 export async function placeAt(latitude: number, longitude: number): Promise<Place> {
   const lat = Math.round(latitude * 1000) / 1000
   const lon = Math.round(longitude * 1000) / 1000
@@ -269,13 +269,13 @@ export async function placeAt(latitude: number, longitude: number): Promise<Plac
   }
 }
 
-/** Pede a posição e devolve a cidade onde o usuário está. */
+/** Asks for the position and returns the city where the user is. */
 export async function locateUser(): Promise<Place> {
   const pos = await getPosition()
   return placeAt(pos.coords.latitude, pos.coords.longitude)
 }
 
-/** Distância em km entre dois pontos (haversine). */
+/** Distance in km between two points (haversine). */
 export function distanceKm(
   a: { latitude: number; longitude: number },
   b: { latitude: number; longitude: number },
@@ -291,8 +291,8 @@ export function distanceKm(
 }
 
 /**
- * Acompanha a posição em tempo real. Só chama `onMove` quando a pessoa se desloca
- * de verdade (evita trocar de cidade por oscilação do GPS).
+ * Follows the position in real time. Calls `onMove` only when the person actually
+ * moves (avoids changing city because of GPS jitter).
  */
 export function watchUser(
   from: () => { latitude: number; longitude: number } | null,

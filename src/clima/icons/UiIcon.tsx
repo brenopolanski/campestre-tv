@@ -1,4 +1,4 @@
-/** Glifos de interface: traço único 1.8, cantos arredondados, mesma grade 24. */
+/** Interface glyphs: single 1.8 stroke, rounded corners, same 24 grid. */
 
 const PATHS = {
   location: (

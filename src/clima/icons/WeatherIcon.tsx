@@ -2,8 +2,8 @@ import type { WeatherKind } from '../weather/types'
 import './icons.css'
 
 /**
- * Ícones meteorológicos próprios do Climinha: preenchidos, duas cores,
- * geometria simples. Um único sistema para toda a interface.
+ * Climinha's own weather icons: filled, two colors,
+ * simple geometry. One system for the whole interface.
  */
 
 const CLOUD = 'M7.2 19h10.3a4 4 0 0 0 .55-7.96A5.6 5.6 0 0 0 7.4 9.7 4.66 4.66 0 0 0 7.2 19Z'
@@ -166,7 +166,7 @@ export function WeatherIcon({ kind, isDay = true, size = 26, className, title }:
   )
 }
 
-/** Nascer / pôr do sol para a linha do tempo por hora. */
+/** Sunrise / sunset for the hourly timeline. */
 export function SunEventIcon({ type, size = 26 }: { type: 'sunrise' | 'sunset'; size?: number }) {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} className="wi" aria-hidden="true">

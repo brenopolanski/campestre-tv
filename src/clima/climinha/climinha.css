@@ -144,7 +144,7 @@
   }
 }
 
-/* a cor do corpo comunica o clima — cruza lentamente, no ritmo do ambiente */
+/* body color communicates the weather — it crosses slowly, at the pace of the environment */
 .climinha__stop {
   transition:
     stop-color var(--motion-weather-transition) var(--ease-weather),

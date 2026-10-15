@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Chuva ambiental (fundo). As gotas do Climinha são do personagem, não daqui.
+ * Ambient rain (background). Climinha's drops belong to the character, not here.
  *
- * Onde dá (Chrome, Safari 17+, Firefox), a chuva é desenhada num Web Worker com
- * OffscreenCanvas: fora da linha principal, ela não trava o scroll nem as animações.
- * Nos outros navegadores, cai na versão na linha principal.
+ * Where it works (Chrome, Safari 17+, Firefox), rain is drawn in a Web Worker with
+ * OffscreenCanvas: off the main thread, it does not stall scroll or animations.
+ * On other browsers, it falls back to the main-thread version.
  */
 export function RainCanvas({ intensity, reduced }: { intensity: 0 | 1 | 2; reduced: boolean }) {
   const wrap = useRef<HTMLDivElement>(null)
@@ -13,7 +13,7 @@ export function RainCanvas({ intensity, reduced }: { intensity: 0 | 1 | 2; reduc
   useEffect(() => {
     const host = wrap.current
     if (!host || intensity === 0) return
-    // um canvas novo a cada efeito: um canvas só pode ser transferido para o worker uma vez
+    // a new canvas on every effect: a canvas can be transferred to the worker only once
     const canvas = document.createElement('canvas')
     canvas.className = 'env__rain-canvas'
     host.appendChild(canvas)
@@ -63,7 +63,7 @@ interface Drop {
   depth: number
 }
 
-/** Versão na linha principal, para navegadores sem OffscreenCanvas. */
+/** Main-thread version, for browsers without OffscreenCanvas. */
 function rainOnMainThread(canvas: HTMLCanvasElement, intensity: 1 | 2, reduced: boolean) {
   const ctx = canvas.getContext('2d')
   if (!ctx) return () => {}

@@ -12,7 +12,7 @@ import { RAIN_THRESHOLD } from '../weather/outlook'
 import { Card } from './primitives'
 
 /* ------------------------------------------------------------------ */
-/* Por hora                                                            */
+/* Hourly                                                              */
 /* ------------------------------------------------------------------ */
 
 type HourlyItem =
@@ -109,10 +109,10 @@ export function HourlyCard({
 }
 
 /* ------------------------------------------------------------------ */
-/* 10 dias                                                             */
+/* 10 days                                                             */
 /* ------------------------------------------------------------------ */
 
-// escala absoluta de temperatura → cor (frio azul → ameno verde → quente laranja)
+// absolute temperature scale → color (cold blue → mild green → hot orange)
 const TEMP_STOPS: [number, string][] = [
   [0, '#5aa9ff'],
   [12, '#59c8e8'],
@@ -196,7 +196,7 @@ export function DailyCard({
 }
 
 /* ------------------------------------------------------------------ */
-/* Chuva próxima (condicional)                                         */
+/* Upcoming rain (conditional)                                         */
 /* ------------------------------------------------------------------ */
 
 export function PrecipitationCard({

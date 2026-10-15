@@ -17,8 +17,8 @@ interface Props {
 export type DetailId = 'uv' | 'feels' | 'wind' | 'humidity' | 'precip' | 'sun'
 
 /**
- * Os cards de detalhe (UV, sensação, vento, umidade, precipitação, sol) como peças soltas:
- * no celular viram um grid que aparece rolando; no computador ficam em órbita do Climinha.
+ * The detail cards (UV, feels-like, wind, humidity, precipitation, sun) as loose pieces:
+ * on a phone they become a grid that appears on scroll; on a computer they orbit Climinha.
  */
 export function detailCards({
   forecast,
@@ -124,7 +124,7 @@ export function detailCards({
   }
 }
 
-/** Celular: grid de detalhes que aparece conforme o scroll. */
+/** Phone: a detail grid that appears as you scroll. */
 export function DetailGrid({ forecast, unit, order }: Props) {
   const cards = detailCards({ forecast, unit, order, reveal: true })
   return (
@@ -154,7 +154,7 @@ function UvScale({ value }: { value: number }) {
 
 function Compass({ direction }: { direction: number }) {
   const reduced = useReducedMotion()
-  // direção meteorológica = de onde vem; a seta aponta para onde vai
+  // meteorological direction = where it comes from; the arrow points where it goes
   const to = (direction + 180) % 360
   return (
     <svg
@@ -231,7 +231,7 @@ function SunCard({
       ? `Nascer: ${clockLabel(today.sunrise)}`
       : `Pôr do sol: ${clockLabel(today.sunset)}`
 
-  // posição do sol ao longo do arco (0 = nascer, 1 = pôr), fora do dia fica abaixo do horizonte
+  // sun position along the arc (0 = rise, 1 = set); outside the day it sits below the horizon
   const t = (now - rise) / Math.max(1, set - rise)
   const progress = Math.min(1.08, Math.max(-0.08, t))
 
@@ -249,7 +249,7 @@ function SunCard({
 }
 
 function SunArc({ progress }: { progress: number }) {
-  // senoide de um dia: horizonte em y=34
+  // a sine wave of one day: horizon at y=34
   const w = 140
   const h = 52
   const horizon = 34

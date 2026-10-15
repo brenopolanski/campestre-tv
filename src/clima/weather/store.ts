@@ -2,23 +2,23 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { fetchForecast } from './openMeteo'
 import type { Forecast, Place } from './types'
 
-// Chaves versionadas: mudar o formato ou os padrões invalida o que estava salvo.
-// v2 não tem cidades padrão (a primeira cidade é a do usuário) e usa Celsius.
+// Versioned keys: changing the format or the defaults invalidates what was saved.
+// v2 has no default cities (the first city is the user's) and uses Celsius.
 const PLACES_KEY = 'climinha:places:v2'
 const HERE_KEY = 'climinha:here'
 const CACHE_KEY = 'climinha:forecasts'
 const UNIT_KEY = 'climinha:unit:v2'
 const STALE_MS = 10 * 60 * 1000
-/** com o app aberto, procura dados novos neste intervalo */
+/** while the app is open, looks for fresh data on this interval */
 const REFRESH_MS = 60 * 1000
 
-/** fora do app por mais que isso: ao voltar, começa do zero na localização atual */
+/** away longer than this: on return, start fresh at the current location */
 const SESSION_GAP_MS = 30 * 60 * 1000
 const LAST_SEEN_KEY = 'climinha:last-seen'
 
 /**
- * Chamado antes do primeiro render: se a pessoa ficou um tempo fora, esquece as
- * cidades adicionadas e a última localização — o app volta a abrir onde ela está.
+ * Called before the first render: if the person was away for a while, forget the
+ * added cities and the last location — the app opens again where they are.
  */
 export function resetIfAway() {
   const last = read<number>(LAST_SEEN_KEY, 0)
@@ -27,13 +27,13 @@ export function resetIfAway() {
       localStorage.removeItem(PLACES_KEY)
       localStorage.removeItem(HERE_KEY)
     } catch {
-      // armazenamento indisponível: nada a esquecer
+      // storage unavailable: nothing to forget
     }
   }
   markSeen()
 }
 
-/** marca que o app está em uso (chamado periodicamente e ao sair) */
+/** marks that the app is in use (called periodically and on leave) */
 export function markSeen() {
   write(LAST_SEEN_KEY, Date.now())
 }
@@ -59,12 +59,12 @@ function write(key: string, value: unknown) {
   try {
     localStorage.setItem(key, JSON.stringify(value))
   } catch {
-    // armazenamento indisponível: segue só em memória
+    // storage unavailable: continue in memory only
   }
 }
 
 export function usePlaces() {
-  // só as cidades que o usuário adicionou; a cidade dele vem da localização
+  // only the cities the user added; their city comes from location
   const [places, setPlaces] = useState<Place[]>(() => read<Place[]>(PLACES_KEY, []))
 
   useEffect(() => write(PLACES_KEY, places), [places])
@@ -122,7 +122,7 @@ export function useForecasts(places: Place[]) {
       })
     } catch (err) {
       if ((err as Error).name === 'AbortError') return
-      // mantém o último dado bom
+      // keep the last good data
       setEntries((e) => ({ ...e, [place.id]: { data: e[place.id]?.data, status: 'error' } }))
     } finally {
       inflight.current.delete(place.id)
@@ -133,8 +133,8 @@ export function useForecasts(places: Place[]) {
     for (const p of places) void load(p)
   }, [places, load])
 
-  // tempo real: com o app aberto, atualiza sozinho; e também ao voltar para a aba,
-  // ao focar a janela ou quando a conexão volta (load ignora o que ainda está fresco)
+  // live: while the app is open it refreshes on its own; also when returning to the tab,
+  // focusing the window, or when the connection comes back (load skips what is still fresh)
   useEffect(() => {
     const refreshStale = () => {
       if (!document.hidden) for (const p of places) void load(p)

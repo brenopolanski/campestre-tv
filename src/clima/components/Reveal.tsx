@@ -5,14 +5,14 @@ import { motionTokens } from '../theme/motion'
 interface Props {
   children: ReactNode
   className?: string
-  /** atraso relativo dentro de uma linha (0…1): itens à direita chegam um pouco depois */
+  /** relative delay within a row (0…1): items on the right arrive a little later */
   lag?: number
 }
 
 /**
- * O bloco começa invisível abaixo da dobra e aparece quando entra na tela.
- * O scroll continua 1:1 com o dedo: a entrada é uma animação curta e própria
- * (só opacidade e transform, que a GPU compõe sem redesenhar), não presa ao scroll.
+ * The block starts invisible below the fold and appears when it enters the screen.
+ * Scroll stays 1:1 with the finger: the entrance is a short animation of its own
+ * (opacity and transform only, which the GPU composites without repainting), not tied to scroll.
  */
 export function Reveal({ children, className, lag = 0 }: Props) {
   const reduced = useReducedMotion() ?? false
