@@ -19,7 +19,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import type { ReactNode } from 'react'
 import type { CliminhaPhase } from './climinha/Climinha'
 import { NEUTRAL_STATE, climinhaFor } from './climinha/states'
 import type { Mood } from './climinha/states'
@@ -57,7 +56,7 @@ const SIMULATOR = process.env.NODE_ENV === 'development'
 /** Climinha intro: off for now */
 const SHOW_SPLASH = false
 
-export default function App({ header }: { header: ReactNode }) {
+export default function App({ header }: { header: React.ReactNode }) {
   const reduced = useReducedMotion() ?? false
   const { places: saved, addPlace, removePlace } = usePlaces()
   // device location, when the person asks; otherwise it opens at Clube Campestre

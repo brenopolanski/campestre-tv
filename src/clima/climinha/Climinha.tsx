@@ -9,7 +9,6 @@ import {
 } from 'motion/react'
 import type { MotionValue, Transition } from 'motion/react'
 import { useEffect, useId, useRef, useState } from 'react'
-import type { CSSProperties } from 'react'
 import { motionTokens } from '../theme/motion'
 import { STATIC_BODY_PATH, eyeLeanOffset, fluidBodyPath } from './fluidBody'
 import { NEUTRAL_STATE, drowsyEyes, eyesFor } from './states'
@@ -37,7 +36,7 @@ export type CliminhaPhase = 'scanning' | 'awake'
 export interface CliminhaProps {
   state: CliminhaState
   /** CSS width of the character */
-  size?: CSSProperties['width']
+  size?: React.CSSProperties['width']
   /** scanning: eyes sweep the environment (loading). awake: he noticed the user. */
   phase?: CliminhaPhase
   /** external look direction, -1…1 */
@@ -57,7 +56,7 @@ export interface CliminhaProps {
   eyeTransition?: Transition
   onTap?: () => void
   className?: string
-  style?: CSSProperties
+  style?: React.CSSProperties
 }
 
 export function Climinha({
@@ -344,7 +343,7 @@ export function Climinha({
     '--cl-contact': state.body.contactShadow,
     width: size,
     ...style,
-  } as CSSProperties
+  } as React.CSSProperties
 
   const { amplitude, period } = state.float
   const floatTransition = { duration: period, repeat: Infinity, ease: 'easeInOut' as const }

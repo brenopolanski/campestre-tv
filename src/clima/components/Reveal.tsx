@@ -1,9 +1,8 @@
 import { motion, useReducedMotion } from 'motion/react'
-import type { ReactNode } from 'react'
 import { motionTokens } from '../theme/motion'
 
 interface Props {
-  children: ReactNode
+  children: React.ReactNode
   className?: string
   /** relative delay within a row (0…1): items on the right arrive a little later */
   lag?: number

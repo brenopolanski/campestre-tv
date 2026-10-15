@@ -1,6 +1,5 @@
 'use client'
 
-import type { ComponentProps } from 'react'
 import { useEffect, useState } from 'react'
 
 import { LinkIcon, Share2Icon, TelegramIcon, WhatsappIcon } from '@/components/shared/Icons'
@@ -18,7 +17,7 @@ interface ShareButtonProps {
   url?: string
 }
 
-type OpenChangeHandler = NonNullable<ComponentProps<typeof Popover>['onOpenChange']>
+type OpenChangeHandler = NonNullable<React.ComponentProps<typeof Popover>['onOpenChange']>
 
 export const ShareButton = ({
   'aria-label': ariaLabel = 'Compartilhar',

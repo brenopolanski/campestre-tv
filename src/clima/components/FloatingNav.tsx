@@ -1,5 +1,4 @@
 import { motion } from 'motion/react'
-import type { ComponentProps } from 'react'
 import { UiIcon } from '../icons/UiIcon'
 import { motionTokens } from '../theme/motion'
 import type { Place } from '../weather/types'
@@ -15,7 +14,7 @@ interface Props {
   onSearch: () => void
   onOpenList: () => void
   listOpen: boolean
-  settings: ComponentProps<typeof SettingsMenu>
+  settings: React.ComponentProps<typeof SettingsMenu>
 }
 
 /** Dark translucent floating navigation: location · search · pages · cities · settings. */

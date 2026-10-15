@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from 'motion/react'
-import type { ReactNode } from 'react'
 import { compassLabel, uvCategory } from '../weather/conditions'
 import { clockLabel, minutesOf } from '../weather/format'
 import { toUnit } from '../weather/store'
@@ -25,7 +24,7 @@ export function detailCards({
   unit,
   order,
   reveal,
-}: Props & { reveal: boolean }): Record<DetailId, ReactNode> {
+}: Props & { reveal: boolean }): Record<DetailId, React.ReactNode> {
   const c = forecast.current
   const today = forecast.daily[0]
   const tomorrow = forecast.daily[1]

@@ -10,7 +10,6 @@ import {
 } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import type { RefObject } from 'react'
 import { Climinha } from '../climinha/Climinha'
 import type { CliminhaPhase } from '../climinha/Climinha'
 import type { CliminhaState, Mood } from '../climinha/states'
@@ -40,7 +39,7 @@ interface Geometry {
 }
 
 interface Props {
-  anchorRef: RefObject<HTMLDivElement | null>
+  anchorRef: React.RefObject<HTMLDivElement | null>
   state: CliminhaState
   phase: CliminhaPhase
   moodOverride?: Mood
@@ -49,7 +48,7 @@ interface Props {
   /** told when he is already positioned — the intro can release its character */
   onReady?: () => void
   /** intro character: the flight starts exactly where he is */
-  fromRef?: RefObject<HTMLDivElement | null>
+  fromRef?: React.RefObject<HTMLDivElement | null>
   /** offset of the drag between cities */
   swipeX?: MotionValue<number>
 }

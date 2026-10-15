@@ -1,6 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { useEffect, useState } from 'react'
-import type { RefObject } from 'react'
 import { Climinha } from '../climinha/Climinha'
 import { NEUTRAL_STATE } from '../climinha/states'
 import type { Mood } from '../climinha/states'
@@ -20,7 +19,7 @@ interface Props {
   /** the intro character leaves only when the Home one can receive him */
   characterVisible: boolean
   /** measured by the Home Climinha so the flight can start from here */
-  characterRef: RefObject<HTMLDivElement | null>
+  characterRef: React.RefObject<HTMLDivElement | null>
 }
 
 export function Splash({ visible, characterVisible, characterRef }: Props) {

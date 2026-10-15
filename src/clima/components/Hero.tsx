@@ -1,5 +1,4 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import type { RefObject } from 'react'
 import { entrance, motionTokens } from '../theme/motion'
 import { toUnit } from '../weather/store'
 import type { TemperatureUnit } from '../weather/store'
@@ -17,7 +16,7 @@ interface Props {
   data: HeroData | null
   unit: TemperatureUnit
   /** reserved spot for Climinha — TravelingCliminha positions itself from it */
-  anchorRef: RefObject<HTMLDivElement | null>
+  anchorRef: React.RefObject<HTMLDivElement | null>
   /** false while the intro covers the screen */
   revealed: boolean
   /** direction of the last city change: -1, 0, 1 */

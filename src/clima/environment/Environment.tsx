@@ -1,7 +1,6 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 import { memo, useEffect, useRef } from 'react'
-import type { CSSProperties } from 'react'
 import { motionTokens } from '../theme/motion'
 import type { WeatherTheme } from '../theme/weatherThemes'
 import { RainCanvas } from './RainCanvas'
@@ -81,7 +80,7 @@ export const Environment = memo(function Environment({ theme, onLightning }: Pro
     '--cloud-shade': a.cloudShade,
     '--horizon-glow': theme.horizonGlow,
     '--cloud-seconds': `${motionTokens.weather.ambientCloudSeconds}s`,
-  } as CSSProperties
+  } as React.CSSProperties
 
   return (
     <div className="env" style={style} aria-hidden="true" data-reduced={reduced || undefined}>
@@ -92,7 +91,7 @@ export const Environment = memo(function Environment({ theme, onLightning }: Pro
             '--sky-top': theme.skyTop,
             '--sky-mid': theme.skyMid,
             '--sky-bottom': theme.skyBottom,
-          } as CSSProperties
+          } as React.CSSProperties
         }
       />
       <div className="env__horizon" />
@@ -207,7 +206,7 @@ function CloudLayer({
               opacity: i < visible ? 1 : 0,
               // outside the current sky: stop animating and leave the composite after it fades
               ...(i < visible ? null : { visibility: 'hidden', animationPlayState: 'paused' }),
-            } as CSSProperties
+            } as React.CSSProperties
           }
         >
           <div className="env__cloud" style={{ transform: `scale(${c.scale})` }} />

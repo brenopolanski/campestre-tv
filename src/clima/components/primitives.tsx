@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react'
 import type { HTMLMotionProps } from 'motion/react'
 import { forwardRef, useContext } from 'react'
-import type { ReactNode } from 'react'
 import { UiIcon } from '../icons/UiIcon'
 import type { UiIconName } from '../icons/UiIcon'
 import { entrance, motionTokens, pressScale } from '../theme/motion'
@@ -65,7 +64,7 @@ export const PlainIconButton = forwardRef<HTMLButtonElement, PlainIconButtonProp
 interface CardProps {
   title: string
   icon?: UiIconName
-  children: ReactNode
+  children: React.ReactNode
   className?: string
   /** entrance order on the first open */
   order?: number
