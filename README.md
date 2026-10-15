@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="./public/web-app-manifest-192x192.png" alt="Campestre TV logo" width="128">
+  <a href="https://www.campestre.tv">
+    <img src="./public/web-app-manifest-192x192.png" alt="Campestre TV logo" width="128">
+  </a>
 </p>
 
 <h1 align="center">
@@ -14,7 +16,9 @@
 </p>
 
 <p align="center">
-  <img src="./preview/banner.png" alt="Campestre TV" width="100%">
+  <a href="https://www.campestre.tv">
+    <img src="./preview/banner.png" alt="Campestre TV" width="100%">
+  </a>
 </p>
 
 ## Introduction
