@@ -8,21 +8,21 @@ import { RainCanvas } from './RainCanvas'
 import './environment.css'
 
 /**
- * Ambiente meteorológico edge-to-edge, atrás de tudo.
- * Camadas: céu → sol/lua/estrelas → nuvens far/mid/near → névoa → chuva → relâmpago.
- * As cores do céu interpolam via @property; o resto entra/sai por opacidade.
+ * Edge-to-edge weather environment, behind everything.
+ * Layers: sky → sun/moon/stars → far/mid/near clouds → fog → rain → lightning.
+ * Sky colors interpolate via @property; the rest fades in and out by opacity.
  */
 
 interface CloudSpec {
   top: number // vh
   width: number // vw
-  delay: number // fração da travessia
+  delay: number // fraction of the crossing
   scale: number
 }
 
-// posições determinísticas: nada de Math.random no render
-// poucas nuvens grandes por camada: cada uma é uma camada de GPU sobreposta ao céu,
-// e no celular o custo cresce com a sobreposição (8 no total)
+// deterministic positions: no Math.random during render
+// a few large clouds per layer: each one is a GPU layer stacked on the sky,
+// and on a phone the cost grows with the overlap (8 in total)
 const FAR: CloudSpec[] = [
   { top: 6, width: 62, delay: 0.1, scale: 1 },
   { top: 30, width: 70, delay: 0.6, scale: 1.1 },
@@ -39,7 +39,7 @@ const NEAR: CloudSpec[] = [
 ]
 
 const STARS = Array.from({ length: 70 }, (_, i) => {
-  // pseudo-aleatório estável
+  // stable pseudo-random
   const r = (n: number) => {
     const x = Math.sin(i * 127.1 + n * 311.7) * 43758.5453
     return x - Math.floor(x)
@@ -68,7 +68,7 @@ export const Environment = memo(function Environment({ theme, onLightning }: Pro
   const nearY = useTransform(scrollY, (v) => v * -0.09)
   const sunY = useTransform(scrollY, (v) => v * -0.06)
 
-  // quantas nuvens de cada camada ficam visíveis
+  // how many clouds in each layer stay visible
   const farCount = Math.round(a.clouds * FAR.length)
   const midCount = Math.round(Math.max(0, a.clouds - 0.25) * 1.34 * MID.length)
   const nearCount = Math.round(Math.max(0, a.clouds - 0.55) * 2.2 * NEAR.length)
@@ -97,7 +97,7 @@ export const Environment = memo(function Environment({ theme, onLightning }: Pro
       />
       <div className="env__horizon" />
 
-      {/* sol: disco suave fora do centro, parcialmente ocluído pelas nuvens */}
+      {/* sun: a soft disc off center, partly hidden by the clouds */}
       <motion.div
         className="env__sun"
         style={{ y: sunY }}
@@ -161,10 +161,10 @@ export const Environment = memo(function Environment({ theme, onLightning }: Pro
 
       <CloudLayer specs={NEAR} visible={nearCount} depth="near" y={nearY} />
 
-      {/* contraste dinâmico: o próprio céu escurece de leve atrás do hero */}
+      {/* dynamic contrast: the sky itself darkens slightly behind the hero */}
       <div className="env__scrim" />
 
-      {/* granulado de papel sobre o céu: estático, dá textura de ilustração impressa */}
+      {/* paper grain over the sky: static, gives a printed-illustration texture */}
       <div className="env__grain" />
 
       {a.lightning && !reduced && <Lightning active onFlash={onLightning} />}
@@ -173,8 +173,8 @@ export const Environment = memo(function Environment({ theme, onLightning }: Pro
 })
 
 /**
- * Opacidade de uma camada do céu. Ao chegar a zero ela fica `visibility: hidden`:
- * o navegador deixa de compor a camada (e as animações dela) até ela voltar.
+ * Opacity of a sky layer. At zero it becomes `visibility: hidden`:
+ * the browser stops compositing the layer (and its animations) until it returns.
  */
 function layer(opacity: number) {
   return opacity > 0
@@ -205,7 +205,7 @@ function CloudLayer({
               '--w': `max(${c.width}vw, ${Math.round(c.width * 5.2)}px)`,
               '--delay': c.delay,
               opacity: i < visible ? 1 : 0,
-              // fora do céu atual: para de animar e sai da composição depois de sumir
+              // outside the current sky: stop animating and leave the composite after it fades
               ...(i < visible ? null : { visibility: 'hidden', animationPlayState: 'paused' }),
             } as CSSProperties
           }
@@ -217,7 +217,7 @@ function CloudLayer({
   )
 }
 
-/** Iluminação atmosférica curta — não é flash branco de tela inteira. */
+/** A short atmospheric light — not a full-screen white flash. */
 function Lightning({ active, onFlash }: { active: boolean; onFlash?: () => void }) {
   const ref = useRef<HTMLDivElement>(null)
   const flashRef = useRef(onFlash)

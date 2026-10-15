@@ -18,7 +18,7 @@ interface Props {
   settings: ComponentProps<typeof SettingsMenu>
 }
 
-/** Navegação flutuante escura e translúcida: localização · busca · páginas · cidades · ajustes. */
+/** Dark translucent floating navigation: location · search · pages · cities · settings. */
 export function FloatingNav({
   places,
   index,

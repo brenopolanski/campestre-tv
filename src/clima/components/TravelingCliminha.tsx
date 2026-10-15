@@ -17,20 +17,20 @@ import type { CliminhaState, Mood } from '../climinha/states'
 import { motionTokens } from '../theme/motion'
 
 /**
- * O Climinha que acompanha a interface.
- *  - topo: ocupa o lugar reservado no hero
- *  - rolando: se solta e pousa em cima da barra de navegação, centralizado
- *  - arrastando entre cidades: fica centralizado, acompanha o gesto só de leve e
- *    inclina o corpo com a inércia (a tela é que vai para o lado)
- * A velocidade do scroll inclina e estica o corpo; molas dão o atraso de nuvem.
+ * The Climinha that follows the interface.
+ *  - top: occupies the spot reserved in the hero
+ *  - scrolling: lets go and lands on top of the navigation bar, centered
+ *  - dragging between cities: stays centered, follows the gesture only slightly, and
+ *    tilts his body with the inertia (the screen is what moves sideways)
+ * Scroll speed tilts and stretches the body; springs give the cloud-like lag.
  */
 
 const RATIO = 182 / 240
-const DOCK_TRAVEL = 0.6 // fração da altura da tela até ele pousar na barra
-const SWIPE_FOLLOW = 0.18 // quanto do arraste ele acompanha (o resto vira inclinação)
+const DOCK_TRAVEL = 0.6 // fraction of the screen height until he lands on the bar
+const SWIPE_FOLLOW = 0.18 // how much of the drag he follows (the rest becomes tilt)
 
 interface Geometry {
-  // âncora no documento (scroll = 0, página sem deslocamento lateral)
+  // anchor in the document (scroll = 0, page with no sideways offset)
   anchorX: number
   anchorY: number
   anchorW: number
@@ -44,13 +44,13 @@ interface Props {
   state: CliminhaState
   phase: CliminhaPhase
   moodOverride?: Mood
-  /** troca de cidade: remede a âncora */
+  /** city change: remeasure the anchor */
   layoutKey: string
-  /** avisado quando já está posicionado — a intro pode soltar o personagem dela */
+  /** told when he is already positioned — the intro can release its character */
   onReady?: () => void
-  /** personagem da intro: o voo começa exatamente de onde ele está */
+  /** intro character: the flight starts exactly where he is */
   fromRef?: RefObject<HTMLDivElement | null>
-  /** deslocamento do arraste entre cidades */
+  /** offset of the drag between cities */
   swipeX?: MotionValue<number>
 }
 
@@ -72,13 +72,13 @@ export function TravelingCliminha({
   const fallbackSwipe = useMotionValue(0)
   const swipe = swipeX ?? fallbackSwipe
 
-  // --- medidas ---------------------------------------------------------------
+  // --- measurements ----------------------------------------------------------
   useLayoutEffect(() => {
     const measure = () => {
       const el = anchorRef.current
       if (!el) return
-      // posição de layout (offsetLeft/Top ignoram transforms): a página pode estar
-      // deslocada pelo arraste ou no meio de uma animação quando medimos
+      // layout position (offsetLeft/Top ignore transforms): the page may be
+      // shifted by the drag or mid-animation when we measure
       let left = 0
       let top = 0
       for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) {
@@ -105,7 +105,7 @@ export function TravelingCliminha({
     }
   }, [anchorRef, layoutKey])
 
-  // --- posição alvo a partir do scroll ----------------------------------------
+  // --- target position from scroll -------------------------------------------
   const rawX = useMotionValue(0)
   const rawY = useMotionValue(0)
   const rawScale = useMotionValue(1)
@@ -121,7 +121,7 @@ export function TravelingCliminha({
     if (!geo) return
     const heroW = geo.anchorW
     const travel = Math.max(1, geo.vh * DOCK_TRAVEL)
-    // pousado em cima da barra, centralizado
+    // landed on top of the bar, centered
     const dw = geo.vw >= 1024 ? 76 : 58
     const dx = geo.vw / 2 - dw / 2
     const dy = geo.navTop - dw * RATIO + 10
@@ -148,7 +148,7 @@ export function TravelingCliminha({
       }
       if (!first || landed.current) return
       landed.current = true
-      // vindo da intro: começa no tamanho/posição do close-up e encolhe devagar até o hero
+      // coming from the intro: starts at the close-up size/position and shrinks slowly to the hero
       const from = fromRef?.current?.getBoundingClientRect()
       if (from && from.width > 0) {
         x.jump(from.left)
@@ -159,7 +159,7 @@ export function TravelingCliminha({
         void animate(y, ty, t)
         void animate(scale, ts, t)
         setLanding(true)
-        // a camada alta vale só durante o voo — por tempo, sem depender do fim da animação
+        // the high layer lasts only during the flight — by time, without waiting for the animation to end
         window.setTimeout(() => setLanding(false), 1600)
       } else {
         x.jump(tx)
@@ -172,14 +172,14 @@ export function TravelingCliminha({
     return scrollY.on('change', (s) => place(s, false))
   }, [geo, scrollY, reduced, rawX, rawY, rawScale, progress, x, y, scale, fromRef])
 
-  // --- arraste: acompanha só de leve; a velocidade do gesto vira inércia no corpo ---
+  // --- drag: follows only slightly; gesture speed becomes inertia in the body ---
   const screenX = useTransform(() => x.get() + swipe.get() * SWIPE_FOLLOW)
   const swipeVelocity = useVelocity(swipe)
   const leanRaw = useTransform(swipeVelocity, [-2200, 0, 2200], [-1, 0, 1], { clamp: true })
-  // mola pouco amortecida: depois de parar ele ainda balança um pouco, como gelatina
+  // lightly damped spring: after stopping he still sways a little, like jelly
   const lean = useSpring(leanRaw, motionTokens.climinha.jelly)
 
-  // --- inclinação e esticada pela velocidade do scroll ----------------------
+  // --- tilt and stretch from scroll speed ------------------------------------
   const velocity = useVelocity(scrollY)
   const tiltRaw = useTransform(velocity, [-2400, 0, 2400], [7, 0, -7], { clamp: true })
   const stretchRaw = useTransform(velocity, [-2400, 0, 2400], [1.06, 1, 1.06], { clamp: true })
@@ -187,7 +187,7 @@ export function TravelingCliminha({
   const scaleY = useSpring(stretchRaw, motionTokens.climinha.soft)
   const scaleX = useTransform(scaleY, (v) => 2 - v)
 
-  // --- olhar: cursor no topo; pousado na barra, olha para o conteúdo acima -----
+  // --- look: cursor at the top; landed on the bar, he looks at the content above -----
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
   useEffect(() => {
@@ -202,7 +202,7 @@ export function TravelingCliminha({
 
   const lookX = useTransform(() => {
     const e = progress.get()
-    // arrastando, olha para onde a tela vai
+    // while dragging, he looks where the screen is going
     const drag = Math.max(-1, Math.min(1, -swipe.get() / 300))
     return pointerX.get() * (1 - e) * 0.6 + drag * 0.8 + pointerX.get() * 0.4
   })
@@ -222,7 +222,7 @@ export function TravelingCliminha({
   return (
     <motion.div
       className="traveler"
-      // pousando: por cima do céu da intro (que ainda está sumindo); depois volta para baixo da barra
+      // landing: above the intro sky (which is still fading); then he goes back under the bar
       style={{
         x: screenX,
         y,

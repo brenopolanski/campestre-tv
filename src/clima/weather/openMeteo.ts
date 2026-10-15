@@ -58,7 +58,7 @@ export async function fetchForecast(place: Place, signal?: AbortSignal): Promise
   const code = Number(c.weather_code)
 
   const hourTimes = data.hourly.time as string[]
-  // primeira hora cheia que contém "agora"
+  // first full hour that contains "now"
   const nowHour = currentTime.slice(0, 13)
   const start = Math.max(
     0,

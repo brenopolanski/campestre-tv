@@ -1,4 +1,4 @@
 import { createContext } from 'react'
 
-/** true na primeira abertura: cards seguem a sequência completa de entrada. */
+/** true on the first open: cards follow the full entrance sequence. */
 export const FirstRunContext = createContext(true)

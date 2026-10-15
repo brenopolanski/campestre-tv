@@ -46,21 +46,21 @@ import './app.css'
 
 const LOADING_THEME = getTheme('clear', true)
 
-// a lista de cidades (com busca) só é baixada quando abre pela primeira vez
+// the city list (with search) is downloaded only the first time it opens
 const CitiesSheet = lazy(() =>
   import('./components/CitiesSheet').then((m) => ({ default: m.CitiesSheet })),
 )
 
-/** simulador de clima: só no ambiente local */
+/** weather simulator: local environment only */
 const SIMULATOR = process.env.NODE_ENV === 'development'
 
-/** intro do Climinha: desligada por enquanto */
+/** Climinha intro: off for now */
 const SHOW_SPLASH = false
 
 export default function App({ header }: { header: ReactNode }) {
   const reduced = useReducedMotion() ?? false
   const { places: saved, addPlace, removePlace } = usePlaces()
-  // localização do aparelho, quando a pessoa pede; senão abre no Clube Campestre
+  // device location, when the person asks; otherwise it opens at Clube Campestre
   const [here, setHere] = useState<Place | null>(readHere)
   const places = useMemo(() => {
     const extras = saved.filter((p) => p.id !== CLUB_PLACE.id && p.id !== here?.id)
@@ -77,7 +77,7 @@ export default function App({ header }: { header: ReactNode }) {
   const place = places[safeIndex]
   const entry = entries[place.id]
 
-  // simulador de clima (?weather=, ?temp=, ?debug): só no ambiente local, nunca no site publicado
+  // weather simulator (?weather=, ?temp=, ?debug): local environment only, never on the published site
   const debug = useMemo(
     () => SIMULATOR && new URLSearchParams(window.location.search).has('debug'),
     [],
@@ -85,8 +85,8 @@ export default function App({ header }: { header: ReactNode }) {
   const [simulation, setSimulation] = useState<Simulation | null>(() =>
     SIMULATOR ? simulationFromUrl() : null,
   )
-  // relógio: a cada 30 s a previsão é ajustada à hora real da cidade (dia/noite, "Agora", "Hoje")
-  // e o app marca que está em uso (o "começar do zero" só vale depois de um tempo fora)
+  // clock: every 30 s the forecast is adjusted to the city's real time (day/night, "Agora", "Hoje")
+  // and the app marks that it is in use ("start from scratch" only applies after time away)
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -108,7 +108,7 @@ export default function App({ header }: { header: ReactNode }) {
     return simulation ? applySimulation(live, simulation) : live
   }, [entry?.data, simulation, now])
 
-  // --- ambiente + personagem derivados do clima ---------------------------
+  // --- environment + character derived from the weather ----------------------
   const theme = useMemo(
     () => (forecast ? getTheme(forecast.current.kind, forecast.current.isDay) : LOADING_THEME),
     [forecast],
@@ -123,8 +123,8 @@ export default function App({ header }: { header: ReactNode }) {
     [forecast],
   )
 
-  // abertura em tela cheia: fica no mínimo um instante e sai quando há dados
-  // (ou depois de um limite, para não prender o usuário sem conexão)
+  // full-screen open: stays at least a moment and leaves when there is data
+  // (or after a limit, so the user is not stuck without a connection)
   const [splash, setSplash] = useState(SHOW_SPLASH)
   const [splashMinDone, setSplashMinDone] = useState(false)
   useEffect(() => {
@@ -136,14 +136,14 @@ export default function App({ header }: { header: ReactNode }) {
     }
   }, [reduced])
   const hasData = !!forecast || entry?.status === 'error'
-  // a página com os dados é montada e assentada (layout pesado) ainda com a intro parada;
-  // o voo só começa depois, para nunca disputar o quadro com esse trabalho
+  // the page with the data is mounted and settled (heavy layout) while the intro is still still;
+  // the flight starts only after that, so it never fights this work for a frame
   const [dataSettled, setDataSettled] = useState(false)
   useEffect(() => {
     if (!hasData || dataSettled) return
     let raf = 0
     const t = window.setTimeout(() => {
-      // dois quadros depois do layout: a página já foi pintada
+      // two frames after layout: the page has already been painted
       raf = requestAnimationFrame(() => requestAnimationFrame(() => setDataSettled(true)))
     }, 350)
     return () => {
@@ -153,11 +153,11 @@ export default function App({ header }: { header: ReactNode }) {
   }, [hasData, dataSettled])
   if (splash && splashMinDone && dataSettled) setSplash(false)
 
-  // a intro já é o "notice-user": na Home ele chega acordado
+  // the intro is already the "notice-user": on Home he arrives awake
   const phase: CliminhaPhase = 'awake'
 
-  // os cards abaixo da dobra só aparecem rolando: não precisam existir na abertura.
-  // Montá-los depois do pouso (com o navegador ocioso) tira o maior layout de cima da intro.
+  // cards below the fold only appear on scroll: they do not need to exist at open.
+  // Mounting them after landing (while the browser is idle) takes the biggest layout off the intro.
   const [mountRest, setMountRest] = useState(false)
   useEffect(() => {
     if (mountRest || splash) return
@@ -185,7 +185,7 @@ export default function App({ header }: { header: ReactNode }) {
     return () => window.clearTimeout(t)
   }, [splash])
 
-  // reações curtas: relâmpago assusta, erro confunde
+  // short reactions: lightning scares, an error confuses
   const [flash, setFlash] = useState<Mood | undefined>()
   const flashTimer = useRef(0)
   const react = useCallback((mood: Mood, ms = 700) => {
@@ -205,9 +205,9 @@ export default function App({ header }: { header: ReactNode }) {
       }
     : null
 
-  // --- navegação entre cidades --------------------------------------------
-  // páginas: a tela inteira acompanha o arraste (dedo, mouse, trackpad) e encaixa
-  // pela distância ou velocidade. Troca = página sai para um lado, a próxima entra pelo outro.
+  // --- navigation between cities ---------------------------------------------
+  // pages: the whole screen follows the drag (finger, mouse, trackpad) and snaps
+  // by distance or speed. A change = the page leaves one side, the next enters from the other.
   const swipeX = useMotionValue(0)
   const pageOpacity = useTransform(
     swipeX,
@@ -271,7 +271,7 @@ export default function App({ header }: { header: ReactNode }) {
     [canNext, canPrev, goTo, safeIndex, settle],
   )
 
-  // arraste com dedo ou mouse: trava a direção nos primeiros pixels; vertical fica com o scroll nativo
+  // finger or mouse drag: lock the direction in the first pixels; vertical stays with native scroll
   const drag = useRef<{
     x0: number
     y0: number
@@ -280,7 +280,7 @@ export default function App({ header }: { header: ReactNode }) {
   } | null>(null)
   const dragged = useRef(false)
   const onPointerDown = (e: React.PointerEvent) => {
-    // só dá para arrastar para o lado quando há outra cidade para onde ir
+    // you can only drag sideways when there is another city to go to
     if (!canSwipe || switching.current || e.button !== 0) return
     if ((e.target as HTMLElement).closest('[data-hscroll], input, a')) return
     drag.current = { x0: e.clientX, y0: e.clientY, lock: null, samples: [[e.clientX, e.timeStamp]] }
@@ -301,7 +301,7 @@ export default function App({ header }: { header: ReactNode }) {
         return
       } else return
     }
-    // pontas: resistência elástica
+    // edges: elastic resistance
     const edge = (dx > 0 && !canPrev) || (dx < 0 && !canNext)
     swipeX.set(edge ? dx * 0.22 : dx)
     d.samples.push([e.clientX, e.timeStamp])
@@ -315,7 +315,7 @@ export default function App({ header }: { header: ReactNode }) {
     const dt = Math.max(1, e.timeStamp - t0)
     release(e.clientX - d.x0, ((e.clientX - x0) / dt) * 1000)
   }
-  // depois de arrastar, o "click" que o navegador dispara não deve acionar nada
+  // after a drag, the "click" the browser fires must not activate anything
   const onClickCapture = (e: React.MouseEvent) => {
     if (dragged.current) {
       e.stopPropagation()
@@ -324,7 +324,7 @@ export default function App({ header }: { header: ReactNode }) {
     }
   }
 
-  // trackpad: gesto horizontal de dois dedos
+  // trackpad: a horizontal two-finger gesture
   useEffect(() => {
     let idle = 0
     let lockedUntil = 0
@@ -335,14 +335,14 @@ export default function App({ header }: { header: ReactNode }) {
       if (switching.current || performance.now() < lockedUntil) return
       const w = window.innerWidth
       let x = swipeX.get() - e.deltaX
-      // nas pontas, resistência elástica
+      // at the edges, elastic resistance
       if ((x > 0 && !canPrev) || (x < 0 && !canNext)) x = swipeX.get() - e.deltaX * 0.25
       swipeX.set(Math.max(-w * 0.6, Math.min(w * 0.6, x)))
       window.clearTimeout(idle)
       const commit = () => {
         const v = swipeX.get()
         const dir = v < -w * 0.14 ? 1 : v > w * 0.14 ? -1 : 0
-        lockedUntil = performance.now() + 700 // ignora a inércia do trackpad
+        lockedUntil = performance.now() + 700 // ignore trackpad inertia
         release(dir === 0 ? 0 : -dir * w, 0)
       }
       if (Math.abs(swipeX.get()) > w * 0.32) commit()
@@ -355,7 +355,7 @@ export default function App({ header }: { header: ReactNode }) {
     }
   }, [swipeX, canPrev, canNext, canSwipe, release])
 
-  // --- localização ---------------------------------------------------------
+  // --- location --------------------------------------------------------------
   const [locating, setLocating] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
   useEffect(() => {
@@ -374,7 +374,7 @@ export default function App({ header }: { header: ReactNode }) {
     [refresh],
   )
 
-  // botão de localização: busca de novo e vai para a cidade do usuário
+  // location button: searches again and goes to the user's city
   const locate = async () => {
     setLocating(true)
     try {
@@ -390,7 +390,7 @@ export default function App({ header }: { header: ReactNode }) {
   }
 
   const [listOpen, setListOpen] = useState(false)
-  // depois de aberta uma vez, a lista fica montada (fecha com animação)
+  // after it has been opened once, the list stays mounted (it closes with an animation)
   const [sheetUsed, setSheetUsed] = useState(false)
   if (listOpen && !sheetUsed) setSheetUsed(true)
   const anchorRef = useRef<HTMLDivElement>(null)
@@ -403,7 +403,7 @@ export default function App({ header }: { header: ReactNode }) {
     const i = places.findIndex((x) => x.id === p.id)
     if (i >= 0) goTo(i)
     else {
-      // cidade recém-adicionada entra no fim da lista
+      // a newly added city goes to the end of the list
       setDirection(1)
       setIndex(places.length)
     }
@@ -451,7 +451,7 @@ export default function App({ header }: { header: ReactNode }) {
           </motion.button>
         )}
 
-        {/* montado por trás da intro (sem custo na hora do voo); aparece quando ela sai */}
+        {/* mounted behind the intro (no cost during the flight); appears when it leaves */}
         <motion.div
           key={place.id + (forecast ? '' : '-empty')}
           className="content"
@@ -463,7 +463,7 @@ export default function App({ header }: { header: ReactNode }) {
         >
           {forecast ? (
             <>
-              {/* na tela de cara: só o hero e os 10 dias. o resto aparece rolando */}
+              {/* on screen first: only the hero and the 10 days. the rest appears on scroll */}
               <DailyCard forecast={forecast} unit={unit} order={0} />
               {mountRest && (
                 <>
@@ -567,7 +567,7 @@ export default function App({ header }: { header: ReactNode }) {
   )
 }
 
-/** Placeholders estáticos e translúcidos com a geometria dos cards. */
+/** Static, translucent placeholders with the cards' geometry. */
 function SkeletonCards() {
   return (
     <div className="skeletons" aria-hidden="true">

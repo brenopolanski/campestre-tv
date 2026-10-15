@@ -17,15 +17,15 @@ import type { CliminhaState, EyeShape, Mood } from './states'
 import './climinha.css'
 
 /**
- * Climinha provisório em SVG + Motion.
- * A API (state, phase, look, onTap) é a mesma que o futuro componente Rive vai expor.
+ * Provisional Climinha in SVG + Motion.
+ * The API (state, phase, look, onTap) is the same one the future Rive component will expose.
  */
 
-// Silhueta: domo central alto, lóbulos laterais baixos, base larga levemente ondulada.
-// Com movimento, o contorno é recalculado a cada quadro (fluidBody.ts).
+// Silhouette: a tall central dome, low side lobes, a wide slightly wavy base.
+// While moving, the outline is recalculated every frame (fluidBody.ts).
 const BODY_PATH = STATIC_BODY_PATH
 
-/** quanto tempo ele olha para o céu antes de reagir ao clima (ms) */
+/** how long he looks at the sky before reacting to the weather (ms) */
 const PERCEIVE_MS = 1300
 
 const EYE_LEFT = { x: 114, y: 86 }
@@ -36,24 +36,24 @@ export type CliminhaPhase = 'scanning' | 'awake'
 
 export interface CliminhaProps {
   state: CliminhaState
-  /** largura CSS do personagem */
+  /** CSS width of the character */
   size?: CSSProperties['width']
-  /** scanning: olhos varrem o ambiente (carregando). awake: percebeu o usuário. */
+  /** scanning: eyes sweep the environment (loading). awake: he noticed the user. */
   phase?: CliminhaPhase
-  /** direção do olhar externa, -1…1 */
+  /** external look direction, -1…1 */
   lookX?: MotionValue<number>
   lookY?: MotionValue<number>
-  /** flutuação, piscadas, gotas */
+  /** float, blinks, drops */
   ambient?: boolean
-  /** humor temporário sobrepondo o do clima (reações) */
+  /** temporary mood on top of the weather's (reactions) */
   moodOverride?: Mood
-  /** -1…1: inércia lateral — o corpo "fica para trás" como gelatina */
+  /** -1…1: sideways inertia — the body "lags behind" like jelly */
   lean?: MotionValue<number>
-  /** contorno ondulando a cada quadro (desligado no close-up da intro: caro em tamanho gigante) */
+  /** outline waving every frame (off in the intro close-up: expensive at huge size) */
   fluid?: boolean
-  /** chega neutro, olha para o céu e só então reage ao clima (e de novo a cada mudança) */
+  /** arrives neutral, looks at the sky, and only then reacts to the weather (and again on every change) */
   perceive?: boolean
-  /** transição dos olhos (ex.: piscadinha lenta e suave da intro) */
+  /** eye transition (e.g. the intro's slow, soft wink) */
   eyeTransition?: Transition
   onTap?: () => void
   className?: string
@@ -80,9 +80,9 @@ export function Climinha({
   const reduced = useReducedMotion() ?? false
   const live = ambient && !reduced
 
-  // --- perceber o clima ------------------------------------------------------
-  // mostra o estado anterior (ou neutro, na chegada) enquanto olha para o céu;
-  // depois de um instante assume o clima novo — cor, humor e efeitos.
+  // --- noticing the weather ---------------------------------------------------
+  // shows the previous state (or neutral, on arrival) while he looks at the sky;
+  // after a moment he takes on the new weather — color, mood, and effects.
   const keyOf = (c: CliminhaState) => `${c.mood}|${c.body.light}|${c.temp ?? ''}`
   const [shown, setShown] = useState<CliminhaState>(() =>
     perceive && !reduced ? NEUTRAL_STATE : target,
@@ -97,8 +97,8 @@ export function Climinha({
 
   const [reaction, setReaction] = useState<Mood | null>(null)
 
-  // dormindo: o toque acorda. 10 s sem interação → sonolento (pisca devagar);
-  // 20 s sem interação → volta a dormir.
+  // sleeping: a tap wakes him. 10 s with no interaction → sleepy (blinks slowly);
+  // 20 s with no interaction → he goes back to sleep.
   const [wake, setWake] = useState<'asleep' | 'awake' | 'drowsy'>('asleep')
   const wakeTimers = useRef<number[]>([])
   const clearWakeTimers = () => {
@@ -106,7 +106,7 @@ export function Climinha({
     wakeTimers.current = []
   }
   useEffect(() => clearWakeTimers, [])
-  // mudou o clima ou amanheceu: o ciclo recomeça do zero
+  // the weather changed or day broke: the cycle starts over from zero
   const [sleepKey, setSleepKey] = useState(state.mood)
   if (sleepKey !== state.mood) {
     setSleepKey(state.mood)
@@ -124,7 +124,7 @@ export function Climinha({
   const mood =
     reaction ?? moodOverride ?? (perceiving ? 'neutral' : null) ?? sleepingMood ?? state.mood
 
-  // sonolento: as pálpebras descem aos poucos ao longo dos 10 s
+  // sleepy: the eyelids lower gradually over the 10 s
   const [drowse, setDrowse] = useState(0)
   useEffect(() => {
     if (wake !== 'drowsy') return
@@ -133,7 +133,7 @@ export function Climinha({
     return () => window.clearInterval(id)
   }, [wake])
   const drowsy = mood === 'sleepy' && wake === 'drowsy'
-  // acabou de cair no sono: a transição para os olhos fechados também é lenta
+  // just fell asleep: the transition to closed eyes is slow too
   const [justSlept, setJustSlept] = useState(false)
   const [prevWake, setPrevWake] = useState(wake)
   if (prevWake !== wake) {
@@ -143,7 +143,7 @@ export function Climinha({
   const [leftEye, rightEye] = drowsy ? drowsyEyes(drowse) : eyesFor(mood)
   const slowEyes = drowsy || justSlept
 
-  // --- olhar -------------------------------------------------------------
+  // --- look -------------------------------------------------------------------
   const fallbackX = useMotionValue(0)
   const fallbackY = useMotionValue(0)
   const extX = lookX ?? fallbackX
@@ -155,12 +155,12 @@ export function Climinha({
   const eyeX = useSpring(sumX, motionTokens.climinha.eyes)
   const eyeY = useSpring(sumY, motionTokens.climinha.eyes)
 
-  // --- corpo: reações (notice, tap, mudança de clima) ---------------------
+  // --- body: reactions (notice, tap, weather change) --------------------------
   const body = useAnimationControls()
   const prevPhase = useRef(phase)
   const prevMood = useRef(state.mood)
 
-  // carregando: olhos varrem devagar de um lado para o outro
+  // loading: eyes sweep slowly from one side to the other
   useEffect(() => {
     if (phase !== 'scanning') return
     if (reduced) {
@@ -177,7 +177,7 @@ export function Climinha({
     return () => window.clearInterval(id)
   }, [phase, reduced, innerX, innerY])
 
-  // scanning → awake: "notice-user" — olha para o usuário, pulinho, pisca
+  // scanning → awake: "notice-user" — looks at the user, a little hop, a blink
   useEffect(() => {
     const was = prevPhase.current
     prevPhase.current = phase
@@ -196,7 +196,7 @@ export function Climinha({
     return () => window.clearTimeout(t)
   }, [phase, reduced, body, innerX, innerY])
 
-  // percebendo: olha para cima e corre os olhos pelo céu
+  // noticing: looks up and runs his eyes across the sky
   useEffect(() => {
     if (!perceiving) return
     innerY.set(-0.9)
@@ -214,7 +214,7 @@ export function Climinha({
     }
   }, [perceiving, innerX, innerY])
 
-  // clima mudou: reação proporcional ao peso do novo clima
+  // weather changed: a reaction proportional to the weight of the new weather
   useEffect(() => {
     if (prevMood.current === state.mood) return
     prevMood.current = state.mood
@@ -236,7 +236,7 @@ export function Climinha({
     }
   }, [state.mood, state.heavy, reduced, body])
 
-  // toque: reação no lugar — nada se desloca, só o corpo amassa e volta
+  // tap: a reaction in place — nothing moves, only the body squashes and returns
   function handleTap() {
     onTap?.()
     if (!reduced) {
@@ -247,7 +247,7 @@ export function Climinha({
       })
     }
     if (state.mood === 'sleeping') {
-      // acorda (um instante surpreso) e reinicia a contagem para voltar a dormir
+      // wakes (surprised for a moment) and restarts the countdown back to sleep
       if (wake === 'asleep') setReaction('surprised')
       setWake('awake')
       clearWakeTimers()
@@ -262,13 +262,13 @@ export function Climinha({
     window.setTimeout(() => setReaction(null), 1000)
   }
 
-  // --- piscar -------------------------------------------------------------
+  // --- blink ------------------------------------------------------------------
   const [blink, setBlink] = useState(false)
   useEffect(() => {
     if (!live || phase === 'scanning') return
     let timer = 0
     if (drowsy) {
-      // pálpebras pesadas: fecha devagar, demora a abrir
+      // heavy eyelids: closes slowly, takes a while to open
       const heavy = () => {
         timer = window.setTimeout(
           () => {
@@ -287,7 +287,7 @@ export function Climinha({
         () => {
           setBlink(true)
           window.setTimeout(() => setBlink(false), 110)
-          // às vezes pisca duas vezes
+          // sometimes blinks twice
           if (Math.random() < 0.22) {
             window.setTimeout(() => setBlink(true), 240)
             window.setTimeout(() => setBlink(false), 350)
@@ -301,7 +301,7 @@ export function Climinha({
     return () => window.clearTimeout(timer)
   }, [live, phase, drowsy])
 
-  // --- corpo fluido ----------------------------------------------------------
+  // --- fluid body -------------------------------------------------------------
   const bodyRefs = useRef<(SVGPathElement | null)[]>([])
   const setBodyRef = (i: number) => (el: SVGPathElement | null) => {
     bodyRefs.current[i] = el
@@ -315,11 +315,11 @@ export function Climinha({
   const lastFluid = useRef(0)
   useAnimationFrame((ms) => {
     if (!live || !fluid) return
-    // ondulação lenta: ~30 fps bastam e economizam metade das repinturas (celulares)
+    // slow wave: ~30 fps is enough and saves half the repaints (phones)
     if (ms - lastFluid.current < 32) return
     lastFluid.current = ms
     const t = ms / 1000
-    // balanço lento mesmo parado: nuvem nunca fica rígida
+    // a slow sway even when still: a cloud is never rigid
     idleLean.set(Math.sin(t * 0.55) * 0.12)
     const d = fluidBodyPath(t, waveAmp, totalLean.get())
     for (const el of bodyRefs.current) el?.setAttribute('d', d)
@@ -419,10 +419,10 @@ export function Climinha({
         </clipPath>
       </defs>
 
-      {/* halo atmosférico: separa o corpo do céu sem outline */}
+      {/* atmospheric halo: separates the body from the sky without an outline */}
       <ellipse cx="120" cy="88" rx="120" ry="88" fill={`url(#${uid}-halo)`} />
 
-      {/* sombra de contato — encolhe quando ele sobe */}
+      {/* contact shadow — shrinks when he rises */}
       <motion.ellipse
         cx="120"
         cy="166"
@@ -439,7 +439,7 @@ export function Climinha({
         animate={live ? { y: [0, -amplitude, 0] } : { y: 0 }}
         transition={live ? floatTransition : undefined}
       >
-        {/* tremor: medo do raio (de tempos em tempos), frio (às vezes), muito frio (sem parar, encolhido) */}
+        {/* shiver: fear of lightning (now and then), cold (sometimes), very cold (nonstop, hunched) */}
         <motion.g
           style={{ originX: '50%', originY: '100%' }}
           animate={{
@@ -559,7 +559,7 @@ interface EyeProps {
   shape: EyeShape
   side: 'left' | 'right'
   blink: boolean
-  /** piscada lenta de sono */
+  /** slow sleepy blink */
   slow?: boolean
   transition?: Transition
   x: MotionValue<number>
@@ -577,7 +577,7 @@ function Eye({ cx, cy, shape, side, blink, slow, transition, x, y }: EyeProps) {
   const mid = (yLeft + yRight) / 2 + curve * 2
   const lidClip = `M ${-half - 2} ${yLeft} Q 0 ${mid} ${half + 2} ${yRight} L ${half + 2} 40 L ${-half - 2} 40 Z`
   const lidLine = `M ${-half} ${yLeft} Q 0 ${mid} ${half} ${yRight}`
-  // sono: tudo devagar e contínuo; o resto usa a mola dos olhos
+  // sleep: everything slow and continuous; the rest uses the eye spring
   const t = transition ?? (slow ? motionTokens.climinha.drowsy : motionTokens.climinha.eyes)
 
   return (
@@ -612,7 +612,7 @@ function Eye({ cx, cy, shape, side, blink, slow, transition, x, y }: EyeProps) {
             animate={{ d: lidLine, opacity: lidded && !shape.arc && !shape.noLine ? 1 : 0 }}
             transition={t}
           />
-          {/* feliz: ∩ */}
+          {/* happy: ∩ */}
           <motion.path
             d="M -9 5 C -9 -11 9 -11 9 5"
             stroke="#000000"
@@ -626,7 +626,7 @@ function Eye({ cx, cy, shape, side, blink, slow, transition, x, y }: EyeProps) {
             }}
             transition={shape.lid > 0 && shape.arc ? { ...t, delay: 0.12 } : t}
           />
-          {/* dormindo: ‿ */}
+          {/* sleeping: ‿ */}
           <motion.path
             d="M -9 -1 C -8 8 8 8 9 -1"
             stroke="#000000"
@@ -660,7 +660,7 @@ const ZAPS = [
   { x: 222, y: 118, rotate: 78, delay: 3.1 },
 ]
 
-/** Tempestade: raiozinhos estalando para fora do corpo, de tempos em tempos. */
+/** Storm: little bolts cracking out of the body, from time to time. */
 function Zaps({ live }: { live: boolean }) {
   return (
     <g>
@@ -702,7 +702,7 @@ const SWEAT_SLOTS = [
   { x: 96, y: 40, delay: 1.9 },
 ]
 
-/** Suor: gotinhas escorrendo pelos lados do corpo quando faz calor. */
+/** Sweat: little drops running down the sides of the body when it is hot. */
 function Sweat({ fill }: { fill: string }) {
   return (
     <g>
@@ -728,7 +728,7 @@ function Sweat({ fill }: { fill: string }) {
   )
 }
 
-/** Gotas surgindo do próprio corpo — responsabilidade do personagem, não do ambiente. */
+/** Drops coming out of the body itself — the character's job, not the environment's. */
 function Drops({ count, fill }: { count: number; fill: string }) {
   return (
     <g>

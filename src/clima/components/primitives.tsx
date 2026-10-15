@@ -14,7 +14,7 @@ type GlassButtonProps = Omit<HTMLMotionProps<'button'>, 'children'> & {
   size?: number
 }
 
-/** Controle circular flutuante (UI layer). Alvo mínimo de 44px. */
+/** Floating circular control (UI layer). Minimum 44px target. */
 export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(function GlassButton(
   { icon, label, size = 44, className, ...rest },
   ref,
@@ -41,7 +41,7 @@ type PlainIconButtonProps = Omit<HTMLMotionProps<'button'>, 'children'> & {
   pressed?: boolean
 }
 
-/** Botão plano dentro de um container glass (sem glass dentro de glass). */
+/** Flat button inside a glass container (no glass inside glass). */
 export const PlainIconButton = forwardRef<HTMLButtonElement, PlainIconButtonProps>(
   function PlainIconButton({ icon, label, pressed, className, ...rest }, ref) {
     return (
@@ -67,15 +67,15 @@ interface CardProps {
   icon?: UiIconName
   children: ReactNode
   className?: string
-  /** ordem de entrada na primeira abertura */
+  /** entrance order on the first open */
   order?: number
-  /** aparece conforme o scroll em vez de entrar ao montar */
+  /** appears with scroll instead of entering on mount */
   reveal?: boolean
-  /** atraso relativo na linha (0…1), para cards lado a lado */
+  /** relative delay in the row (0…1), for cards side by side */
   lag?: number
 }
 
-/** Card de dados: material simples (sem blur), raio de card, título discreto. */
+/** Data card: a simple material (no blur), card radius, a quiet title. */
 export function Card({ title, icon, children, className, order = 0, reveal, lag }: CardProps) {
   const reduced = useReducedMotion()
   const firstRun = useContext(FirstRunContext)

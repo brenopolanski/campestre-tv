@@ -1,10 +1,10 @@
 /**
- * Corpo fluido do Climinha: o contorno é recalculado a cada quadro.
- *  - ondulação lenta (duas frequências por ponto) → nuvem "respirando", nunca parada
- *  - inclinação por inércia (lean): o topo fica para trás quando ele se move, como gelatina
+ * Climinha's fluid body: the outline is recalculated every frame.
+ *  - a slow wave (two frequencies per point) → a cloud "breathing", never still
+ *  - inertia tilt (lean): the top lags behind when he moves, like jelly
  */
 
-// contorno traçado da referência (viewBox 240×182)
+// outline traced from the reference (viewBox 240×182)
 const POINTS: [number, number][] = [
   [15.0, 110.9],
   [23.9, 89.6],
@@ -31,7 +31,7 @@ const CENTER: [number, number] = [120, 92]
 const TOP = 21.6
 const BOTTOM = 149.3
 
-// normais apontando para fora
+// normals pointing outward
 const NORMALS = POINTS.map((p, i) => {
   const prev = POINTS[(i - 1 + POINTS.length) % POINTS.length]
   const next = POINTS[(i + 1) % POINTS.length]
@@ -40,7 +40,7 @@ const NORMALS = POINTS.map((p, i) => {
   const len = Math.hypot(nx, ny) || 1
   nx /= len
   ny /= len
-  // garante que aponte para longe do centro
+  // make sure it points away from the center
   if (nx * (p[0] - CENTER[0]) + ny * (p[1] - CENTER[1]) < 0) {
     nx = -nx
     ny = -ny
@@ -70,15 +70,15 @@ function catmullRom(pts: [number, number][]) {
 export const STATIC_BODY_PATH = catmullRom(POINTS)
 
 /**
- * @param t       tempo em segundos
- * @param amp     amplitude da ondulação (unidades do viewBox)
- * @param lean    -1…1: deslocamento lateral; o topo fica para trás
+ * @param t       time in seconds
+ * @param amp     wave amplitude (viewBox units)
+ * @param lean    -1…1: sideways shift; the top lags behind
  */
 export function fluidBodyPath(t: number, amp: number, lean: number) {
   const pts = POINTS.map((p, i) => {
     const wave = Math.sin(t * 1.25 + i * 0.95) * 0.6 + Math.sin(t * 0.7 + i * 2.3) * 0.4
     const [nx, ny] = NORMALS[i]
-    // altura relativa: 1 no topo, 0 na base
+    // relative height: 1 at the top, 0 at the base
     const h = 1 - (p[1] - TOP) / (BOTTOM - TOP)
     const lag = -lean * 14 * h * h
     return [p[0] + nx * wave * amp + lag, p[1] + ny * wave * amp] as [number, number]
@@ -86,7 +86,7 @@ export function fluidBodyPath(t: number, amp: number, lean: number) {
   return catmullRom(pts)
 }
 
-/** quanto os olhos acompanham a inclinação (eles ficam no meio do corpo) */
+/** how far the eyes follow the tilt (they sit in the middle of the body) */
 export function eyeLeanOffset(lean: number) {
   return -lean * 14 * 0.42
 }

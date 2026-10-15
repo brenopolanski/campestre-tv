@@ -1,4 +1,4 @@
-/** Condição meteorológica normalizada usada por ambiente, Climinha e ícones. */
+/** Normalized weather condition used by the environment, Climinha, and icons. */
 export type WeatherKind =
   'sunny' | 'clear' | 'partly' | 'cloudy' | 'fog' | 'rain' | 'heavyRain' | 'storm'
 
@@ -22,7 +22,7 @@ export interface Place {
 }
 
 export interface CurrentWeather {
-  /** horário local do local, ISO sem offset ("2026-10-01T14:15") */
+  /** local time at the place, ISO without an offset ("2026-10-01T14:15") */
   time: string
   temperature: number
   apparent: number
@@ -67,6 +67,6 @@ export interface Forecast {
   current: CurrentWeather
   hourly: HourPoint[]
   daily: DayPoint[]
-  /** precipitação (mm) em passos de 15 min, a partir de agora */
+  /** precipitation (mm) in 15-minute steps, starting from now */
   nowcast: { time: string; precipitation: number }[]
 }

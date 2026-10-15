@@ -4,11 +4,11 @@ import type { Forecast, WeatherKind } from './types'
 export interface Simulation {
   kind: WeatherKind
   isDay: boolean
-  /** temperatura forçada (°C), para ver calor e frio */
+  /** forced temperature (°C), to preview heat and cold */
   temperature?: number
 }
 
-/** Lê ?weather=storm&night=1&temp=36 — usado para revisar todos os ambientes. */
+/** Reads ?weather=storm&night=1&temp=36 — used to review every environment. */
 export function simulationFromUrl(): Simulation | null {
   const params = new URLSearchParams(window.location.search)
   const kind = params.get('weather') as WeatherKind | null
@@ -21,7 +21,7 @@ export function simulationFromUrl(): Simulation | null {
   }
 }
 
-/** Sobrepõe a condição atual mantendo o resto da previsão real. */
+/** Overrides the current condition and keeps the rest of the real forecast. */
 export function applySimulation(forecast: Forecast, sim: Simulation): Forecast {
   const code = REPRESENTATIVE_CODE[sim.kind]
   const wet = isWet(sim.kind)
@@ -36,7 +36,7 @@ export function applySimulation(forecast: Forecast, sim: Simulation): Forecast {
         }
       : h,
   )
-  // chuva prevista começando em ~35 min, para exercitar a linha do tempo
+  // forecast rain starting in ~35 min, to exercise the timeline
   const nowcast = forecast.nowcast.map((n, i) => ({
     ...n,
     precipitation: wet

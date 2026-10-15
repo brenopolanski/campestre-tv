@@ -29,7 +29,7 @@ interface Props {
   onSimulate: (s: Simulation | null) => void
 }
 
-/** Ajustes: popover glass que abre para cima a partir da barra de navegação. */
+/** Settings: a glass popover that opens upward from the navigation bar. */
 export function SettingsMenu({
   unit,
   onUnitChange,

@@ -22,7 +22,7 @@ import type { Place } from '../weather/types'
 
 interface Props {
   open: boolean
-  /** abre já com a busca em foco (botão de busca da barra) */
+  /** opens with search already focused (search button on the bar) */
   searchFirst?: boolean
   onClose: () => void
   places: Place[]
@@ -36,7 +36,7 @@ interface Props {
 
 type Snap = 'medium' | 'full'
 
-/** Bottom sheet de cidades: busca + lista com mini atmosfera. */
+/** City bottom sheet: search + a list with a mini atmosphere. */
 export function CitiesSheet(props: Props) {
   return props.open ? <Sheet {...props} /> : null
 }
@@ -56,8 +56,8 @@ function Sheet({
   const sheetRef = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState(() => sheetHeight())
   const positions = { full: 0, medium: Math.round(height * 0.38), closed: height + 40 }
-  // Busca: o sheet já abre na posição final, com o campo visível. No iOS o teclado só
-  // abre com foco dentro do gesto, e focar um campo fora da tela faz o Safari rolar a página.
+  // Search: the sheet already opens at its final position, with the field visible. On iOS the keyboard
+  // only opens with focus inside the gesture, and focusing a field off screen makes Safari scroll the page.
   const y = useMotionValue(searchFirst ? positions.full : positions.closed)
   const backdrop = useTransform(y, [positions.closed, positions.medium], [0, 1])
   const [snap, setSnap] = useState<Snap>(searchFirst ? 'full' : 'medium')
@@ -104,7 +104,7 @@ function Sheet({
   function onDragEnd(_: unknown, info: PanInfo) {
     const v = info.velocity.y
     const current = y.get()
-    // projeção com velocidade: o sheet "continua" o gesto antes de escolher o ponto
+    // projection with velocity: the sheet "continues" the gesture before choosing the snap point
     const projected = current + v * 0.18
     if (projected > positions.medium + height * 0.22 || (snap === 'medium' && v > 700))
       return close()
@@ -290,7 +290,7 @@ function SearchPanel({
 
   const searching = query.trim().length >= 2
 
-  // foco no mesmo ciclo do toque (abre o teclado no iPhone), sem rolar a página
+  // focus in the same turn as the tap (opens the keyboard on iPhone), without scrolling the page
   const inputRef = useRef<HTMLInputElement>(null)
   useLayoutEffect(() => {
     if (autoFocus) inputRef.current?.focus({ preventScroll: true })

@@ -2,9 +2,9 @@
    Base
    ================================================================ */
 
-/* o Climinha foi desenhado sobre os padrões do navegador: dentro dele, desfaz o reset
-   do Tailwind (camada base) sem tocar nos atributos de apresentação dos SVGs */
-/* .campestre-header é o header do Campestre: as classes do Tailwind valem nele */
+/* Climinha was drawn on top of the browser defaults: inside him, undo the Tailwind
+   reset (base layer) without touching the SVGs' presentation attributes */
+/* .campestre-header is the Campestre header: Tailwind classes apply there */
 :where(.clima) :where(:not(.campestre-header, .campestre-header *)),
 :where(.clima) :where(:not(.campestre-header, .campestre-header *))::before,
 :where(.clima) :where(:not(.campestre-header, .campestre-header *))::after {
@@ -64,8 +64,8 @@
 }
 
 html:has(.clima) {
-  /* declara que o site já é escuro/claro por conta própria: impede o "modo escuro"
-     forçado de navegadores Android (Samsung Internet, Chrome) de escurecer tudo */
+  /* declare that the site is already dark/light on its own: stops the forced "dark mode"
+     of Android browsers (Samsung Internet, Chrome) from darkening everything */
   color-scheme: dark light;
   scrollbar-width: none;
 }
@@ -133,11 +133,11 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Materiais
+   Materials
    ================================================================ */
 
 .glass {
-  /* "seixo": superfície sólida escura, traço de tinta e sombra de adesivo — sem vidro */
+  /* "pebble": a solid dark surface, an ink stroke, and a sticker shadow — no glass */
   --fg: #fbf8f1;
   --fg-2: rgba(251, 248, 241, 0.78);
   --fg-3: rgba(251, 248, 241, 0.55);
@@ -146,7 +146,7 @@ body[data-sheet-open] {
   --separator: rgba(251, 248, 241, 0.12);
   position: relative;
   color: var(--fg);
-  /* vidro escuro translúcido, estilo Apple */
+  /* dark translucent glass, Apple style */
   background: rgba(10, 12, 18, 0.5);
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
   backdrop-filter: blur(var(--glass-blur)) saturate(150%);
@@ -211,7 +211,7 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Página
+   Page
    ================================================================ */
 
 .page {
@@ -233,7 +233,7 @@ body[data-sheet-open] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* ocupa a primeira tela, deixando os primeiros dias da previsão inteiros acima da barra */
+  /* fills the first screen, leaving the first forecast days fully above the bar */
   min-height: max(400px, calc(100svh - 390px));
   text-align: center;
   padding: var(--space-4) 0 var(--space-8);
@@ -251,8 +251,8 @@ body[data-sheet-open] {
   --cw: clamp(120px, 32vw, 160px);
   width: var(--cw);
   aspect-ratio: 240 / 182;
-  /* o desenho tem folga vazia em cima e embaixo (sombra e gotas): desconta para
-     o Climinha ficar perto da temperatura e da condição */
+  /* the drawing has empty space above and below (shadow and drops): pull it in so
+     Climinha stays close to the temperature and the condition */
   margin: calc(var(--cw) * 0.04) 0 calc(var(--cw) * -0.08);
 }
 
@@ -263,7 +263,7 @@ body[data-sheet-open] {
   gap: var(--space-1);
 }
 
-/* Climinha que acompanha o scroll (camada acima do conteúdo, abaixo da navegação) */
+/* Climinha that follows the scroll (layer above the content, below the navigation) */
 .traveler {
   position: fixed;
   left: 0;
@@ -313,8 +313,8 @@ body[data-sheet-open] {
   font-variant-numeric: tabular-nums;
 }
 
-/* "30°" centralizado como um bloco, no mesmo eixo da cidade; o recuo à esquerda
-   compensa opticamente o grau, que é mais leve que os números */
+/* "30°" centered as a block, on the same axis as the city; the left padding
+   optically balances the degree mark, which is lighter than the numbers */
 .hero__temp {
   padding-left: 0.12em;
 }
@@ -391,7 +391,7 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Conteúdo e cards
+   Content and cards
    ================================================================ */
 
 .content {
@@ -441,7 +441,7 @@ body[data-sheet-open] {
   font-size: var(--type-secondary);
 }
 
-/* ---------- por hora ---------- */
+/* ---------- hourly ---------- */
 .hourly {
   display: flex;
   overflow-x: auto;
@@ -514,7 +514,7 @@ body[data-sheet-open] {
   white-space: nowrap;
 }
 
-/* ---------- 10 dias ---------- */
+/* ---------- 10 days ---------- */
 .daily {
   list-style: none;
   margin: 0;
@@ -572,7 +572,7 @@ body[data-sheet-open] {
   box-shadow: 0 0 0 2px rgba(0, 10, 30, 0.35);
 }
 
-/* ---------- chuva próxima ---------- */
+/* ---------- upcoming rain ---------- */
 .precip__text {
   padding: var(--space-2) 0 var(--space-3);
   border-top: 0.5px solid var(--separator);
@@ -609,7 +609,7 @@ body[data-sheet-open] {
   color: var(--fg-3);
 }
 
-/* ---------- detalhes ---------- */
+/* ---------- details ---------- */
 .details {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -790,7 +790,7 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Menu de ajustes
+   Settings menu
    ================================================================ */
 
 /* ---------- menu ---------- */
@@ -847,11 +847,11 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Navegação flutuante
+   Floating navigation
    ================================================================ */
 
 .floatnav {
-  /* escura e translúcida em qualquer clima: ícones sempre claros */
+  /* dark and translucent in any weather: icons always light */
   --fg: #ffffff;
   --fg-2: rgba(255, 255, 255, 0.78);
   --fg-3: rgba(255, 255, 255, 0.55);
@@ -929,13 +929,13 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Sheet de cidades
+   City sheet
    ================================================================ */
 
 .sheet-backdrop {
   position: fixed;
   inset: 0;
-  /* acima de tudo da tela (inclusive o Climinha), abaixo só da intro */
+  /* above everything on the screen (including Climinha), below only the intro */
   z-index: 119;
   background: rgba(0, 6, 18, 0.3);
 }
@@ -952,7 +952,7 @@ body[data-sheet-open] {
   margin: 0 auto;
   border-radius: 34px 40px 0 0 / 30px 36px 0 0;
   border-bottom: 0;
-  /* bem translúcida: o céu do clima aparece por trás */
+  /* quite translucent: the weather sky shows through */
   background: color-mix(in srgb, var(--ink) 28%, transparent);
   -webkit-backdrop-filter: blur(22px) saturate(140%);
   backdrop-filter: blur(22px) saturate(140%);
@@ -1183,10 +1183,10 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Responsivo
+   Responsive
    ================================================================ */
 
-/* tablet: cards mais largos, detalhes em 3 colunas */
+/* tablet: wider cards, details in 3 columns */
 @media (min-width: 700px) {
   .hero__character {
     width: 170px;
@@ -1224,7 +1224,7 @@ body[data-sheet-open] {
   }
 }
 
-/* desktop: mesma narrativa vertical, coluna central contida; a atmosfera ocupa o resto */
+/* desktop: the same vertical story, a contained center column; the atmosphere fills the rest */
 @media (min-width: 1024px) {
   .page {
     padding-top: calc(var(--safe-top) + 48px);
@@ -1248,7 +1248,7 @@ body[data-sheet-open] {
   }
 }
 
-/* ---------- ajustes (abre para cima, a partir da barra) ---------- */
+/* ---------- settings (opens upward, from the bar) ---------- */
 .floatnav .menu {
   top: auto;
   bottom: 56px;
@@ -1275,7 +1275,7 @@ body[data-sheet-open] {
 }
 
 /* ================================================================
-   Abertura
+   Splash
    ================================================================ */
 
 .splash {
@@ -1303,7 +1303,7 @@ body[data-sheet-open] {
   z-index: 101;
   overflow: hidden;
   pointer-events: none;
-  /* bem perto: maior que a tela, com os olhos no centro */
+  /* very close: larger than the screen, with the eyes in the center */
   --w: max(230vw, 150vh);
 }
 
@@ -1318,15 +1318,15 @@ body[data-sheet-open] {
   width: 100%;
 }
 
-/* o close-up é desenhado uma vez e só se move por transform (composição na GPU) */
+/* the close-up is drawn once and only moves by transform (GPU compositing) */
 .splash__drift,
 .splash__float {
   will-change: transform;
 }
 
-/* a página é arrastável para os lados (troca de cidade); o scroll vertical continua nativo */
+/* the page can be dragged sideways (city change); vertical scroll stays native */
 .page {
-  /* camada própria: arrastar para o lado só move a camada, sem repintar */
+  /* its own layer: dragging sideways only moves the layer, without repainting */
   will-change: transform;
   touch-action: pan-y;
   -webkit-user-select: none;
