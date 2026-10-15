@@ -30,14 +30,14 @@ interface Props {
 }
 
 /** Settings: a glass popover that opens upward from the navigation bar. */
-export function SettingsMenu({
+export const SettingsMenu = ({
   unit,
   onUnitChange,
   onRefresh,
   debug,
   simulation,
   onSimulate,
-}: Props) {
+}: Props) => {
   const [open, setOpen] = useState(false)
   const reduced = useReducedMotion()
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -158,7 +158,7 @@ export function SettingsMenu({
   )
 }
 
-function MenuItem({
+const MenuItem = ({
   children,
   checked,
   icon,
@@ -168,7 +168,7 @@ function MenuItem({
   checked?: boolean
   icon?: 'refresh'
   onSelect: () => void
-}) {
+}) => {
   const isCheck = checked !== undefined
   return (
     <button

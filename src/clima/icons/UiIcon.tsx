@@ -86,7 +86,7 @@ const PATHS = {
 
 export type UiIconName = keyof typeof PATHS
 
-export function UiIcon({
+export const UiIcon = ({
   name,
   size = 22,
   className,
@@ -94,7 +94,7 @@ export function UiIcon({
   name: UiIconName
   size?: number
   className?: string
-}) {
+}) => {
   return (
     <svg
       viewBox="0 0 24 24"

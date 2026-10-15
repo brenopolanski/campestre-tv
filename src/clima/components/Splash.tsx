@@ -22,7 +22,7 @@ interface Props {
   characterRef: React.RefObject<HTMLDivElement | null>
 }
 
-export function Splash({ visible, characterVisible, characterRef }: Props) {
+export const Splash = ({ visible, characterVisible, characterRef }: Props) => {
   const reduced = useReducedMotion() ?? false
 
   // eyes open while he passes → a one-eye wink → opens again and goes to the screen

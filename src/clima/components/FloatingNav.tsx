@@ -18,7 +18,7 @@ interface Props {
 }
 
 /** Dark translucent floating navigation: location · search · pages · cities · settings. */
-export function FloatingNav({
+export const FloatingNav = ({
   places,
   index,
   onSelect,
@@ -28,7 +28,7 @@ export function FloatingNav({
   onOpenList,
   listOpen,
   settings,
-}: Props) {
+}: Props) => {
   return (
     <nav className="floatnav" aria-label="Navegação">
       <PlainIconButton

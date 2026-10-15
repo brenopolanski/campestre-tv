@@ -27,7 +27,16 @@ interface Props {
 }
 
 /** Centered hero: city · temperature · Climinha · condition · max/min. */
-export function Hero({ place, data, unit, anchorRef, revealed, direction, error, onRetry }: Props) {
+export const Hero = ({
+  place,
+  data,
+  unit,
+  anchorRef,
+  revealed,
+  direction,
+  error,
+  onRetry,
+}: Props) => {
   const reduced = useReducedMotion() ?? false
   const { scrollY } = useScroll()
   // the hero text fades out smoothly; Climinha keeps traveling

@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react'
  * OffscreenCanvas: off the main thread, it does not stall scroll or animations.
  * On other browsers, it falls back to the main-thread version.
  */
-export function RainCanvas({ intensity, reduced }: { intensity: 0 | 1 | 2; reduced: boolean }) {
+export const RainCanvas = ({ intensity, reduced }: { intensity: 0 | 1 | 2; reduced: boolean }) => {
   const wrap = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

@@ -37,11 +37,11 @@ interface Props {
 type Snap = 'medium' | 'full'
 
 /** City bottom sheet: search + a list with a mini atmosphere. */
-export function CitiesSheet(props: Props) {
+export const CitiesSheet = (props: Props) => {
   return props.open ? <Sheet {...props} /> : null
 }
 
-function Sheet({
+const Sheet = ({
   searchFirst,
   onClose,
   places,
@@ -51,7 +51,7 @@ function Sheet({
   onSelect,
   onAdd,
   onRemove,
-}: Props) {
+}: Props) => {
   const reduced = useReducedMotion() ?? false
   const sheetRef = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState(() => sheetHeight())
@@ -231,7 +231,7 @@ function Sheet({
   )
 }
 
-function SearchPanel({
+const SearchPanel = ({
   children,
   onPick,
   onExpand,
@@ -241,7 +241,7 @@ function SearchPanel({
   children: React.ReactNode
   onPick: (p: Place) => void
   onExpand: () => void
-}) {
+}) => {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<Place[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')

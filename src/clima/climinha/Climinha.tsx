@@ -60,7 +60,7 @@ export interface CliminhaProps {
   style?: React.CSSProperties
 }
 
-export function Climinha({
+export const Climinha = ({
   state: target,
   size = 120,
   phase = 'awake',
@@ -75,7 +75,7 @@ export function Climinha({
   onTap,
   className,
   style,
-}: CliminhaProps) {
+}: CliminhaProps) => {
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '')
   const reduced = useReducedMotion() ?? false
   const live = ambient && !reduced
@@ -566,7 +566,7 @@ interface EyeProps {
   y: MotionValue<number>
 }
 
-function Eye({ cx, cy, shape, side, blink, slow, transition, x, y }: EyeProps) {
+const Eye = ({ cx, cy, shape, side, blink, slow, transition, x, y }: EyeProps) => {
   const id = useId().replace(/[^a-zA-Z0-9_-]/g, '')
   const inward = side === 'left' ? 1 : -1
   const half = shape.rx + 4.5
@@ -661,7 +661,7 @@ const ZAPS = [
 ]
 
 /** Storm: little bolts cracking out of the body, from time to time. */
-function Zaps({ live }: { live: boolean }) {
+const Zaps = ({ live }: { live: boolean }) => {
   return (
     <g>
       {ZAPS.map((z, i) => (
@@ -703,7 +703,7 @@ const SWEAT_SLOTS = [
 ]
 
 /** Sweat: little drops running down the sides of the body when it is hot. */
-function Sweat({ fill }: { fill: string }) {
+const Sweat = ({ fill }: { fill: string }) => {
   return (
     <g>
       {SWEAT_SLOTS.map((d, i) => (
@@ -729,7 +729,7 @@ function Sweat({ fill }: { fill: string }) {
 }
 
 /** Drops coming out of the body itself — the character's job, not the environment's. */
-function Drops({ count, fill }: { count: number; fill: string }) {
+const Drops = ({ count, fill }: { count: number; fill: string }) => {
   return (
     <g>
       {DROP_SLOTS.slice(0, count).map((d, i) => (

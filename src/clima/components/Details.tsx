@@ -124,7 +124,7 @@ export function detailCards({
 }
 
 /** Phone: a detail grid that appears as you scroll. */
-export function DetailGrid({ forecast, unit, order }: Props) {
+export const DetailGrid = ({ forecast, unit, order }: Props) => {
   const cards = detailCards({ forecast, unit, order, reveal: true })
   return (
     <div className="details">
@@ -142,7 +142,7 @@ function formatMm(v: number) {
   return v < 10 ? v.toFixed(1).replace('.', ',').replace(',0', '') : String(Math.round(v))
 }
 
-function UvScale({ value }: { value: number }) {
+const UvScale = ({ value }: { value: number }) => {
   const pos = Math.min(100, (value / 11) * 100)
   return (
     <span className="uv-scale" aria-hidden="true">
@@ -151,7 +151,7 @@ function UvScale({ value }: { value: number }) {
   )
 }
 
-function Compass({ direction }: { direction: number }) {
+const Compass = ({ direction }: { direction: number }) => {
   const reduced = useReducedMotion()
   // meteorological direction = where it comes from; the arrow points where it goes
   const to = (direction + 180) % 360
@@ -203,7 +203,7 @@ function Compass({ direction }: { direction: number }) {
   )
 }
 
-function SunCard({
+const SunCard = ({
   forecast,
   order,
   reveal,
@@ -211,7 +211,7 @@ function SunCard({
   forecast: Forecast
   order: number
   reveal: boolean
-}) {
+}) => {
   const today = forecast.daily[0]
   const tomorrow = forecast.daily[1]
   const now = minutesOf(forecast.current.time)
@@ -247,7 +247,7 @@ function SunCard({
   )
 }
 
-function SunArc({ progress }: { progress: number }) {
+const SunArc = ({ progress }: { progress: number }) => {
   // a sine wave of one day: horizon at y=34
   const w = 140
   const h = 52

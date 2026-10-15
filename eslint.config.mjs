@@ -105,7 +105,6 @@ const eslintConfig = defineConfig([
       'react-hooks/preserve-manual-memoization': 'off',
       'react-hooks/refs': 'off',
       'react-hooks/set-state-in-effect': 'off',
-      'react/function-component-definition': 'off',
       'react/jsx-sort-props': 'off',
       'simple-import-sort/exports': 'off',
       'simple-import-sort/imports': 'off',

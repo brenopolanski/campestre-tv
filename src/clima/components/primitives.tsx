@@ -75,7 +75,7 @@ interface CardProps {
 }
 
 /** Data card: a simple material (no blur), card radius, a quiet title. */
-export function Card({ title, icon, children, className, order = 0, reveal, lag }: CardProps) {
+export const Card = ({ title, icon, children, className, order = 0, reveal, lag }: CardProps) => {
   const reduced = useReducedMotion()
   const firstRun = useContext(FirstRunContext)
   const delay = firstRun ? entrance.firstCard + order * entrance.cardStep : order * 0.025

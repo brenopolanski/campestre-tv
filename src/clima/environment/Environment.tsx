@@ -182,7 +182,7 @@ function layer(opacity: number) {
     : { opacity: 0, transitionEnd: { visibility: 'hidden' as const } }
 }
 
-function CloudLayer({
+const CloudLayer = ({
   specs,
   visible,
   depth,
@@ -192,7 +192,7 @@ function CloudLayer({
   visible: number
   depth: 'far' | 'mid' | 'near'
   y: MotionValue<number>
-}) {
+}) => {
   return (
     <motion.div className={`env__clouds env__clouds--${depth}`} style={{ y }}>
       {specs.map((c, i) => (
@@ -218,7 +218,7 @@ function CloudLayer({
 }
 
 /** A short atmospheric light — not a full-screen white flash. */
-function Lightning({ active, onFlash }: { active: boolean; onFlash?: () => void }) {
+const Lightning = ({ active, onFlash }: { active: boolean; onFlash?: () => void }) => {
   const ref = useRef<HTMLDivElement>(null)
   const flashRef = useRef(onFlash)
   useEffect(() => {

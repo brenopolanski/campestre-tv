@@ -53,7 +53,7 @@ interface Props {
   swipeX?: MotionValue<number>
 }
 
-export function TravelingCliminha({
+export const TravelingCliminha = ({
   anchorRef,
   state,
   phase,
@@ -62,7 +62,7 @@ export function TravelingCliminha({
   onReady,
   fromRef,
   swipeX,
-}: Props) {
+}: Props) => {
   const reduced = useReducedMotion() ?? false
   const [bounce, setBounce] = useState(0)
   const { scrollY } = useScroll()

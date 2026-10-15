@@ -12,7 +12,7 @@ const CLOUD_SMALL =
   'M8.2 16.5h8.4a3.2 3.2 0 0 0 .45-6.37 4.5 4.5 0 0 0-8.53-1.04A3.73 3.73 0 0 0 8.2 16.5Z'
 const MOON = 'M15.5 3.6a7.6 7.6 0 1 0 5 12.4A8.2 8.2 0 0 1 15.5 3.6Z'
 
-function Sun({
+const Sun = ({
   cx = 12,
   cy = 12,
   r = 4.6,
@@ -22,7 +22,7 @@ function Sun({
   cy?: number
   r?: number
   rays?: boolean
-}) {
+}) => {
   const len = r * 0.55
   const gap = r + 2
   return (
@@ -52,7 +52,7 @@ function Sun({
   )
 }
 
-function Drops({ heavy }: { heavy?: boolean }) {
+const Drops = ({ heavy }: { heavy?: boolean }) => {
   const xs = heavy ? [7.6, 11, 14.4, 17.8] : [8.6, 12.2, 15.8]
   return (
     <g>
@@ -80,7 +80,13 @@ export interface WeatherIconProps {
   title?: string
 }
 
-export function WeatherIcon({ kind, isDay = true, size = 26, className, title }: WeatherIconProps) {
+export const WeatherIcon = ({
+  kind,
+  isDay = true,
+  size = 26,
+  className,
+  title,
+}: WeatherIconProps) => {
   const body = (() => {
     switch (kind) {
       case 'sunny':
@@ -168,7 +174,13 @@ export function WeatherIcon({ kind, isDay = true, size = 26, className, title }:
 }
 
 /** Sunrise / sunset for the hourly timeline. */
-export function SunEventIcon({ type, size = 26 }: { type: 'sunrise' | 'sunset'; size?: number }) {
+export const SunEventIcon = ({
+  type,
+  size = 26,
+}: {
+  type: 'sunrise' | 'sunset'
+  size?: number
+}) => {
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} className="wi" aria-hidden="true">
       <clipPath id={`clip-${type}`}>

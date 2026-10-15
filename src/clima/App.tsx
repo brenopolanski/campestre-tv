@@ -48,7 +48,7 @@ const LOADING_THEME = getTheme('clear', true)
 
 // the city list (with search) is downloaded only the first time it opens
 const CitiesSheet = lazy(() =>
-  import('./components/CitiesSheet').then((m) => ({ default: m.CitiesSheet })),
+  import('./components/CitiesSheet').then((mod) => ({ default: mod.CitiesSheet })),
 )
 
 /** weather simulator: local environment only */
@@ -57,7 +57,27 @@ const SIMULATOR = process.env.NODE_ENV === 'development'
 /** Climinha intro: off for now */
 const SHOW_SPLASH = false
 
-export default function App({ header }: { header: React.ReactNode }) {
+/** Static, translucent placeholders with the cards' geometry. */
+const SkeletonCards = () => {
+  return (
+    <div className="skeletons" aria-hidden="true">
+      <div className="card skeleton-card" style={{ height: 168 }} />
+      <div className="content__columns">
+        <div className="card skeleton-card" style={{ height: 420 }} />
+        <div className="details">
+          <div className="card skeleton-card" style={{ height: 164 }} />
+          <div className="card skeleton-card" style={{ height: 164 }} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+interface AppProps {
+  header: React.ReactNode
+}
+
+const App = ({ header }: AppProps) => {
   const reduced = useReducedMotion() ?? false
   const { places: saved, addPlace, removePlace } = usePlaces()
   // device location, when the person asks; otherwise it opens at Clube Campestre
@@ -567,18 +587,4 @@ export default function App({ header }: { header: React.ReactNode }) {
   )
 }
 
-/** Static, translucent placeholders with the cards' geometry. */
-function SkeletonCards() {
-  return (
-    <div className="skeletons" aria-hidden="true">
-      <div className="card skeleton-card" style={{ height: 168 }} />
-      <div className="content__columns">
-        <div className="card skeleton-card" style={{ height: 420 }} />
-        <div className="details">
-          <div className="card skeleton-card" style={{ height: 164 }} />
-          <div className="card skeleton-card" style={{ height: 164 }} />
-        </div>
-      </div>
-    </div>
-  )
-}
+export default App

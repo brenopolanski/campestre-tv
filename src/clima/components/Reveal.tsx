@@ -13,7 +13,7 @@ interface Props {
  * Scroll stays 1:1 with the finger: the entrance is a short animation of its own
  * (opacity and transform only, which the GPU composites without repainting), not tied to scroll.
  */
-export function Reveal({ children, className, lag = 0 }: Props) {
+export const Reveal = ({ children, className, lag = 0 }: Props) => {
   const reduced = useReducedMotion() ?? false
   return (
     <motion.div
