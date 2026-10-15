@@ -105,7 +105,7 @@ const PlayerRow = ({ game, player, rank, scores, serve = false }: PlayerRowProps
   )
 }
 
-const NotFound = () => {
+const NotFoundPage = () => {
   const [leader, server] = pickPair()
 
   return (
@@ -135,4 +135,4 @@ const NotFound = () => {
   )
 }
 
-export default NotFound
+export default NotFoundPage

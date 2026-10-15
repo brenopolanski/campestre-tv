@@ -4,7 +4,7 @@ import { LiveBroadcast, LiveBroadcastFallback } from '@/components/broadcast/Liv
 import { Footer } from '@/components/navigation/footer/Footer'
 import { Header } from '@/components/navigation/header/Header'
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -18,4 +18,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage
