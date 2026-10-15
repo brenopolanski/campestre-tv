@@ -21,7 +21,7 @@ interface RootLayoutProps {
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html
-      className={cn('font-sans text-base antialiased', fontVariables)}
+      className={cn('dark font-sans text-base antialiased', fontVariables)}
       lang="pt-BR"
       suppressHydrationWarning
     >

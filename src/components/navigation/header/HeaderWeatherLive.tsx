@@ -16,7 +16,8 @@ import {
   SunIcon,
 } from '@/components/shared/Icons'
 import { paths } from '@/config/paths'
-import { type ClubWeather, fetchClubWeather } from '@/lib/weather/clubWeather'
+import type { ClubWeather } from '@/lib/weather/clubWeather'
+import { fetchClubWeather } from '@/lib/weather/clubWeather'
 
 interface WeatherIconProps extends LucideProps {
   isDay: boolean
