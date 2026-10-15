@@ -6,20 +6,14 @@ import {
   useReducedMotion,
   useSpring,
   useTransform,
-  type MotionValue,
-  type Transition,
 } from 'motion/react'
-import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
+import type { MotionValue, Transition } from 'motion/react'
+import { useEffect, useId, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { motionTokens } from '../theme/motion'
 import { STATIC_BODY_PATH, eyeLeanOffset, fluidBodyPath } from './fluidBody'
-import {
-  NEUTRAL_STATE,
-  drowsyEyes,
-  eyesFor,
-  type CliminhaState,
-  type EyeShape,
-  type Mood,
-} from './states'
+import { NEUTRAL_STATE, drowsyEyes, eyesFor } from './states'
+import type { CliminhaState, EyeShape, Mood } from './states'
 import './climinha.css'
 
 /**

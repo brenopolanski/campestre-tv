@@ -6,8 +6,8 @@ import {
   useMotionValue,
   useReducedMotion,
   useTransform,
-  type PanInfo,
 } from 'motion/react'
+import type { PanInfo } from 'motion/react'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { WeatherIcon } from '../icons/WeatherIcon'
 import { UiIcon } from '../icons/UiIcon'
@@ -16,7 +16,8 @@ import { getTheme } from '../theme/weatherThemes'
 import { conditionLabel } from '../weather/format'
 import { CLUB_PLACE } from '../weather/location'
 import { searchPlaces } from '../weather/openMeteo'
-import { toUnit, type ForecastEntry, type TemperatureUnit } from '../weather/store'
+import { toUnit } from '../weather/store'
+import type { ForecastEntry, TemperatureUnit } from '../weather/store'
 import type { Place } from '../weather/types'
 
 interface Props {

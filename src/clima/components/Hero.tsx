@@ -1,7 +1,8 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import type { RefObject } from 'react'
 import { entrance, motionTokens } from '../theme/motion'
-import { toUnit, type TemperatureUnit } from '../weather/store'
+import { toUnit } from '../weather/store'
+import type { TemperatureUnit } from '../weather/store'
 import type { Place } from '../weather/types'
 
 export interface HeroData {
