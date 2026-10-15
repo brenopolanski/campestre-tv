@@ -661,7 +661,11 @@ const ZAPS = [
 ]
 
 /** Storm: little bolts cracking out of the body, from time to time. */
-const Zaps = ({ live }: { live: boolean }) => {
+interface ZapsProps {
+  live: boolean
+}
+
+const Zaps = ({ live }: ZapsProps) => {
   return (
     <g>
       {ZAPS.map((z, i) => (
@@ -703,7 +707,11 @@ const SWEAT_SLOTS = [
 ]
 
 /** Sweat: little drops running down the sides of the body when it is hot. */
-const Sweat = ({ fill }: { fill: string }) => {
+interface SweatProps {
+  fill: string
+}
+
+const Sweat = ({ fill }: SweatProps) => {
   return (
     <g>
       {SWEAT_SLOTS.map((d, i) => (
@@ -729,7 +737,12 @@ const Sweat = ({ fill }: { fill: string }) => {
 }
 
 /** Drops coming out of the body itself — the character's job, not the environment's. */
-const Drops = ({ count, fill }: { count: number; fill: string }) => {
+interface DropsProps {
+  count: number
+  fill: string
+}
+
+const Drops = ({ count, fill }: DropsProps) => {
   return (
     <g>
       {DROP_SLOTS.slice(0, count).map((d, i) => (

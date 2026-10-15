@@ -231,17 +231,14 @@ const Sheet = ({
   )
 }
 
-const SearchPanel = ({
-  children,
-  onPick,
-  onExpand,
-  autoFocus,
-}: {
+interface SearchPanelProps {
   autoFocus?: boolean
   children: React.ReactNode
   onPick: (p: Place) => void
   onExpand: () => void
-}) => {
+}
+
+const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps) => {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<Place[]>([])
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')

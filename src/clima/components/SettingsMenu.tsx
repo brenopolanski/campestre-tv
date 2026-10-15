@@ -158,17 +158,14 @@ export const SettingsMenu = ({
   )
 }
 
-const MenuItem = ({
-  children,
-  checked,
-  icon,
-  onSelect,
-}: {
+interface MenuItemProps {
   children: React.ReactNode
   checked?: boolean
   icon?: 'refresh'
   onSelect: () => void
-}) => {
+}
+
+const MenuItem = ({ children, checked, icon, onSelect }: MenuItemProps) => {
   const isCheck = checked !== undefined
   return (
     <button

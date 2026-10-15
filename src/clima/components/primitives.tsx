@@ -7,7 +7,7 @@ import { entrance, motionTokens, pressScale } from '../theme/motion'
 import { FirstRunContext } from './firstRun'
 import { Reveal } from './Reveal'
 
-type GlassButtonProps = Omit<HTMLMotionProps<'button'>, 'children'> & {
+interface GlassButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   icon: UiIconName
   label: string
   size?: number
@@ -34,7 +34,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(funct
   )
 })
 
-type PlainIconButtonProps = Omit<HTMLMotionProps<'button'>, 'children'> & {
+interface PlainIconButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   icon: UiIconName
   label: string
   pressed?: boolean

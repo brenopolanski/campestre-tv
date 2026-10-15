@@ -27,15 +27,13 @@ type HourlyItem =
     }
   | { type: 'sun'; key: string; label: string; event: 'sunrise' | 'sunset'; caption: string }
 
-export const HourlyCard = ({
-  forecast,
-  unit,
-  order,
-}: {
+interface HourlyCardProps {
   forecast: Forecast
   unit: TemperatureUnit
   order: number
-}) => {
+}
+
+export const HourlyCard = ({ forecast, unit, order }: HourlyCardProps) => {
   const items = useMemo<HourlyItem[]>(() => {
     const hours = forecast.hourly.slice(0, 25)
     const out: HourlyItem[] = []
@@ -129,15 +127,13 @@ function tempGradient(min: number, max: number) {
   return `linear-gradient(90deg, ${stops.join(', ')})`
 }
 
-export const DailyCard = ({
-  forecast,
-  unit,
-  order,
-}: {
+interface DailyCardProps {
   forecast: Forecast
   unit: TemperatureUnit
   order: number
-}) => {
+}
+
+export const DailyCard = ({ forecast, unit, order }: DailyCardProps) => {
   const reduced = useReducedMotion()
   const days = forecast.daily.slice(0, 10)
   const low = Math.min(...days.map((d) => d.min))
@@ -199,13 +195,12 @@ export const DailyCard = ({
 /* Upcoming rain (conditional)                                        */
 /* ------------------------------------------------------------------ */
 
-export const PrecipitationCard = ({
-  outlook,
-  order,
-}: {
+interface PrecipitationCardProps {
   outlook: PrecipitationOutlook
   order: number
-}) => {
+}
+
+export const PrecipitationCard = ({ outlook, order }: PrecipitationCardProps) => {
   const reduced = useReducedMotion()
   const max = Math.max(1, ...outlook.steps.map((s) => s.precipitation))
   return (
