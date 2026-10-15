@@ -2,6 +2,7 @@
   "name": "campestre-tv",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.28.1",
   "description": "Campestre TV - Transmissão ao vivo das quadras de tênis do Campestre.",
   "repository": {
     "type": "git",
