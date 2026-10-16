@@ -25,10 +25,6 @@
 
 Campestre TV plays the club's tennis courts live in the browser. The page lists the courts that are on air and opens the one you pick.
 
-### :heart: Found this project useful?
-
-If you found this project useful, then please consider giving it a :star: on GitHub and sharing it with your friends via social media. It helps to promote the project and attract more contributors.
-
 ## What it does
 
 - Lists the courts currently live on the Campestre TV YouTube channel
