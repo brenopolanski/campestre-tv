@@ -9,7 +9,7 @@ import type { Forecast } from '@/clima/weather/types'
 
 import { Card } from './primitives'
 
-interface Props {
+interface DetailGridProps {
   forecast: Forecast
   unit: TemperatureUnit
   order: number
@@ -26,7 +26,7 @@ export function detailCards({
   unit,
   order,
   reveal,
-}: Props & { reveal: boolean }): Record<DetailId, React.ReactNode> {
+}: DetailGridProps & { reveal: boolean }): Record<DetailId, React.ReactNode> {
   const c = forecast.current
   const today = forecast.daily[0]
   const tomorrow = forecast.daily[1]
@@ -126,7 +126,7 @@ export function detailCards({
 }
 
 /** Phone: a detail grid that appears as you scroll. */
-export const DetailGrid = ({ forecast, unit, order }: Props) => {
+export const DetailGrid = ({ forecast, unit, order }: DetailGridProps) => {
   const cards = detailCards({ forecast, unit, order, reveal: true })
   return (
     <div className="details">

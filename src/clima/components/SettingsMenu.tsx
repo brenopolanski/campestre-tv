@@ -22,7 +22,7 @@ const KIND_LABEL: Record<WeatherKind, string> = {
   storm: 'Tempestade',
 }
 
-interface Props {
+interface SettingsMenuProps {
   unit: TemperatureUnit
   onUnitChange: (u: TemperatureUnit) => void
   onRefresh: () => void
@@ -39,7 +39,7 @@ export const SettingsMenu = ({
   debug,
   simulation,
   onSimulate,
-}: Props) => {
+}: SettingsMenuProps) => {
   const [open, setOpen] = useState(false)
   const reduced = useReducedMotion()
   const buttonRef = useRef<HTMLButtonElement>(null)

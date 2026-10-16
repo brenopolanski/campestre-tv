@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from 'motion/react'
 
 import { motionTokens } from '@/clima/theme/motion'
 
-interface Props {
+interface RevealProps {
   children: React.ReactNode
   className?: string
   /** relative delay within a row (0…1): items on the right arrive a little later */
@@ -14,7 +14,7 @@ interface Props {
  * Scroll stays 1:1 with the finger: the entrance is a short animation of its own
  * (opacity and transform only, which the GPU composites without repainting), not tied to scroll.
  */
-export const Reveal = ({ children, className, lag = 0 }: Props) => {
+export const Reveal = ({ children, className, lag = 0 }: RevealProps) => {
   const reduced = useReducedMotion() ?? false
   return (
     <motion.div

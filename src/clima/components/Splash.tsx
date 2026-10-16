@@ -15,7 +15,7 @@ import { motionTokens } from '@/clima/theme/motion'
 /** minimum intro duration before releasing the interface (ms) */
 export const SPLASH_MIN_MS = 2700
 
-interface Props {
+interface SplashProps {
   visible: boolean
   /** the intro character leaves only when the Home one can receive him */
   characterVisible: boolean
@@ -23,7 +23,7 @@ interface Props {
   characterRef: React.RefObject<HTMLDivElement | null>
 }
 
-export const Splash = ({ visible, characterVisible, characterRef }: Props) => {
+export const Splash = ({ visible, characterVisible, characterRef }: SplashProps) => {
   const reduced = useReducedMotion() ?? false
 
   // eyes open while he passes → a one-eye wink → opens again and goes to the screen

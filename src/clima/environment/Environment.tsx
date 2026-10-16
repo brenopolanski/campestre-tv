@@ -56,12 +56,12 @@ const STARS = Array.from({ length: 70 }, (_, i) => {
   }
 })
 
-interface Props {
+interface EnvironmentProps {
   theme: WeatherTheme
   onLightning?: () => void
 }
 
-export const Environment = memo(function Environment({ theme, onLightning }: Props) {
+export const Environment = memo(function Environment({ theme, onLightning }: EnvironmentProps) {
   const reduced = useReducedMotion() ?? false
   const a = theme.atmosphere
   const { scrollY } = useScroll()

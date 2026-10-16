@@ -7,7 +7,7 @@ import type { Place } from '@/clima/weather/types'
 import { PlainIconButton } from './primitives'
 import { SettingsMenu } from './SettingsMenu'
 
-interface Props {
+interface FloatingNavProps {
   places: Place[]
   index: number
   onSelect: (i: number) => void
@@ -30,7 +30,7 @@ export const FloatingNav = ({
   onOpenList,
   listOpen,
   settings,
-}: Props) => {
+}: FloatingNavProps) => {
   return (
     <nav className="floatnav" aria-label="Navegação">
       <PlainIconButton

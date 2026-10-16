@@ -39,7 +39,7 @@ interface Geometry {
   navTop: number
 }
 
-interface Props {
+interface TravelingCliminhaProps {
   anchorRef: React.RefObject<HTMLDivElement | null>
   state: CliminhaState
   phase: CliminhaPhase
@@ -63,7 +63,7 @@ export const TravelingCliminha = ({
   onReady,
   fromRef,
   swipeX,
-}: Props) => {
+}: TravelingCliminhaProps) => {
   const reduced = useReducedMotion() ?? false
   const [bounce, setBounce] = useState(0)
   const { scrollY } = useScroll()

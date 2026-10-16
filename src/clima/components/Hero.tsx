@@ -12,7 +12,7 @@ export interface HeroData {
   min: number
 }
 
-interface Props {
+interface HeroProps {
   place: Place
   data: HeroData | null
   unit: TemperatureUnit
@@ -37,7 +37,7 @@ export const Hero = ({
   direction,
   error,
   onRetry,
-}: Props) => {
+}: HeroProps) => {
   const reduced = useReducedMotion() ?? false
   const { scrollY } = useScroll()
   // the hero text fades out smoothly; Climinha keeps traveling

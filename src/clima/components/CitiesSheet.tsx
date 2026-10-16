@@ -21,7 +21,7 @@ import type { ForecastEntry, TemperatureUnit } from '@/clima/weather/store'
 import { toUnit } from '@/clima/weather/store'
 import type { Place } from '@/clima/weather/types'
 
-interface Props {
+interface CitiesSheetProps {
   open: boolean
   /** opens with search already focused (search button on the bar) */
   searchFirst?: boolean
@@ -38,7 +38,7 @@ interface Props {
 type Snap = 'medium' | 'full'
 
 /** City bottom sheet: search + a list with a mini atmosphere. */
-export const CitiesSheet = (props: Props) => {
+export const CitiesSheet = (props: CitiesSheetProps) => {
   return props.open ? <Sheet {...props} /> : null
 }
 
@@ -52,7 +52,7 @@ const Sheet = ({
   onSelect,
   onAdd,
   onRemove,
-}: Props) => {
+}: CitiesSheetProps) => {
   const reduced = useReducedMotion() ?? false
   const sheetRef = useRef<HTMLDivElement>(null)
   const [height, setHeight] = useState(() => sheetHeight())
