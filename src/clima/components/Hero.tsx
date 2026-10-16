@@ -71,7 +71,7 @@ export const Hero = ({
               aria-label={`${temp} graus`}
             >
               <span className="hero__temp-value">{temp}</span>
-              <span className="hero__temp-degree" aria-hidden="true">
+              <span className="hero__temp-degree" aria-hidden>
                 °
               </span>
             </motion.p>
@@ -81,11 +81,11 @@ export const Hero = ({
         </div>
       </motion.div>
 
-      <div className="hero__character" ref={anchorRef} aria-hidden="true" />
+      <div ref={anchorRef} className="hero__character" aria-hidden />
 
       <motion.div
-        className="hero__readout"
         key={`data-${place.id}-${data ? 'ready' : error ? 'error' : 'empty'}`}
+        className="hero__readout"
         style={reduced ? undefined : { opacity: fade }}
       >
         {data ? (
@@ -100,7 +100,7 @@ export const Hero = ({
         ) : error ? (
           <motion.div className="hero__error" {...enter(entrance.temperature)} role="alert">
             <p className="hero__error-text">Não consegui atualizar agora.</p>
-            <button type="button" className="pill-button glass" onClick={onRetry}>
+            <button className="pill-button glass" type="button" onClick={onRetry}>
               Tentar novamente
             </button>
           </motion.div>

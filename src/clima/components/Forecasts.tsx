@@ -78,15 +78,15 @@ export const HourlyCard = ({ forecast, unit, order }: HourlyCardProps) => {
   const summary = hourlySummary(forecast.hourly)
 
   return (
-    <Card title="Previsão por hora" icon="clock" className="card--hourly" order={order} reveal>
+    <Card className="card--hourly" icon="clock" order={order} title="Previsão por hora" reveal>
       {summary && <p className="card__summary">{summary}</p>}
-      <div className="hourly" data-hscroll tabIndex={0} aria-label="Próximas 24 horas">
+      <div aria-label="Próximas 24 horas" className="hourly" tabIndex={0} data-hscroll>
         {items.map((item) =>
           item.type === 'hour' ? (
             <div key={item.key} className="hourly__item">
               <span className="hourly__label">{item.label}</span>
               <span className="hourly__icon">
-                <WeatherIcon kind={item.kind} isDay={item.isDay} size={26} />
+                <WeatherIcon isDay={item.isDay} kind={item.kind} size={26} />
                 {item.pop >= 20 && (
                   <span className="hourly__pop">{Math.round(item.pop / 10) * 10}%</span>
                 )}
@@ -145,7 +145,7 @@ export const DailyCard = ({ forecast, unit, order }: DailyCardProps) => {
   const now = forecast.current.temperature
 
   return (
-    <Card title="Previsão para 10 dias" icon="calendar" className="card--daily" order={order}>
+    <Card className="card--daily" icon="calendar" order={order} title="Previsão para 10 dias">
       <ul className="daily">
         {days.map((d, i) => {
           const left = ((d.min - low) / span) * 100
@@ -163,18 +163,18 @@ export const DailyCard = ({ forecast, unit, order }: DailyCardProps) => {
                 )}
               </span>
               <span className="daily__min">{toUnit(d.min, unit)}°</span>
-              <span className="daily__track" aria-hidden="true">
+              <span className="daily__track" aria-hidden>
                 <motion.span
                   className="daily__fill"
-                  style={{ backgroundImage: gradient }}
                   initial={
                     reduced
                       ? false
                       : { clipPath: `inset(0 ${100 - center}% 0 ${center}% round 999px)` }
                   }
-                  whileInView={{ clipPath: `inset(0 ${right}% 0 ${left}% round 999px)` }}
-                  viewport={{ once: true, margin: '0px 0px -40px 0px' }}
+                  style={{ backgroundImage: gradient }}
                   transition={{ ...motionTokens.system.default, delay: i * 0.03 }}
+                  viewport={{ once: true, margin: '0px 0px -40px 0px' }}
+                  whileInView={{ clipPath: `inset(0 ${right}% 0 ${left}% round 999px)` }}
                 />
                 {i === 0 && (
                   <span
@@ -206,22 +206,22 @@ export const PrecipitationCard = ({ outlook, order }: PrecipitationCardProps) =>
   const reduced = useReducedMotion()
   const max = Math.max(1, ...outlook.steps.map((s) => s.precipitation))
   return (
-    <Card title="Chuva próxima" icon="umbrella" className="card--precip" order={order} reveal>
+    <Card className="card--precip" icon="umbrella" order={order} title="Chuva próxima" reveal>
       <p className="precip__text">{outlook.text}</p>
-      <div className="precip__bars" aria-hidden="true">
+      <div className="precip__bars" aria-hidden>
         {outlook.steps.map((s, i) => (
           <motion.span
             key={s.time}
             className="precip__bar"
             data-dry={s.precipitation < RAIN_THRESHOLD || undefined}
             initial={reduced ? false : { scaleY: 0 }}
-            whileInView={{ scaleY: Math.max(0.08, s.precipitation / max) }}
-            viewport={{ once: true, margin: '0px 0px -25% 0px' }}
             transition={{ ...motionTokens.system.default, delay: 0.1 + i * 0.025 }}
+            viewport={{ once: true, margin: '0px 0px -25% 0px' }}
+            whileInView={{ scaleY: Math.max(0.08, s.precipitation / max) }}
           />
         ))}
       </div>
-      <div className="precip__axis" aria-hidden="true">
+      <div className="precip__axis" aria-hidden>
         <span>Agora</span>
         <span>1h</span>
         <span>2h</span>

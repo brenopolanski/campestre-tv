@@ -55,7 +55,7 @@ export const RainCanvas = ({ intensity, reduced }: RainCanvasProps) => {
       ref={wrap}
       className="env__rain"
       style={{ opacity: intensity === 0 ? 0 : 1 }}
-      aria-hidden="true"
+      aria-hidden
     />
   )
 }

@@ -46,7 +46,7 @@ export function detailCards({
 
   return {
     uv: (
-      <Card key="uv" title="Índice UV" icon="sun" order={order} reveal={reveal} lag={0}>
+      <Card key="uv" icon="sun" lag={0} order={order} reveal={reveal} title="Índice UV">
         <p className="detail__value">{uvShown}</p>
         <p className="detail__label">{uvInfo.label}</p>
         <UvScale value={uv} />
@@ -58,11 +58,11 @@ export function detailCards({
     feels: (
       <Card
         key="feels"
-        title="Sensação"
         icon="thermometer"
+        lag={0.5}
         order={order + 1}
         reveal={reveal}
-        lag={0.5}
+        title="Sensação"
       >
         <p className="detail__value">{toUnit(c.apparent, unit)}°</p>
         <p className="detail__spacer" />
@@ -72,12 +72,12 @@ export function detailCards({
     wind: (
       <Card
         key="wind"
-        title="Vento"
-        icon="wind"
-        order={order + 2}
         className="card--wind"
-        reveal={reveal}
+        icon="wind"
         lag={1}
+        order={order + 2}
+        reveal={reveal}
+        title="Vento"
       >
         <div className="wind">
           <div className="wind__stats">
@@ -93,7 +93,7 @@ export function detailCards({
       </Card>
     ),
     humidity: (
-      <Card key="humidity" title="Umidade" icon="drop" order={order + 3} reveal={reveal} lag={0}>
+      <Card key="humidity" icon="drop" lag={0} order={order + 3} reveal={reveal} title="Umidade">
         <p className="detail__value">{Math.round(c.humidity)}%</p>
         <p className="detail__spacer" />
         <p className="detail__note">Orvalho a {toUnit(c.dewPoint, unit)}°.</p>
@@ -102,11 +102,11 @@ export function detailCards({
     precip: (
       <Card
         key="precip"
-        title="Precipitação"
         icon="umbrella"
+        lag={0.5}
         order={order + 4}
         reveal={reveal}
-        lag={0.5}
+        title="Precipitação"
       >
         <p className="detail__value">
           {formatMm(today?.precipSum ?? 0)}
@@ -151,7 +151,7 @@ interface UvScaleProps {
 const UvScale = ({ value }: UvScaleProps) => {
   const pos = Math.min(100, (value / 11) * 100)
   return (
-    <span className="uv-scale" aria-hidden="true">
+    <span className="uv-scale" aria-hidden>
       <span className="uv-scale__dot" style={{ left: `${pos}%` }} />
     </span>
   )
@@ -167,12 +167,12 @@ const Compass = ({ direction }: CompassProps) => {
   const to = (direction + 180) % 360
   return (
     <svg
-      viewBox="0 0 100 100"
+      aria-label={`Vento vindo de ${compassLabel(direction)}`}
       className="compass"
       role="img"
-      aria-label={`Vento vindo de ${compassLabel(direction)}`}
+      viewBox="0 0 100 100"
     >
-      <circle cx="50" cy="50" r="40" className="compass__ring" />
+      <circle className="compass__ring" cx="50" cy="50" r="40" />
       {Array.from({ length: 36 }, (_, i) => {
         const a = (i * 10 * Math.PI) / 180
         const major = i % 9 === 0
@@ -180,34 +180,34 @@ const Compass = ({ direction }: CompassProps) => {
         return (
           <line
             key={i}
-            x1={50 + Math.sin(a) * r1}
-            y1={50 - Math.cos(a) * r1}
-            x2={50 + Math.sin(a) * 40}
-            y2={50 - Math.cos(a) * 40}
             className={major ? 'compass__tick compass__tick--major' : 'compass__tick'}
+            x1={50 + Math.sin(a) * r1}
+            x2={50 + Math.sin(a) * 40}
+            y1={50 - Math.cos(a) * r1}
+            y2={50 - Math.cos(a) * 40}
           />
         )
       })}
-      <text x="50" y="22" className="compass__label">
+      <text className="compass__label" x="50" y="22">
         N
       </text>
-      <text x="80" y="53.5" className="compass__label">
+      <text className="compass__label" x="80" y="53.5">
         L
       </text>
-      <text x="50" y="85" className="compass__label">
+      <text className="compass__label" x="50" y="85">
         S
       </text>
-      <text x="20" y="53.5" className="compass__label">
+      <text className="compass__label" x="20" y="53.5">
         O
       </text>
       <motion.g
-        initial={reduced ? false : { rotate: to - 40 }}
         animate={{ rotate: to }}
+        initial={reduced ? false : { rotate: to - 40 }}
         transition={{ ...motionTokens.system.default, delay: 0.8 }}
       >
-        <line x1="50" y1="70" x2="50" y2="32" className="compass__needle" />
-        <path d="M50 26 L55 36 L45 36 Z" className="compass__head" />
-        <circle cx="50" cy="72" r="3.2" className="compass__tail" />
+        <line className="compass__needle" x1="50" x2="50" y1="70" y2="32" />
+        <path className="compass__head" d="M50 26 L55 36 L45 36 Z" />
+        <circle className="compass__tail" cx="50" cy="72" r="3.2" />
       </motion.g>
     </svg>
   )
@@ -243,7 +243,7 @@ const SunCard = ({ forecast, order, reveal }: SunCardProps) => {
   const progress = Math.min(1.08, Math.max(-0.08, t))
 
   return (
-    <Card title={title} icon="sunrise" order={order} className="card--sun" reveal={reveal} lag={1}>
+    <Card className="card--sun" icon="sunrise" lag={1} order={order} reveal={reveal} title={title}>
       <div className="sun">
         <div className="sun__stats">
           <p className="detail__value">{clockLabel(main)}</p>
@@ -276,14 +276,14 @@ const SunArc = ({ progress }: SunArcProps) => {
   const sy = horizon - Math.sin(progress * Math.PI) * amp
   const up = progress > 0 && progress < 1
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="sun-arc" aria-hidden="true">
-      <polyline points={pts.join(' ')} className="sun-arc__path" />
-      <line x1="0" y1={horizon} x2={w} y2={horizon} className="sun-arc__horizon" />
+    <svg className="sun-arc" viewBox={`0 0 ${w} ${h}`} aria-hidden>
+      <polyline className="sun-arc__path" points={pts.join(' ')} />
+      <line className="sun-arc__horizon" x1="0" x2={w} y1={horizon} y2={horizon} />
       <circle
+        className={up ? 'sun-arc__sun' : 'sun-arc__sun sun-arc__sun--down'}
         cx={sx}
         cy={sy}
         r="5"
-        className={up ? 'sun-arc__sun' : 'sun-arc__sun sun-arc__sun--down'}
       />
     </svg>
   )

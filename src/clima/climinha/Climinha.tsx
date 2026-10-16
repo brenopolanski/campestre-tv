@@ -352,66 +352,66 @@ export const Climinha = ({
   const floatTransition = { duration: period, repeat: Infinity, ease: 'easeInOut' as const }
 
   const content = (
-    <svg viewBox="0 0 240 182" className="climinha__svg" aria-hidden="true" focusable="false">
+    <svg className="climinha__svg" focusable="false" viewBox="0 0 240 182" aria-hidden>
       <defs>
-        <linearGradient id={`${uid}-body`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" className="climinha__stop" style={{ stopColor: 'var(--cl-light)' }} />
-          <stop offset="0.55" className="climinha__stop" style={{ stopColor: 'var(--cl-mid)' }} />
-          <stop offset="1" className="climinha__stop" style={{ stopColor: 'var(--cl-shade)' }} />
+        <linearGradient id={`${uid}-body`} x1="0" x2="0" y1="0" y2="1">
+          <stop className="climinha__stop" offset="0" style={{ stopColor: 'var(--cl-light)' }} />
+          <stop className="climinha__stop" offset="0.55" style={{ stopColor: 'var(--cl-mid)' }} />
+          <stop className="climinha__stop" offset="1" style={{ stopColor: 'var(--cl-shade)' }} />
         </linearGradient>
-        <radialGradient id={`${uid}-warm`} cx="0.3" cy="0.22" r="0.62">
+        <radialGradient cx="0.3" cy="0.22" id={`${uid}-warm`} r="0.62">
           <stop
-            offset="0"
             className="climinha__stop"
+            offset="0"
             style={{ stopColor: 'var(--cl-light)', stopOpacity: 0.95 }}
           />
           <stop
-            offset="1"
             className="climinha__stop"
+            offset="1"
             style={{ stopColor: 'var(--cl-light)', stopOpacity: 0 }}
           />
         </radialGradient>
-        <radialGradient id={`${uid}-cool`} cx="0.8" cy="0.95" r="0.6">
+        <radialGradient cx="0.8" cy="0.95" id={`${uid}-cool`} r="0.6">
           <stop
-            offset="0"
             className="climinha__stop"
+            offset="0"
             style={{ stopColor: 'var(--cl-shade)', stopOpacity: 0.7 }}
           />
           <stop
-            offset="1"
             className="climinha__stop"
+            offset="1"
             style={{ stopColor: 'var(--cl-shade)', stopOpacity: 0 }}
           />
         </radialGradient>
-        <linearGradient id={`${uid}-rim`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" className="climinha__stop" style={{ stopColor: 'var(--cl-rim)' }} />
+        <linearGradient id={`${uid}-rim`} x1="0" x2="0" y1="0" y2="1">
+          <stop className="climinha__stop" offset="0" style={{ stopColor: 'var(--cl-rim)' }} />
           <stop
-            offset="0.6"
             className="climinha__stop"
+            offset="0.6"
             style={{ stopColor: 'var(--cl-rim)', stopOpacity: 0 }}
           />
         </linearGradient>
-        <radialGradient id={`${uid}-halo`} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" className="climinha__stop" style={{ stopColor: 'var(--cl-halo)' }} />
+        <radialGradient cx="0.5" cy="0.5" id={`${uid}-halo`} r="0.5">
+          <stop className="climinha__stop" offset="0" style={{ stopColor: 'var(--cl-halo)' }} />
           <stop
-            offset="1"
             className="climinha__stop"
+            offset="1"
             style={{ stopColor: 'var(--cl-halo)', stopOpacity: 0 }}
           />
         </radialGradient>
-        <radialGradient id={`${uid}-contact`} cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" className="climinha__stop" style={{ stopColor: 'var(--cl-contact)' }} />
+        <radialGradient cx="0.5" cy="0.5" id={`${uid}-contact`} r="0.5">
+          <stop className="climinha__stop" offset="0" style={{ stopColor: 'var(--cl-contact)' }} />
           <stop
-            offset="1"
             className="climinha__stop"
+            offset="1"
             style={{ stopColor: 'var(--cl-contact)', stopOpacity: 0 }}
           />
         </radialGradient>
-        <radialGradient id={`${uid}-drop`} cx="0.35" cy="0.6" r="0.7">
+        <radialGradient cx="0.35" cy="0.6" id={`${uid}-drop`} r="0.7">
           <stop offset="0" stopColor="#f2f8ff" />
           <stop offset="1" stopColor="#8dbcf2" />
         </radialGradient>
-        <radialGradient id={`${uid}-storm`} cx="0.5" cy="0.62" r="0.5">
+        <radialGradient cx="0.5" cy="0.62" id={`${uid}-storm`} r="0.5">
           <stop offset="0" stopColor="#ffe27a" stopOpacity="0.95" />
           <stop offset="0.55" stopColor="#ffc93d" stopOpacity="0.35" />
           <stop offset="1" stopColor="#ffc93d" stopOpacity="0" />
@@ -422,18 +422,18 @@ export const Climinha = ({
       </defs>
 
       {/* atmospheric halo: separates the body from the sky without an outline */}
-      <ellipse cx="120" cy="88" rx="120" ry="88" fill={`url(#${uid}-halo)`} />
+      <ellipse cx="120" cy="88" fill={`url(#${uid}-halo)`} rx="120" ry="88" />
 
       {/* contact shadow — shrinks when he rises */}
       <motion.ellipse
-        cx="120"
-        cy="166"
-        rx="84"
-        ry="8"
-        fill={`url(#${uid}-contact)`}
         animate={
           live ? { scaleX: [1, 0.86, 1], opacity: [0.9, 0.6, 0.9] } : { scaleX: 1, opacity: 0.9 }
         }
+        cx="120"
+        cy="166"
+        fill={`url(#${uid}-contact)`}
+        rx="84"
+        ry="8"
         transition={live ? floatTransition : undefined}
       />
 
@@ -443,12 +443,12 @@ export const Climinha = ({
       >
         {/* shiver: fear of lightning (now and then), cold (sometimes), very cold (nonstop, hunched) */}
         <motion.g
-          style={{ originX: '50%', originY: '100%' }}
           animate={{
             x: shiver ? shiver.x : 0,
             scaleY: live && state.temp === 'freezing' ? 0.95 : 1,
             scaleX: live && state.temp === 'freezing' ? 1.03 : 1,
           }}
+          style={{ originX: '50%', originY: '100%' }}
           transition={{
             x: shiver
               ? { duration: shiver.duration, repeat: Infinity, repeatDelay: shiver.repeatDelay }
@@ -464,15 +464,15 @@ export const Climinha = ({
             {state.storm && (
               <g clipPath={`url(#${uid}-clip)`}>
                 <motion.ellipse
-                  cx="124"
-                  cy="104"
-                  rx="92"
-                  ry="46"
-                  fill={`url(#${uid}-storm)`}
-                  initial={{ opacity: 0 }}
                   animate={
                     live ? { opacity: [0.25, 0.5, 0.3, 0.85, 0.3, 0.45, 0.25] } : { opacity: 0.35 }
                   }
+                  cx="124"
+                  cy="104"
+                  fill={`url(#${uid}-storm)`}
+                  initial={{ opacity: 0 }}
+                  rx="92"
+                  ry="46"
                   transition={
                     live
                       ? {
@@ -492,29 +492,29 @@ export const Climinha = ({
                 d={BODY_PATH}
                 fill="none"
                 stroke={`url(#${uid}-rim)`}
-                strokeWidth="3.5"
                 strokeOpacity="0.8"
+                strokeWidth="3.5"
               />
             </g>
 
             <motion.g style={{ x: eyeShift }}>
               <Eye
+                blink={blink}
                 cx={EYE_LEFT.x}
                 cy={EYE_LEFT.y}
                 shape={leftEye}
                 side="left"
-                blink={blink}
                 slow={slowEyes}
                 transition={eyeTransition}
                 x={eyeX}
                 y={eyeY}
               />
               <Eye
+                blink={blink}
                 cx={EYE_RIGHT.x}
                 cy={EYE_RIGHT.y}
                 shape={rightEye}
                 side="right"
-                blink={blink}
                 slow={slowEyes}
                 transition={eyeTransition}
                 x={eyeX}
@@ -538,18 +538,18 @@ export const Climinha = ({
   if (onTap) {
     return (
       <button
-        type="button"
+        aria-label="Climinha"
         className={`${classes} climinha--interactive`}
         style={vars}
+        type="button"
         onClick={handleTap}
-        aria-label="Climinha"
       >
         {content}
       </button>
     )
   }
   return (
-    <div className={classes} style={vars} role="img" aria-label="Climinha">
+    <div aria-label="Climinha" className={classes} role="img" style={vars}>
       {content}
     </div>
   )
@@ -585,58 +585,58 @@ const Eye = ({ cx, cy, shape, side, blink, slow, transition, x, y }: EyeProps) =
   return (
     <g transform={`translate(${cx} ${cy})`}>
       <motion.g style={{ x, y }}>
-        <motion.g initial={false} animate={{ y: shape.dy }} transition={t}>
+        <motion.g animate={{ y: shape.dy }} initial={false} transition={t}>
           <clipPath id={`${id}-lid`}>
-            <motion.path initial={false} animate={{ d: lidClip }} transition={t} />
+            <motion.path animate={{ d: lidClip }} initial={false} transition={t} />
           </clipPath>
           <motion.g
-            initial={false}
             animate={{ scaleY: blink && !shape.arc ? 0.1 : 1 }}
+            initial={false}
             transition={slow ? motionTokens.climinha.drowsyBlink : motionTokens.climinha.blink}
           >
             <motion.ellipse
+              animate={{ rx: shape.rx, ry: shape.ry, opacity: shape.arc && shape.lid <= 0 ? 0 : 1 }}
+              clipPath={`url(#${id}-lid)`}
               cx="0"
               cy="0"
               fill="#000000"
-              clipPath={`url(#${id}-lid)`}
               initial={false}
-              animate={{ rx: shape.rx, ry: shape.ry, opacity: shape.arc && shape.lid <= 0 ? 0 : 1 }}
               transition={t}
             />
           </motion.g>
           <motion.path
+            animate={{ d: lidLine, opacity: lidded && !shape.arc && !shape.noLine ? 1 : 0 }}
             d={lidLine}
-            stroke="#000000"
-            strokeWidth="2.4"
-            strokeLinecap="round"
             fill="none"
             initial={false}
-            animate={{ d: lidLine, opacity: lidded && !shape.arc && !shape.noLine ? 1 : 0 }}
+            stroke="#000000"
+            strokeLinecap="round"
+            strokeWidth="2.4"
             transition={t}
           />
           {/* happy: ∩ */}
           <motion.path
-            d="M -9 5 C -9 -11 9 -11 9 5"
-            stroke="#000000"
-            strokeWidth="5.5"
-            strokeLinecap="round"
-            fill="none"
-            initial={false}
             animate={{
               opacity: shape.arc && !shape.closed ? 1 : 0,
               scaleY: shape.arc && !shape.closed ? 1 : 0.4,
             }}
+            d="M -9 5 C -9 -11 9 -11 9 5"
+            fill="none"
+            initial={false}
+            stroke="#000000"
+            strokeLinecap="round"
+            strokeWidth="5.5"
             transition={shape.lid > 0 && shape.arc ? { ...t, delay: 0.12 } : t}
           />
           {/* sleeping: ‿ */}
           <motion.path
+            animate={{ opacity: shape.closed ? 1 : 0, scaleY: shape.closed ? 1 : 0.4 }}
             d="M -9 -1 C -8 8 8 8 9 -1"
-            stroke="#000000"
-            strokeWidth="4.5"
-            strokeLinecap="round"
             fill="none"
             initial={false}
-            animate={{ opacity: shape.closed ? 1 : 0, scaleY: shape.closed ? 1 : 0.4 }}
+            stroke="#000000"
+            strokeLinecap="round"
+            strokeWidth="4.5"
             transition={t}
           />
         </motion.g>
@@ -673,17 +673,17 @@ const Zaps = ({ live }: ZapsProps) => {
       {ZAPS.map((z, i) => (
         <g key={i} transform={`translate(${z.x} ${z.y}) rotate(${z.rotate}) scale(1.7)`}>
           <motion.path
-            d={ZAP_PATH}
-            fill="#ffd84f"
-            stroke="#b9780a"
-            strokeWidth="1"
-            strokeLinejoin="round"
-            initial={{ opacity: 0, scale: 0.4 }}
             animate={
               live
                 ? { opacity: [0, 1, 0.2, 1, 0], scale: [0.4, 1.1, 0.9, 1.05, 0.6] }
                 : { opacity: 0.8, scale: 1 }
             }
+            d={ZAP_PATH}
+            fill="#ffd84f"
+            initial={{ opacity: 0, scale: 0.4 }}
+            stroke="#b9780a"
+            strokeLinejoin="round"
+            strokeWidth="1"
             transition={
               live
                 ? {
@@ -719,11 +719,11 @@ const Sweat = ({ fill }: SweatProps) => {
       {SWEAT_SLOTS.map((d, i) => (
         <motion.path
           key={i}
+          animate={{ y: [d.y - 2, d.y + 3, d.y + 16], opacity: [0, 1, 0], scale: [0.4, 0.85, 0.7] }}
           d={DROP_PATH}
           fill={fill}
-          style={{ x: d.x, y: d.y, scale: 0.8 }}
           initial={{ opacity: 0 }}
-          animate={{ y: [d.y - 2, d.y + 3, d.y + 16], opacity: [0, 1, 0], scale: [0.4, 0.85, 0.7] }}
+          style={{ x: d.x, y: d.y, scale: 0.8 }}
           transition={{
             duration: 1.6,
             times: [0, 0.3, 1],
@@ -750,11 +750,11 @@ const Drops = ({ count, fill }: DropsProps) => {
       {DROP_SLOTS.slice(0, count).map((d, i) => (
         <motion.path
           key={i}
+          animate={{ y: [d.y - 2, d.y + 4, d.y + 30], opacity: [0, 1, 0], scale: [0.3, 1, 0.85] }}
           d={DROP_PATH}
           fill={fill}
-          style={{ x: d.x, y: d.y }}
           initial={{ opacity: 0, scale: 0.3 }}
-          animate={{ y: [d.y - 2, d.y + 4, d.y + 30], opacity: [0, 1, 0], scale: [0.3, 1, 0.85] }}
+          style={{ x: d.x, y: d.y }}
           transition={{
             duration: 1.3,
             times: [0, 0.35, 1],

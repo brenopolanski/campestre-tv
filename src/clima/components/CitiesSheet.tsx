@@ -122,32 +122,32 @@ const Sheet = ({
       <motion.div
         className="sheet-backdrop"
         style={{ opacity: backdrop }}
+        aria-hidden
         onClick={close}
-        aria-hidden="true"
       />
       <motion.div
         ref={sheetRef}
-        className="sheet glass"
-        role="dialog"
-        aria-modal="true"
         aria-label="Cidades"
-        tabIndex={-1}
-        style={{ y, height }}
+        aria-modal="true"
+        className="sheet glass"
         drag="y"
-        dragControls={dragControls}
-        dragListener={false}
         dragConstraints={{ top: 0, bottom: positions.closed }}
+        dragControls={dragControls}
         dragElastic={{ top: 0.08, bottom: 0.6 }}
+        dragListener={false}
         dragMomentum={false}
+        role="dialog"
+        style={{ y, height }}
+        tabIndex={-1}
         onDragEnd={onDragEnd}
       >
-        <div className="sheet__grabber" aria-hidden="true" onPointerDown={startDrag} />
+        <div className="sheet__grabber" aria-hidden onPointerDown={startDrag} />
         <div className="sheet__header" onPointerDown={startDrag}>
           <h2 className="sheet__title">Cidades</h2>
-          <button type="button" className="text-button" onClick={() => setEditing((e) => !e)}>
+          <button className="text-button" type="button" onClick={() => setEditing((e) => !e)}>
             {editing ? 'OK' : 'Editar'}
           </button>
-          <button type="button" className="plain-icon-button" aria-label="Fechar" onClick={close}>
+          <button aria-label="Fechar" className="plain-icon-button" type="button" onClick={close}>
             <UiIcon name="close" size={20} />
           </button>
         </div>
@@ -165,9 +165,8 @@ const Sheet = ({
               const data = entries[p.id]?.data
               const theme = data ? getTheme(data.current.kind, data.current.isDay) : null
               return (
-                <motion.li key={p.id} layout={!reduced} className="city-list__item">
+                <motion.li key={p.id} className="city-list__item" layout={!reduced}>
                   <button
-                    type="button"
                     className="city-row"
                     data-current={p.id === currentId || undefined}
                     data-scheme={theme?.scheme}
@@ -178,6 +177,7 @@ const Sheet = ({
                           }
                         : undefined
                     }
+                    type="button"
                     onClick={() => {
                       onSelect(p)
                       close()
@@ -197,8 +197,8 @@ const Sheet = ({
                       {data && (
                         <span className="city-row__range">
                           <WeatherIcon
-                            kind={data.current.kind}
                             isDay={data.current.isDay}
+                            kind={data.current.kind}
                             size={18}
                           />
                           {toUnit(data.daily[0].max, unit)}° · {toUnit(data.daily[0].min, unit)}°
@@ -209,14 +209,14 @@ const Sheet = ({
                   <AnimatePresence>
                     {editing && places.length > 1 && p.id !== CLUB_PLACE.id && (
                       <motion.button
-                        type="button"
-                        className="city-row__remove"
-                        aria-label={`Remover ${p.name}`}
-                        onClick={() => onRemove(p.id)}
-                        initial={{ opacity: 0, scale: 0.6 }}
                         animate={{ opacity: 1, scale: 1 }}
+                        aria-label={`Remover ${p.name}`}
+                        className="city-row__remove"
                         exit={{ opacity: 0, scale: 0.6 }}
+                        initial={{ opacity: 0, scale: 0.6 }}
                         transition={motionTokens.system.fast}
+                        type="button"
+                        onClick={() => onRemove(p.id)}
                       >
                         <UiIcon name="minus" size={16} />
                       </motion.button>
@@ -299,23 +299,23 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
       <label className="search">
         <UiIcon name="search" size={18} />
         <input
-          type="search"
+          ref={inputRef}
+          aria-activedescendant={results.length ? `result-${active}` : undefined}
+          aria-controls="search-results"
+          aria-label="Buscar cidade"
+          autoComplete="off"
+          enterKeyHint="search"
           placeholder="Buscar cidade"
+          type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={onExpand}
-          ref={inputRef}
           onKeyDown={onKeyDown}
-          aria-label="Buscar cidade"
-          aria-controls="search-results"
-          aria-activedescendant={results.length ? `result-${active}` : undefined}
-          autoComplete="off"
-          enterKeyHint="search"
         />
       </label>
       <div className="sheet__scroll">
         {searching ? (
-          <ul className="results" id="search-results" role="listbox" aria-label="Resultados">
+          <ul aria-label="Resultados" className="results" id="search-results" role="listbox">
             {status === 'error' && <li className="results__empty">Não consegui buscar agora.</li>}
             {status === 'idle' && results.length === 0 && (
               <li className="results__empty">Nenhuma cidade encontrada.</li>
@@ -323,16 +323,16 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
             {results.map((r, i) => (
               <motion.li
                 key={r.id}
-                id={`result-${i}`}
-                role="option"
+                animate={{ opacity: 1, y: 0 }}
                 aria-selected={i === active}
                 className="results__item"
                 data-active={i === active || undefined}
+                id={`result-${i}`}
+                initial={reduced ? false : { opacity: 0, y: 6 }}
+                role="option"
+                transition={{ ...motionTokens.system.default, delay: i * 0.03 }}
                 onClick={() => onPick(r)}
                 onPointerEnter={() => setActive(i)}
-                initial={reduced ? false : { opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ ...motionTokens.system.default, delay: i * 0.03 }}
               >
                 <span className="results__name">{r.name}</span>
                 <span className="results__region">{r.region}</span>

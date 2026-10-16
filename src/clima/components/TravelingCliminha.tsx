@@ -235,26 +235,26 @@ export const TravelingCliminha = ({
     >
       <motion.div style={reduced ? undefined : { rotate, scaleY, scaleX, originY: 1 }}>
         <motion.div
-          style={{ originY: 1 }}
-          initial={false}
           animate={landing ? { scaleY: [1, 1.06, 0.93, 1], scaleX: [1, 0.96, 1.05, 1] } : undefined}
+          initial={false}
+          style={{ originY: 1 }}
           transition={{ duration: 1.3, times: [0, 0.45, 0.82, 1], ease: 'easeInOut' }}
           onAnimationComplete={() => setLanding(false)}
         >
           <Climinha
-            state={state}
-            phase={phase}
-            size="100%"
+            lean={lean}
             lookX={lookX}
             lookY={lookY}
             moodOverride={moodOverride}
-            lean={lean}
+            phase={phase}
+            size="100%"
+            state={state}
             perceive
             onTap={() => {
               if (!reduced) setBounce((n) => n + 1)
             }}
           />
-          <div className="tennis-ball" aria-hidden="true">
+          <div className="tennis-ball" aria-hidden>
             <div key={bounce} className={bounce ? 'is-bouncing' : undefined}>
               <div className="tennis-ball__shadow" />
               <div className="tennis-ball__body" />

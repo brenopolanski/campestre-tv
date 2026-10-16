@@ -34,17 +34,17 @@ const Sun = ({ cx = 12, cy = 12, r = 4.6, rays = true }: SunProps) => {
           return (
             <line
               key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
               className="wi-sun"
-              strokeWidth="1.8"
               strokeLinecap="round"
+              strokeWidth="1.8"
+              x1={x1}
+              x2={x2}
+              y1={y1}
+              y2={y2}
             />
           )
         })}
-      <circle cx={cx} cy={cy} r={r} className="wi-sun-fill" />
+      <circle className="wi-sun-fill" cx={cx} cy={cy} r={r} />
     </g>
   )
 }
@@ -60,13 +60,13 @@ const Drops = ({ heavy }: DropsProps) => {
       {xs.map((x, i) => (
         <line
           key={x}
-          x1={x}
-          y1={i % 2 ? 21 : 20.6}
-          x2={x - 1.1}
-          y2={i % 2 ? 23.4 : 23}
           className="wi-rain"
-          strokeWidth={heavy ? 1.9 : 1.6}
           strokeLinecap="round"
+          strokeWidth={heavy ? 1.9 : 1.6}
+          x1={x}
+          x2={x - 1.1}
+          y1={i % 2 ? 21 : 20.6}
+          y2={i % 2 ? 23.4 : 23}
         />
       ))}
     </g>
@@ -92,68 +92,68 @@ export const WeatherIcon = ({
     switch (kind) {
       case 'sunny':
       case 'clear':
-        return isDay ? <Sun /> : <path d={MOON} className="wi-moon" transform="translate(-1.5 1)" />
+        return isDay ? <Sun /> : <path className="wi-moon" d={MOON} transform="translate(-1.5 1)" />
       case 'partly':
         return (
           <>
             {isDay ? (
               <Sun cx={9} cy={8.6} r={3.7} />
             ) : (
-              <path d={MOON} className="wi-moon" transform="translate(-4.2 -1.6) scale(0.82)" />
+              <path className="wi-moon" d={MOON} transform="translate(-4.2 -1.6) scale(0.82)" />
             )}
-            <path d={CLOUD} className="wi-cloud" transform="translate(1.4 1.2) scale(0.9)" />
+            <path className="wi-cloud" d={CLOUD} transform="translate(1.4 1.2) scale(0.9)" />
           </>
         )
       case 'cloudy':
         return (
           <>
-            <path d={CLOUD_SMALL} className="wi-cloud-back" transform="translate(3.4 -3.2)" />
-            <path d={CLOUD} className="wi-cloud" transform="translate(-0.6 0.6)" />
+            <path className="wi-cloud-back" d={CLOUD_SMALL} transform="translate(3.4 -3.2)" />
+            <path className="wi-cloud" d={CLOUD} transform="translate(-0.6 0.6)" />
           </>
         )
       case 'fog':
         return (
           <>
-            <path d={CLOUD} className="wi-cloud" transform="translate(0 -3.2)" />
+            <path className="wi-cloud" d={CLOUD} transform="translate(0 -3.2)" />
             <line
-              x1="4.5"
-              y1="19.4"
-              x2="19.5"
-              y2="19.4"
               className="wi-fog"
-              strokeWidth="1.7"
               strokeLinecap="round"
+              strokeWidth="1.7"
+              x1="4.5"
+              x2="19.5"
+              y1="19.4"
+              y2="19.4"
             />
             <line
-              x1="7"
-              y1="22.4"
-              x2="17"
-              y2="22.4"
               className="wi-fog"
-              strokeWidth="1.7"
               strokeLinecap="round"
+              strokeWidth="1.7"
+              x1="7"
+              x2="17"
+              y1="22.4"
+              y2="22.4"
             />
           </>
         )
       case 'rain':
         return (
           <>
-            <path d={CLOUD} className="wi-cloud" transform="translate(0 -3.6)" />
+            <path className="wi-cloud" d={CLOUD} transform="translate(0 -3.6)" />
             <Drops />
           </>
         )
       case 'heavyRain':
         return (
           <>
-            <path d={CLOUD} className="wi-cloud" transform="translate(0 -3.6)" />
+            <path className="wi-cloud" d={CLOUD} transform="translate(0 -3.6)" />
             <Drops heavy />
           </>
         )
       case 'storm':
         return (
           <>
-            <path d={CLOUD} className="wi-cloud" transform="translate(0 -3.6)" />
-            <path d="M12.6 15.4 9.7 19.6h2.6l-1.5 3.9 4.2-5.4h-2.7l1.6-2.7Z" className="wi-bolt" />
+            <path className="wi-cloud" d={CLOUD} transform="translate(0 -3.6)" />
+            <path className="wi-bolt" d="M12.6 15.4 9.7 19.6h2.6l-1.5 3.9 4.2-5.4h-2.7l1.6-2.7Z" />
           </>
         )
     }
@@ -161,13 +161,13 @@ export const WeatherIcon = ({
 
   return (
     <svg
-      viewBox="0 0 24 24"
-      width={size}
-      height={size}
-      className={['wi', className].filter(Boolean).join(' ')}
-      role={title ? 'img' : undefined}
       aria-hidden={title ? undefined : true}
       aria-label={title}
+      className={['wi', className].filter(Boolean).join(' ')}
+      height={size}
+      role={title ? 'img' : undefined}
+      viewBox="0 0 24 24"
+      width={size}
     >
       {body}
     </svg>
@@ -182,33 +182,33 @@ interface SunEventIconProps {
 /** Sunrise / sunset for the hourly timeline. */
 export const SunEventIcon = ({ type, size = 26 }: SunEventIconProps) => {
   return (
-    <svg viewBox="0 0 24 24" width={size} height={size} className="wi" aria-hidden="true">
+    <svg className="wi" height={size} viewBox="0 0 24 24" width={size} aria-hidden>
       <clipPath id={`clip-${type}`}>
-        <rect x="0" y="0" width="24" height="17" />
+        <rect height="17" width="24" x="0" y="0" />
       </clipPath>
       <g clipPath={`url(#clip-${type})`}>
         <Sun cx={12} cy={17} r={4.4} />
       </g>
       <line
-        x1="3"
-        y1="17.8"
-        x2="21"
-        y2="17.8"
         className="wi-fog"
-        strokeWidth="1.6"
         strokeLinecap="round"
+        strokeWidth="1.6"
+        x1="3"
+        x2="21"
+        y1="17.8"
+        y2="17.8"
       />
       <path
+        className="wi-fog"
         d={
           type === 'sunrise'
             ? 'M12 22.6v-2.6m-1.6 1.2L12 19.6l1.6 1.6'
             : 'M12 19.6v2.6m-1.6-1.2 1.6 1.6 1.6-1.6'
         }
-        className="wi-fog"
-        strokeWidth="1.4"
+        fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="none"
+        strokeWidth="1.4"
       />
     </svg>
   )

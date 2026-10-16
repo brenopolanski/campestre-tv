@@ -105,7 +105,6 @@ const eslintConfig = defineConfig([
       'react-hooks/preserve-manual-memoization': 'off',
       'react-hooks/refs': 'off',
       'react-hooks/set-state-in-effect': 'off',
-      'react/jsx-sort-props': 'off',
       'shadcn/no-unknown-classes': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',
       '@typescript-eslint/prefer-nullish-coalescing': 'off',

@@ -23,12 +23,12 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(funct
   return (
     <motion.button
       ref={ref}
-      type="button"
+      aria-label={label}
       className={['glass glass-button', className].filter(Boolean).join(' ')}
       style={{ width: size, height: size }}
-      aria-label={label}
-      whileTap={{ scale: pressScale }}
       transition={motionTokens.system.press}
+      type="button"
+      whileTap={{ scale: pressScale }}
       {...rest}
     >
       <UiIcon name={icon} size={20} />
@@ -48,13 +48,13 @@ export const PlainIconButton = forwardRef<HTMLButtonElement, PlainIconButtonProp
     return (
       <motion.button
         ref={ref}
-        type="button"
-        className={['plain-icon-button', className].filter(Boolean).join(' ')}
         aria-label={label}
-        title={label}
         aria-pressed={pressed}
-        whileTap={{ scale: pressScale }}
+        className={['plain-icon-button', className].filter(Boolean).join(' ')}
+        title={label}
         transition={motionTokens.system.press}
+        type="button"
+        whileTap={{ scale: pressScale }}
         {...rest}
       >
         <UiIcon name={icon} size={21} />
@@ -90,8 +90,8 @@ export const Card = ({ title, icon, children, className, order = 0, reveal, lag 
   )
   if (reveal) {
     return (
-      <Reveal lag={lag} className="reveal">
-        <section className={classes} aria-label={title}>
+      <Reveal className="reveal" lag={lag}>
+        <section aria-label={title} className={classes}>
           {header}
           {children}
         </section>
@@ -100,10 +100,10 @@ export const Card = ({ title, icon, children, className, order = 0, reveal, lag 
   }
   return (
     <motion.section
-      className={['card', className].filter(Boolean).join(' ')}
-      aria-label={title}
-      initial={reduced ? false : { opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
+      aria-label={title}
+      className={['card', className].filter(Boolean).join(' ')}
+      initial={reduced ? false : { opacity: 0, y: 14 }}
       transition={{ ...motionTokens.system.default, delay }}
     >
       {header}

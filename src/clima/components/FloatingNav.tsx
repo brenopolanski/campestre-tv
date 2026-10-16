@@ -32,42 +32,42 @@ export const FloatingNav = ({
   settings,
 }: FloatingNavProps) => {
   return (
-    <nav className="floatnav" aria-label="Navegação">
+    <nav aria-label="Navegação" className="floatnav">
       <PlainIconButton
         icon="location"
         label="Minha localização"
-        onClick={onLocate}
         pressed={locating}
+        onClick={onLocate}
       />
       <PlainIconButton icon="search" label="Buscar cidade" onClick={onSearch} />
 
       {places.length > 1 && (
-        <div className="pager" role="tablist" aria-label="Cidades salvas">
+        <div aria-label="Cidades salvas" className="pager" role="tablist">
           {places.map((p, i) => {
             const active = i === index
             return (
               <button
                 key={p.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
                 aria-label={p.name}
+                aria-selected={active}
                 className="pager__dot"
+                role="tab"
+                type="button"
                 onClick={() => onSelect(i)}
               >
                 {p.id === 'here' ? (
                   <motion.span
-                    className="pager__glyph"
                     animate={{ opacity: active ? 1 : 0.45 }}
+                    className="pager__glyph"
                     transition={motionTokens.system.fast}
                   >
                     <UiIcon name="location" size={10} />
                   </motion.span>
                 ) : (
                   <motion.span
+                    animate={{ scale: active ? 1 : 0.78, opacity: active ? 1 : 0.4 }}
                     className="pager__mark"
                     initial={false}
-                    animate={{ scale: active ? 1 : 0.78, opacity: active ? 1 : 0.4 }}
                     transition={motionTokens.system.fast}
                   />
                 )}
@@ -77,7 +77,7 @@ export const FloatingNav = ({
         </div>
       )}
 
-      <PlainIconButton icon="list" label="Cidades" onClick={onOpenList} pressed={listOpen} />
+      <PlainIconButton icon="list" label="Cidades" pressed={listOpen} onClick={onOpenList} />
       <SettingsMenu {...settings} />
     </nav>
   )

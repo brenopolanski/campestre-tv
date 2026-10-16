@@ -87,26 +87,26 @@ export const SettingsMenu = ({
     <div className="menu-anchor">
       <PlainIconButton
         ref={buttonRef}
+        aria-expanded={open}
+        aria-haspopup="menu"
         icon="settings"
         label="Ajustes"
         pressed={open}
-        aria-haspopup="menu"
-        aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
       />
       <AnimatePresence>
         {open && (
           <motion.div
             ref={menuRef}
-            className="menu glass"
-            role="menu"
-            aria-label="Ajustes"
-            onKeyDown={onMenuKey}
-            initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 6 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
+            aria-label="Ajustes"
+            className="menu glass"
             exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.97, y: 4 }}
-            transition={motionTokens.system.menu}
+            initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 6 }}
+            role="menu"
             style={{ originX: 1, originY: 1 }}
+            transition={motionTokens.system.menu}
+            onKeyDown={onMenuKey}
           >
             <p className="menu__label">Unidade</p>
             <MenuItem checked={unit === 'c'} onSelect={choose(() => onUnitChange('c'))}>
@@ -171,10 +171,10 @@ const MenuItem = ({ children, checked, icon, onSelect }: MenuItemProps) => {
   const isCheck = checked !== undefined
   return (
     <button
-      type="button"
+      aria-checked={isCheck ? checked : undefined}
       className="menu__item"
       role={isCheck ? 'menuitemradio' : 'menuitem'}
-      aria-checked={isCheck ? checked : undefined}
+      type="button"
       onClick={onSelect}
     >
       <span className="menu__check">{checked && <UiIcon name="check" size={16} />}</span>

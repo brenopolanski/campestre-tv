@@ -86,7 +86,7 @@ export const Environment = memo(function Environment({ theme, onLightning }: Env
   } as React.CSSProperties
 
   return (
-    <div className="env" style={style} aria-hidden="true" data-reduced={reduced || undefined}>
+    <div className="env" data-reduced={reduced || undefined} style={style} aria-hidden>
       <div
         className="env__sky"
         style={
@@ -101,25 +101,25 @@ export const Environment = memo(function Environment({ theme, onLightning }: Env
 
       {/* sun: a soft disc off center, partly hidden by the clouds */}
       <motion.div
-        className="env__sun"
-        style={{ y: sunY }}
-        initial={false}
         animate={layer(sunOpacity)}
+        className="env__sun"
+        initial={false}
+        style={{ y: sunY }}
         transition={fade}
       >
         <div className="env__sun-glow" />
         <motion.div
+          animate={{ opacity: a.sun === 'disc' ? 1 : 0, scale: a.sun === 'disc' ? 1 : 0.8 }}
           className="env__sun-disc"
           initial={false}
-          animate={{ opacity: a.sun === 'disc' ? 1 : 0, scale: a.sun === 'disc' ? 1 : 0.8 }}
           transition={fade}
         />
       </motion.div>
 
       <motion.div
+        animate={layer(a.stars ? 1 : 0)}
         className="env__night"
         initial={false}
-        animate={layer(a.stars ? 1 : 0)}
         transition={fade}
       >
         {STARS.map((s, i) => (
@@ -137,21 +137,21 @@ export const Environment = memo(function Environment({ theme, onLightning }: Env
           />
         ))}
         <motion.div
-          className="env__moon"
-          style={{ y: sunY }}
-          initial={false}
           animate={{ opacity: a.moon ? 1 : 0 }}
+          className="env__moon"
+          initial={false}
+          style={{ y: sunY }}
           transition={fade}
         />
       </motion.div>
 
-      <CloudLayer specs={FAR} visible={farCount} depth="far" y={farY} />
-      <CloudLayer specs={MID} visible={midCount} depth="mid" y={midY} />
+      <CloudLayer depth="far" specs={FAR} visible={farCount} y={farY} />
+      <CloudLayer depth="mid" specs={MID} visible={midCount} y={midY} />
 
       <motion.div
+        animate={layer(a.fog ? 1 : 0)}
         className="env__fog"
         initial={false}
-        animate={layer(a.fog ? 1 : 0)}
         transition={fade}
       >
         <div className="env__fog-band env__fog-band--1" />
@@ -161,7 +161,7 @@ export const Environment = memo(function Environment({ theme, onLightning }: Env
 
       <RainCanvas intensity={a.rain} reduced={reduced} />
 
-      <CloudLayer specs={NEAR} visible={nearCount} depth="near" y={nearY} />
+      <CloudLayer depth="near" specs={NEAR} visible={nearCount} y={nearY} />
 
       {/* dynamic contrast: the sky itself darkens slightly behind the hero */}
       <div className="env__scrim" />

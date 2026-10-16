@@ -61,7 +61,7 @@ const SHOW_SPLASH = false
 /** Static, translucent placeholders with the cards' geometry. */
 const SkeletonCards = () => {
   return (
-    <div className="skeletons" aria-hidden="true">
+    <div className="skeletons" aria-hidden>
       <div className="card skeleton-card" style={{ height: 168 }} />
       <div className="content__columns">
         <div className="card skeleton-card" style={{ height: 420 }} />
@@ -442,31 +442,31 @@ const App = ({ header }: AppProps) => {
         className="page"
         data-swipe={canSwipe || undefined}
         style={{ x: swipeX, opacity: pageOpacity }}
+        onClickCapture={onClickCapture}
+        onPointerCancel={onPointerUp}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
-        onClickCapture={onClickCapture}
       >
         <Hero
-          place={place}
-          data={heroData}
-          unit={unit}
           anchorRef={anchorRef}
-          revealed={!splash}
+          data={heroData}
           direction={direction}
           error={noData}
+          place={place}
+          revealed={!splash}
+          unit={unit}
           onRetry={() => void refresh(place)}
         />
 
         {staleError && (
           <motion.button
-            type="button"
-            className="stale-banner glass"
-            onClick={() => void refresh(place)}
-            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
+            className="stale-banner glass"
+            initial={{ opacity: 0, y: -6 }}
             transition={motionTokens.system.default}
+            type="button"
+            onClick={() => void refresh(place)}
           >
             Não consegui atualizar agora · <strong>Tentar novamente</strong>
           </motion.button>
@@ -475,9 +475,9 @@ const App = ({ header }: AppProps) => {
         {/* mounted behind the intro (no cost during the flight); appears when it leaves */}
         <motion.div
           key={place.id + (forecast ? '' : '-empty')}
+          animate={splash ? { opacity: 0, y: 28 } : { opacity: 1, y: 0 }}
           className="content"
           initial={false}
-          animate={splash ? { opacity: 0, y: 28 } : { opacity: 1, y: 0 }}
           transition={
             splash || reduced ? { duration: 0 } : { ...motionTokens.system.page, delay: 0.45 }
           }
@@ -485,14 +485,14 @@ const App = ({ header }: AppProps) => {
           {forecast ? (
             <>
               {/* on screen first: only the hero and the 10 days. the rest appears on scroll */}
-              <DailyCard forecast={forecast} unit={unit} order={0} />
+              <DailyCard forecast={forecast} order={0} unit={unit} />
               {mountRest && (
                 <>
                   <div className="content__stack">
-                    {outlook && <PrecipitationCard outlook={outlook} order={1} />}
-                    <HourlyCard forecast={forecast} unit={unit} order={2} />
+                    {outlook && <PrecipitationCard order={1} outlook={outlook} />}
+                    <HourlyCard forecast={forecast} order={2} unit={unit} />
                   </div>
-                  <DetailGrid forecast={forecast} unit={unit} order={3} />
+                  <DetailGrid forecast={forecast} order={3} unit={unit} />
                 </>
               )}
             </>
@@ -503,20 +503,10 @@ const App = ({ header }: AppProps) => {
       </motion.main>
 
       <FloatingNav
-        places={places}
         index={safeIndex}
-        onSelect={goTo}
-        onLocate={locate}
-        locating={locating}
-        onSearch={() => {
-          setSearchFirst(true)
-          setListOpen(true)
-        }}
-        onOpenList={() => {
-          setSearchFirst(false)
-          setListOpen(true)
-        }}
         listOpen={listOpen}
+        locating={locating}
+        places={places}
         settings={{
           unit,
           onUnitChange: setUnit,
@@ -525,35 +515,45 @@ const App = ({ header }: AppProps) => {
           simulation,
           onSimulate: setSimulation,
         }}
+        onLocate={locate}
+        onOpenList={() => {
+          setSearchFirst(false)
+          setListOpen(true)
+        }}
+        onSearch={() => {
+          setSearchFirst(true)
+          setListOpen(true)
+        }}
+        onSelect={goTo}
       />
 
       {!splash && (
         <TravelingCliminha
           anchorRef={anchorRef}
-          state={climinha}
-          phase={phase}
-          moodOverride={moodOverride}
-          layoutKey={`${place.id}-${forecast ? 1 : 0}-${noData ? 1 : 0}`}
-          onReady={onTravelerReady}
-          swipeX={swipeX}
           fromRef={splashCharacterRef}
+          layoutKey={`${place.id}-${forecast ? 1 : 0}-${noData ? 1 : 0}`}
+          moodOverride={moodOverride}
+          phase={phase}
+          state={climinha}
+          swipeX={swipeX}
+          onReady={onTravelerReady}
         />
       )}
 
       <Splash
-        visible={splash}
-        characterVisible={SHOW_SPLASH && (splash || !travelerReady)}
         characterRef={splashCharacterRef}
+        characterVisible={SHOW_SPLASH && (splash || !travelerReady)}
+        visible={splash}
       />
 
       <AnimatePresence>
         {notice && (
           <motion.div
-            className="toast glass"
-            role="status"
-            initial={{ opacity: 0, y: 8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
+            className="toast glass"
             exit={{ opacity: 0, y: 4 }}
+            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+            role="status"
             transition={motionTokens.system.default}
           >
             {notice}
@@ -564,15 +564,14 @@ const App = ({ header }: AppProps) => {
       {sheetUsed && (
         <Suspense fallback={null}>
           <CitiesSheet
-            open={listOpen}
-            searchFirst={searchFirst}
-            onClose={() => setListOpen(false)}
-            places={places}
-            entries={entries}
-            unit={unit}
             currentId={place.id}
-            onSelect={selectPlace}
+            entries={entries}
+            open={listOpen}
+            places={places}
+            searchFirst={searchFirst}
+            unit={unit}
             onAdd={addPlace}
+            onClose={() => setListOpen(false)}
             onRemove={(id) => {
               if (id === CLUB_PLACE.id) return
               if (id === HERE_ID) {
@@ -581,6 +580,7 @@ const App = ({ header }: AppProps) => {
               } else removePlace(id)
               setIndex(0)
             }}
+            onSelect={selectPlace}
           />
         </Suspense>
       )}

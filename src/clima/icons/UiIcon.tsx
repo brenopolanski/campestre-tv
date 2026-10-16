@@ -7,16 +7,16 @@ const PATHS = {
   list: (
     <>
       <path d="M9 6.5h11M9 12h11M9 17.5h11" />
-      <circle cx="4.6" cy="6.5" r="1.1" fill="currentColor" stroke="none" />
-      <circle cx="4.6" cy="12" r="1.1" fill="currentColor" stroke="none" />
-      <circle cx="4.6" cy="17.5" r="1.1" fill="currentColor" stroke="none" />
+      <circle cx="4.6" cy="6.5" fill="currentColor" r="1.1" stroke="none" />
+      <circle cx="4.6" cy="12" fill="currentColor" r="1.1" stroke="none" />
+      <circle cx="4.6" cy="17.5" fill="currentColor" r="1.1" stroke="none" />
     </>
   ),
   more: (
     <>
-      <circle cx="5.5" cy="12" r="1.7" fill="currentColor" stroke="none" />
-      <circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none" />
-      <circle cx="18.5" cy="12" r="1.7" fill="currentColor" stroke="none" />
+      <circle cx="5.5" cy="12" fill="currentColor" r="1.7" stroke="none" />
+      <circle cx="12" cy="12" fill="currentColor" r="1.7" stroke="none" />
+      <circle cx="18.5" cy="12" fill="currentColor" r="1.7" stroke="none" />
     </>
   ),
   search: (
@@ -37,7 +37,7 @@ const PATHS = {
   ),
   calendar: (
     <>
-      <rect x="4" y="5.5" width="16" height="14.5" rx="3" />
+      <rect height="14.5" rx="3" width="16" x="4" y="5.5" />
       <path d="M4 10h16M8.5 3.5v3.5M15.5 3.5v3.5" />
     </>
   ),
@@ -95,12 +95,12 @@ interface UiIconProps {
 export const UiIcon = ({ name, size = 22, className }: UiIconProps) => {
   return (
     <svg
+      className={['ui-icon', className].filter(Boolean).join(' ')}
+      focusable="false"
+      height={size}
       viewBox="0 0 24 24"
       width={size}
-      height={size}
-      className={['ui-icon', className].filter(Boolean).join(' ')}
-      aria-hidden="true"
-      focusable="false"
+      aria-hidden
     >
       {PATHS[name]}
     </svg>

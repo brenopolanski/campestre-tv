@@ -20,11 +20,11 @@ export const Reveal = ({ children, className, lag = 0 }: RevealProps) => {
     <motion.div
       className={className}
       initial={{ opacity: 0, y: reduced ? 0 : 36, scale: reduced ? 1 : 0.97 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.15, margin: '0px 0px -8% 0px' }}
       transition={
         reduced ? { duration: 0.2 } : { ...motionTokens.system.reveal, delay: lag * 0.08 }
       }
+      viewport={{ once: true, amount: 0.15, margin: '0px 0px -8% 0px' }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
     >
       {children}
     </motion.div>
