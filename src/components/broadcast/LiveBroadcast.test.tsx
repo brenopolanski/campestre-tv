@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { withNuqsTestingAdapter } from 'nuqs/adapters/testing'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -27,7 +27,7 @@ const renderLiveBroadcast = (nuqsOptions?: Parameters<typeof withNuqsTestingAdap
 }
 
 vi.mock('next/image', () => ({
-  default: ({ alt }: { alt: string }) => <span role="img">{alt}</span>,
+  default: ({ alt }: { alt: string }) => <span aria-label={alt} role="img" />,
 }))
 
 vi.mock('react-youtube', () => ({
@@ -149,5 +149,26 @@ describe('LiveBroadcast', () => {
     await vi.waitFor(() => {
       expect(onUrlUpdate.mock.lastCall?.[0].searchParams.get('live')).toBe('6')
     })
+  })
+
+  it('shows an offline catalog court with the placeholder and no live badge', async () => {
+    renderLiveBroadcast()
+
+    await screen.findByRole('button', { name: 'Assistir Quadra 8 ao vivo' })
+
+    const heading = screen.getByRole('heading', { name: 'Quadra 6' })
+    const card = heading.closest('li')
+
+    expect(card).toBeTruthy()
+    expect(
+      within(card as HTMLElement).getByRole('img', { name: 'Transmissão da Quadra 6' }),
+    ).toBeTruthy()
+    expect(within(card as HTMLElement).queryByText('Ao vivo')).toBeNull()
+
+    fireEvent.click(heading)
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Quadra 6' })).toBeTruthy()
+    expect(screen.queryByTestId('youtube-player')).toBeNull()
+    expect(screen.queryByRole('link', { name: /Assistir no YouTube/ })).toBeNull()
   })
 })
