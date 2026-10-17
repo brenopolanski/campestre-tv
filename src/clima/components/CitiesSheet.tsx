@@ -253,21 +253,22 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
       setStatus('idle')
       return
     }
-    const controller = new AbortController()
+    let ignore = false
     const t = window.setTimeout(() => {
       setStatus('loading')
-      searchPlaces(q, controller.signal)
+      searchPlaces(q)
         .then((r) => {
+          if (ignore) return
           setResults(r)
           setActive(0)
           setStatus('idle')
         })
-        .catch((e: Error) => {
-          if (e.name !== 'AbortError') setStatus('error')
+        .catch(() => {
+          if (!ignore) setStatus('error')
         })
     }, 220)
     return () => {
-      controller.abort()
+      ignore = true
       window.clearTimeout(t)
     }
   }, [query])

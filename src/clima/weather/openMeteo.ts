@@ -135,14 +135,19 @@ interface GeocodingResult {
 
 export async function searchPlaces(query: string, signal?: AbortSignal): Promise<Place[]> {
   const params = new URLSearchParams({ name: query, count: '8', language: 'pt', format: 'json' })
-  const res = await fetch(`${GEOCODING_URL}?${params}`, { signal })
-  if (!res.ok) throw new Error(`Geocoding ${res.status}`)
-  const data = (await res.json()) as { results?: GeocodingResult[] }
-  return (data.results ?? []).map((r) => ({
-    id: `geo-${r.id}`,
-    name: r.name,
-    region: [r.admin1, r.country].filter(Boolean).join(', '),
-    latitude: r.latitude,
-    longitude: r.longitude,
-  }))
+  try {
+    const res = await fetch(`${GEOCODING_URL}?${params}`, { signal })
+    if (!res.ok) throw new Error(`Geocoding ${res.status}`)
+    const data = (await res.json()) as { results?: GeocodingResult[] }
+    return (data.results ?? []).map((r) => ({
+      id: `geo-${r.id}`,
+      name: r.name,
+      region: [r.admin1, r.country].filter(Boolean).join(', '),
+      latitude: r.latitude,
+      longitude: r.longitude,
+    }))
+  } catch (error) {
+    if (signal?.aborted) return []
+    throw error
+  }
 }
