@@ -92,7 +92,9 @@ export const Climinha = ({
   const perceiving = perceive && !reduced && keyOf(shown) !== keyOf(target)
   const state = perceiving ? shown : target
   useEffect(() => {
-    if (!perceiving) return
+    if (!perceiving) {
+      return
+    }
     const t = window.setTimeout(() => setShown(target), PERCEIVE_MS)
     return () => window.clearTimeout(t)
   }, [perceiving, target])
@@ -129,7 +131,9 @@ export const Climinha = ({
   // sleepy: the eyelids lower gradually over the 10 s
   const [drowse, setDrowse] = useState(0)
   useEffect(() => {
-    if (wake !== 'drowsy') return
+    if (wake !== 'drowsy') {
+      return
+    }
     setDrowse(0.1)
     const id = window.setInterval(() => setDrowse((d) => Math.min(0.86, d + 0.1)), 1100)
     return () => window.clearInterval(id)
@@ -164,7 +168,9 @@ export const Climinha = ({
 
   // loading: eyes sweep slowly from one side to the other
   useEffect(() => {
-    if (phase !== 'scanning') return
+    if (phase !== 'scanning') {
+      return
+    }
     if (reduced) {
       innerX.set(-0.5)
       return
@@ -183,10 +189,14 @@ export const Climinha = ({
   useEffect(() => {
     const was = prevPhase.current
     prevPhase.current = phase
-    if (phase !== 'awake') return
+    if (phase !== 'awake') {
+      return
+    }
     innerX.set(0)
     innerY.set(0)
-    if (reduced || was === 'awake') return
+    if (reduced || was === 'awake') {
+      return
+    }
     void body.start({
       y: [0, -9, 0, 0],
       scaleX: [1, 0.95, 1.06, 1],
@@ -200,7 +210,9 @@ export const Climinha = ({
 
   // noticing: looks up and runs his eyes across the sky
   useEffect(() => {
-    if (!perceiving) return
+    if (!perceiving) {
+      return
+    }
     innerY.set(-0.9)
     innerX.set(-0.45)
     const t1 = window.setTimeout(() => innerX.set(0.45), PERCEIVE_MS * 0.4)
@@ -218,9 +230,13 @@ export const Climinha = ({
 
   // weather changed: a reaction proportional to the weight of the new weather
   useEffect(() => {
-    if (prevMood.current === state.mood) return
+    if (prevMood.current === state.mood) {
+      return
+    }
     prevMood.current = state.mood
-    if (reduced) return
+    if (reduced) {
+      return
+    }
     if (state.heavy) {
       void body.start({
         y: [0, 5, 0],
@@ -250,7 +266,9 @@ export const Climinha = ({
     }
     if (state.mood === 'sleeping') {
       // wakes (surprised for a moment) and restarts the countdown back to sleep
-      if (wake === 'asleep') setReaction('surprised')
+      if (wake === 'asleep') {
+        setReaction('surprised')
+      }
       setWake('awake')
       clearWakeTimers()
       wakeTimers.current.push(
@@ -267,7 +285,9 @@ export const Climinha = ({
   // --- blink ------------------------------------------------------------------
   const [blink, setBlink] = useState(false)
   useEffect(() => {
-    if (!live || phase === 'scanning') return
+    if (!live || phase === 'scanning') {
+      return
+    }
     let timer = 0
     if (drowsy) {
       // heavy eyelids: closes slowly, takes a while to open
@@ -316,15 +336,21 @@ export const Climinha = ({
   const waveAmp = state.heavy ? 1.3 : 2.1
   const lastFluid = useRef(0)
   useAnimationFrame((ms) => {
-    if (!live || !fluid) return
+    if (!live || !fluid) {
+      return
+    }
     // slow wave: ~30 fps is enough and saves half the repaints (phones)
-    if (ms - lastFluid.current < 32) return
+    if (ms - lastFluid.current < 32) {
+      return
+    }
     lastFluid.current = ms
     const t = ms / 1000
     // a slow sway even when still: a cloud is never rigid
     idleLean.set(Math.sin(t * 0.55) * 0.12)
     const d = fluidBodyPath(t, waveAmp, totalLean.get())
-    for (const el of bodyRefs.current) el?.setAttribute('d', d)
+    for (const el of bodyRefs.current) {
+      el?.setAttribute('d', d)
+    }
   })
 
   const shiver = !live

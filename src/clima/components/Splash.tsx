@@ -29,7 +29,9 @@ export const Splash = ({ visible, characterVisible, characterRef }: SplashProps)
   // eyes open while he passes → a one-eye wink → opens again and goes to the screen
   const [mood, setMood] = useState<Mood>('neutral')
   useEffect(() => {
-    if (reduced) return
+    if (reduced) {
+      return
+    }
     const close = window.setTimeout(() => setMood('wink'), 1650)
     const open = window.setTimeout(() => setMood('neutral'), 2250)
     return () => {

@@ -100,7 +100,6 @@ const eslintConfig = defineConfig([
     // Climinha's own code style: function components and grouped imports
     files: ['src/clima/**'],
     rules: {
-      curly: 'off',
       'prefer-arrow-callback': 'off',
       'react-hooks/preserve-manual-memoization': 'off',
       'react-hooks/refs': 'off',

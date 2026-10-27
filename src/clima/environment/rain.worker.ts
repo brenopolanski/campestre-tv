@@ -60,7 +60,9 @@ function spawn(anywhere: boolean): Drop {
 }
 
 function resize(nw: number, nh: number) {
-  if (!canvas || !ctx) return
+  if (!canvas || !ctx) {
+    return
+  }
   w = nw
   h = nh
   canvas.width = w
@@ -70,7 +72,9 @@ function resize(nw: number, nh: number) {
 }
 
 function draw() {
-  if (!ctx) return
+  if (!ctx) {
+    return
+  }
   ctx.clearRect(0, 0, w, h)
   ctx.lineCap = 'round'
   const k = wind()
@@ -79,7 +83,9 @@ function draw() {
     ctx.lineWidth = LAYERS[l].width
     ctx.beginPath()
     for (const d of drops) {
-      if (Math.min(2, Math.floor(d.depth * 3)) !== l) continue
+      if (Math.min(2, Math.floor(d.depth * 3)) !== l) {
+        continue
+      }
       ctx.moveTo(d.x, d.y)
       ctx.lineTo(d.x + d.len * k, d.y + d.len)
     }
@@ -88,7 +94,9 @@ function draw() {
 }
 
 function tick(now: number) {
-  if (!running) return
+  if (!running) {
+    return
+  }
   const dt = Math.min(0.05, (now - last) / 1000)
   last = now
   const k = wind()
@@ -96,14 +104,18 @@ function tick(now: number) {
     const d = drops[i]
     d.y += d.speed * dt
     d.x += d.speed * dt * k
-    if (d.y > h + 20) drops[i] = spawn(false)
+    if (d.y > h + 20) {
+      drops[i] = spawn(false)
+    }
   }
   draw()
   raf(tick)
 }
 
 function start() {
-  if (running || reduced) return
+  if (running || reduced) {
+    return
+  }
   running = true
   last = performance.now()
   raf(tick)

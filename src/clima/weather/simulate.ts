@@ -12,7 +12,9 @@ export interface Simulation {
 export function simulationFromUrl(): Simulation | null {
   const params = new URLSearchParams(window.location.search)
   const kind = params.get('weather') as WeatherKind | null
-  if (!kind || !(kind in REPRESENTATIVE_CODE)) return null
+  if (!kind || !(kind in REPRESENTATIVE_CODE)) {
+    return null
+  }
   const temp = params.get('temp')
   return {
     kind,

@@ -50,7 +50,9 @@ export async function fetchForecast(place: Place, signal?: AbortSignal): Promise
     timezone: 'auto',
   })
   const res = await fetch(`${FORECAST_URL}?${params}`, { signal })
-  if (!res.ok) throw new Error(`Open-Meteo ${res.status}`)
+  if (!res.ok) {
+    throw new Error(`Open-Meteo ${res.status}`)
+  }
   const data = (await res.json()) as ForecastResponse
 
   const c = data.current
@@ -137,7 +139,9 @@ export async function searchPlaces(query: string, signal?: AbortSignal): Promise
   const params = new URLSearchParams({ name: query, count: '8', language: 'pt', format: 'json' })
   try {
     const res = await fetch(`${GEOCODING_URL}?${params}`, { signal })
-    if (!res.ok) throw new Error(`Geocoding ${res.status}`)
+    if (!res.ok) {
+      throw new Error(`Geocoding ${res.status}`)
+    }
     const data = (await res.json()) as { results?: GeocodingResult[] }
     return (data.results ?? []).map((r) => ({
       id: `geo-${r.id}`,
@@ -147,7 +151,9 @@ export async function searchPlaces(query: string, signal?: AbortSignal): Promise
       longitude: r.longitude,
     }))
   } catch (error) {
-    if (signal?.aborted) return []
+    if (signal?.aborted) {
+      return []
+    }
     throw error
   }
 }

@@ -90,7 +90,9 @@ export function useForecasts(places: Place[]) {
   const [entries, setEntries] = useState<Record<string, ForecastEntry>>(() => {
     const cache = read<Record<string, Forecast>>(CACHE_KEY, {})
     const initial: Record<string, ForecastEntry> = {}
-    for (const [id, data] of Object.entries(cache)) initial[id] = { data, status: 'loading' }
+    for (const [id, data] of Object.entries(cache)) {
+      initial[id] = { data, status: 'loading' }
+    }
     return initial
   })
   const inflight = useRef(new Map<string, AbortController>())
@@ -106,9 +108,12 @@ export function useForecasts(places: Place[]) {
       existing?.status === 'ready' &&
       existing.data &&
       Date.now() - existing.data.fetchedAt < STALE_MS
-    )
+    ) {
       return
-    if (inflight.current.has(place.id)) return
+    }
+    if (inflight.current.has(place.id)) {
+      return
+    }
     const controller = new AbortController()
     inflight.current.set(place.id, controller)
     setEntries((e) => ({ ...e, [place.id]: { data: e[place.id]?.data, status: 'loading' } }))
@@ -117,12 +122,18 @@ export function useForecasts(places: Place[]) {
       setEntries((e) => {
         const next = { ...e, [place.id]: { data, status: 'ready' as const } }
         const cache: Record<string, Forecast> = {}
-        for (const [id, entry] of Object.entries(next)) if (entry.data) cache[id] = entry.data
+        for (const [id, entry] of Object.entries(next)) {
+          if (entry.data) {
+            cache[id] = entry.data
+          }
+        }
         write(CACHE_KEY, cache)
         return next
       })
     } catch (err) {
-      if ((err as Error).name === 'AbortError') return
+      if ((err as Error).name === 'AbortError') {
+        return
+      }
       // keep the last good data
       setEntries((e) => ({ ...e, [place.id]: { data: e[place.id]?.data, status: 'error' } }))
     } finally {
@@ -131,14 +142,20 @@ export function useForecasts(places: Place[]) {
   }, [])
 
   useEffect(() => {
-    for (const p of places) void load(p)
+    for (const p of places) {
+      void load(p)
+    }
   }, [places, load])
 
   // live: while the app is open it refreshes on its own; also when returning to the tab,
   // focusing the window, or when the connection comes back (load skips what is still fresh)
   useEffect(() => {
     const refreshStale = () => {
-      if (!document.hidden) for (const p of places) void load(p)
+      if (!document.hidden) {
+        for (const p of places) {
+          void load(p)
+        }
+      }
     }
     const id = window.setInterval(refreshStale, REFRESH_MS)
     document.addEventListener('visibilitychange', refreshStale)

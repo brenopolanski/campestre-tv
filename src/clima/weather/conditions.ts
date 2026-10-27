@@ -2,14 +2,30 @@ import type { WeatherKind } from './types'
 
 /** Maps a WMO code (Open-Meteo) to the Climinha condition. */
 export function kindFromCode(code: number): WeatherKind {
-  if (code === 0) return 'sunny'
-  if (code === 1) return 'clear'
-  if (code === 2) return 'partly'
-  if (code === 3) return 'cloudy'
-  if (code === 45 || code === 48) return 'fog'
-  if (code >= 95) return 'storm'
-  if (code === 65 || code === 67 || code === 82) return 'heavyRain'
-  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'rain'
+  if (code === 0) {
+    return 'sunny'
+  }
+  if (code === 1) {
+    return 'clear'
+  }
+  if (code === 2) {
+    return 'partly'
+  }
+  if (code === 3) {
+    return 'cloudy'
+  }
+  if (code === 45 || code === 48) {
+    return 'fog'
+  }
+  if (code >= 95) {
+    return 'storm'
+  }
+  if (code === 65 || code === 67 || code === 82) {
+    return 'heavyRain'
+  }
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
+    return 'rain'
+  }
   // snow and hail are rare for the main audience — treated as cloudy
   return 'cloudy'
 }
@@ -46,7 +62,9 @@ const CODE_LABELS: Record<number, string> = {
 }
 
 export function labelFromCode(code: number, isDay: boolean): string {
-  if (code === 0) return isDay ? 'Ensolarado' : 'Céu limpo'
+  if (code === 0) {
+    return isDay ? 'Ensolarado' : 'Céu limpo'
+  }
   return CODE_LABELS[code] ?? 'Nublado'
 }
 
@@ -67,10 +85,18 @@ export function isWet(kind: WeatherKind) {
 }
 
 export function uvCategory(uv: number): { label: string; advice: string } {
-  if (uv < 3) return { label: 'Baixo', advice: 'Sem protetor.' }
-  if (uv < 6) return { label: 'Moderado', advice: 'Protetor no sol.' }
-  if (uv < 8) return { label: 'Alto', advice: 'Use protetor.' }
-  if (uv < 11) return { label: 'Muito alto', advice: 'Evite o meio-dia.' }
+  if (uv < 3) {
+    return { label: 'Baixo', advice: 'Sem protetor.' }
+  }
+  if (uv < 6) {
+    return { label: 'Moderado', advice: 'Protetor no sol.' }
+  }
+  if (uv < 8) {
+    return { label: 'Alto', advice: 'Use protetor.' }
+  }
+  if (uv < 11) {
+    return { label: 'Muito alto', advice: 'Evite o meio-dia.' }
+  }
   return { label: 'Extremo', advice: 'Fique na sombra.' }
 }
 

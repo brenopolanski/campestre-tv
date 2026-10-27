@@ -230,7 +230,9 @@ const Lightning = ({ active, onFlash }: LightningProps) => {
   }, [onFlash])
 
   useEffect(() => {
-    if (!active) return
+    if (!active) {
+      return
+    }
     let timer = 0
     const schedule = (first: boolean) => {
       timer = window.setTimeout(

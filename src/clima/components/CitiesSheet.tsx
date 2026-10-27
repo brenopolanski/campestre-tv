@@ -80,9 +80,13 @@ const Sheet = ({
 
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null
-    if (!searchFirst) sheetRef.current?.focus()
+    if (!searchFirst) {
+      sheetRef.current?.focus()
+    }
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') close()
+      if (e.key === 'Escape') {
+        close()
+      }
     }
     document.addEventListener('keydown', onKey)
     document.body.dataset.sheetOpen = 'true'
@@ -107,8 +111,9 @@ const Sheet = ({
     const current = y.get()
     // projection with velocity: the sheet "continues" the gesture before choosing the snap point
     const projected = current + v * 0.18
-    if (projected > positions.medium + height * 0.22 || (snap === 'medium' && v > 700))
+    if (projected > positions.medium + height * 0.22 || (snap === 'medium' && v > 700)) {
       return close()
+    }
     const next: Snap = projected < positions.medium / 2 || v < -500 ? 'full' : 'medium'
     if (next === snap) {
       animate(y, positions[next], { ...motionTokens.system.sheet, velocity: v })
@@ -258,13 +263,17 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
       setStatus('loading')
       searchPlaces(q)
         .then((r) => {
-          if (ignore) return
+          if (ignore) {
+            return
+          }
           setResults(r)
           setActive(0)
           setStatus('idle')
         })
         .catch(() => {
-          if (!ignore) setStatus('error')
+          if (!ignore) {
+            setStatus('error')
+          }
         })
     }, 220)
     return () => {
@@ -274,7 +283,9 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
   }, [query])
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (!results.length) return
+    if (!results.length) {
+      return
+    }
     if (e.key === 'ArrowDown') {
       e.preventDefault()
       setActive((a) => (a + 1) % results.length)
@@ -292,7 +303,9 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
   // focus in the same turn as the tap (opens the keyboard on iPhone), without scrolling the page
   const inputRef = useRef<HTMLInputElement>(null)
   useLayoutEffect(() => {
-    if (autoFocus) inputRef.current?.focus({ preventScroll: true })
+    if (autoFocus) {
+      inputRef.current?.focus({ preventScroll: true })
+    }
   }, [autoFocus])
 
   return (

@@ -45,9 +45,15 @@ export interface CliminhaState {
 export type TempFeel = 'hot' | 'cold' | 'freezing'
 
 export function tempFeelFor(celsius: number): TempFeel | undefined {
-  if (celsius > 34) return 'hot'
-  if (celsius < 5) return 'freezing'
-  if (celsius < 16) return 'cold'
+  if (celsius > 34) {
+    return 'hot'
+  }
+  if (celsius < 5) {
+    return 'freezing'
+  }
+  if (celsius < 16) {
+    return 'cold'
+  }
   return undefined
 }
 
@@ -141,13 +147,27 @@ const BODY: Record<WeatherKind | 'night', BodyColors> = {
  */
 function moodFor(kind: WeatherKind, isDay: boolean, temp?: TempFeel): Mood {
   // priority: fear of lightning > sleep > what the temperature feels like > the weather
-  if (kind === 'storm') return 'scared'
-  if (!isDay) return 'sleeping'
-  if (temp === 'freezing') return 'freezing'
-  if (temp === 'hot') return 'hot'
-  if (kind === 'rain' || kind === 'heavyRain' || kind === 'cloudy') return 'bored'
-  if (temp === 'cold') return 'cold'
-  if (kind === 'sunny' || kind === 'clear' || kind === 'partly') return 'happy'
+  if (kind === 'storm') {
+    return 'scared'
+  }
+  if (!isDay) {
+    return 'sleeping'
+  }
+  if (temp === 'freezing') {
+    return 'freezing'
+  }
+  if (temp === 'hot') {
+    return 'hot'
+  }
+  if (kind === 'rain' || kind === 'heavyRain' || kind === 'cloudy') {
+    return 'bored'
+  }
+  if (temp === 'cold') {
+    return 'cold'
+  }
+  if (kind === 'sunny' || kind === 'clear' || kind === 'partly') {
+    return 'happy'
+  }
   return 'neutral'
 }
 
@@ -203,7 +223,9 @@ function mixHex(a: string, b: string, t: number) {
 }
 
 function tinted(body: BodyColors, temp?: TempFeel): BodyColors {
-  if (!temp) return body
+  if (!temp) {
+    return body
+  }
   const t = TINT[temp]
   return {
     ...body,

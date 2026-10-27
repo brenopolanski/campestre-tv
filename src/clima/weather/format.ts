@@ -17,7 +17,9 @@ export function clockLabel(time: string) {
 }
 
 export function dayLabel(date: string, index: number) {
-  if (index === 0) return 'Hoje'
+  if (index === 0) {
+    return 'Hoje'
+  }
   const [y, m, d] = date.split('-').map(Number)
   return WEEKDAYS[new Date(y, m - 1, d).getDay()]
 }
@@ -41,6 +43,8 @@ export function hourlySummary(hours: HourPoint[]): string | null {
       ? `Chuva até as ${hourLabel(next[dryIdx].time)}.`
       : 'Chuva nas próximas horas.'
   }
-  if (wetIdx > 0) return `Chuva a partir das ${hourLabel(next[wetIdx].time)}.`
+  if (wetIdx > 0) {
+    return `Chuva a partir das ${hourLabel(next[wetIdx].time)}.`
+  }
   return null
 }

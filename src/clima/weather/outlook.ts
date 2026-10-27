@@ -11,7 +11,9 @@ export interface PrecipitationOutlook {
 /** Rain in the next 3 h (15-minute steps). Null when there is nothing to show. */
 export function precipitationOutlook(forecast: Forecast): PrecipitationOutlook | null {
   const steps = forecast.nowcast.slice(0, 12)
-  if (!steps.some((s) => s.precipitation >= RAIN_THRESHOLD)) return null
+  if (!steps.some((s) => s.precipitation >= RAIN_THRESHOLD)) {
+    return null
+  }
   const rainingNow =
     steps[0].precipitation >= RAIN_THRESHOLD || forecast.current.precipitation >= RAIN_THRESHOLD
   if (rainingNow) {

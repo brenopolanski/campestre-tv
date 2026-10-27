@@ -76,7 +76,9 @@ export const TravelingCliminha = ({
   useLayoutEffect(() => {
     const measure = () => {
       const el = anchorRef.current
-      if (!el) return
+      if (!el) {
+        return
+      }
       // layout position (offsetLeft/Top ignore transforms): the page may be
       // shifted by the drag or mid-animation when we measure
       let left = 0
@@ -97,7 +99,9 @@ export const TravelingCliminha = ({
     }
     measure()
     const ro = new ResizeObserver(measure)
-    if (anchorRef.current) ro.observe(anchorRef.current)
+    if (anchorRef.current) {
+      ro.observe(anchorRef.current)
+    }
     window.addEventListener('resize', measure)
     return () => {
       ro.disconnect()
@@ -118,7 +122,9 @@ export const TravelingCliminha = ({
   const scale = useSpring(rawScale, motionTokens.climinha.follow)
 
   useLayoutEffect(() => {
-    if (!geo) return
+    if (!geo) {
+      return
+    }
     const heroW = geo.anchorW
     const travel = Math.max(1, geo.vh * DOCK_TRAVEL)
     // landed on top of the bar, centered
@@ -146,7 +152,9 @@ export const TravelingCliminha = ({
         scale.jump(ts)
         return
       }
-      if (!first || landed.current) return
+      if (!first || landed.current) {
+        return
+      }
       landed.current = true
       // coming from the intro: starts at the close-up size/position and shrinks slowly to the hero
       const from = fromRef?.current?.getBoundingClientRect()
@@ -191,7 +199,9 @@ export const TravelingCliminha = ({
   const pointerX = useMotionValue(0)
   const pointerY = useMotionValue(0)
   useEffect(() => {
-    if (reduced || !window.matchMedia('(pointer: fine)').matches) return
+    if (reduced || !window.matchMedia('(pointer: fine)').matches) {
+      return
+    }
     const onMove = (e: PointerEvent) => {
       pointerX.set(Math.max(-1, Math.min(1, (e.clientX / window.innerWidth - 0.5) * 2)) * 0.8)
       pointerY.set(Math.max(-1, Math.min(1, (e.clientY / window.innerHeight - 0.35) * 2)) * 0.5)
@@ -214,10 +224,14 @@ export const TravelingCliminha = ({
 
   const ready = !!geo
   useEffect(() => {
-    if (ready) onReady?.()
+    if (ready) {
+      onReady?.()
+    }
   }, [ready, onReady])
 
-  if (!geo) return null
+  if (!geo) {
+    return null
+  }
 
   return (
     <motion.div
@@ -251,7 +265,9 @@ export const TravelingCliminha = ({
             state={state}
             perceive
             onTap={() => {
-              if (!reduced) setBounce((n) => n + 1)
+              if (!reduced) {
+                setBounce((n) => n + 1)
+              }
             }}
           />
           <div className="tennis-ball" aria-hidden>

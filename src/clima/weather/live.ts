@@ -51,7 +51,9 @@ export function liveForecast(f: Forecast, now: Date): Forecast {
     const h = f.hourly[hourIdx]
     current = { ...current, temperature: h.temperature, code: h.code, kind: h.kind }
   }
-  if (hourly[0]) hourly[0] = { ...hourly[0], isDay }
+  if (hourly[0]) {
+    hourly[0] = { ...hourly[0], isDay }
+  }
 
   return { ...f, current, hourly, daily }
 }

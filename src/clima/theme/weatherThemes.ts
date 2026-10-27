@@ -419,7 +419,9 @@ const THEMES: Record<EnvironmentId, ThemeInput> = {
 }
 
 export function environmentFor(kind: WeatherKind, isDay: boolean): EnvironmentId {
-  if (isDay) return kind
+  if (isDay) {
+    return kind
+  }
   switch (kind) {
     case 'sunny':
     case 'clear':
@@ -451,7 +453,9 @@ export function getTheme(kind: WeatherKind, isDay: boolean): WeatherTheme {
 /** Applies the theme as custom properties on .clima and updates the browser theme-color. */
 export function applyTheme(theme: WeatherTheme) {
   const root = document.querySelector<HTMLElement>('.clima')
-  if (!root) return
+  if (!root) {
+    return
+  }
   const vars: Record<string, string> = {
     '--sky-top': theme.skyTop,
     '--sky-mid': theme.skyMid,
@@ -470,7 +474,9 @@ export function applyTheme(theme: WeatherTheme) {
     '--glass-blur': `${theme.glassBlur}px`,
     '--accent': theme.accent,
   }
-  for (const [k, v] of Object.entries(vars)) root.style.setProperty(k, v)
+  for (const [k, v] of Object.entries(vars)) {
+    root.style.setProperty(k, v)
+  }
   root.dataset.scheme = theme.scheme
   root.dataset.environment = theme.id
 

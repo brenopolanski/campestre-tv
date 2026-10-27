@@ -112,7 +112,9 @@ const App = ({ header }: AppProps) => {
   useEffect(() => {
     const id = window.setInterval(() => {
       setNow(new Date())
-      if (!document.hidden) markSeen()
+      if (!document.hidden) {
+        markSeen()
+      }
     }, 30_000)
     const onHide = () => markSeen()
     window.addEventListener('pagehide', onHide)
@@ -124,7 +126,9 @@ const App = ({ header }: AppProps) => {
     }
   }, [])
   const forecast = useMemo(() => {
-    if (!entry?.data) return undefined
+    if (!entry?.data) {
+      return undefined
+    }
     const live = liveForecast(entry.data, now)
     return simulation ? applySimulation(live, simulation) : live
   }, [entry?.data, simulation, now])
@@ -161,7 +165,9 @@ const App = ({ header }: AppProps) => {
   // the flight starts only after that, so it never fights this work for a frame
   const [dataSettled, setDataSettled] = useState(false)
   useEffect(() => {
-    if (!hasData || dataSettled) return
+    if (!hasData || dataSettled) {
+      return
+    }
     let raf = 0
     const t = window.setTimeout(() => {
       // two frames after layout: the page has already been painted
@@ -172,7 +178,9 @@ const App = ({ header }: AppProps) => {
       cancelAnimationFrame(raf)
     }
   }, [hasData, dataSettled])
-  if (splash && splashMinDone && dataSettled) setSplash(false)
+  if (splash && splashMinDone && dataSettled) {
+    setSplash(false)
+  }
 
   // the intro is already the "notice-user": on Home he arrives awake
   const phase: CliminhaPhase = 'awake'
@@ -181,7 +189,9 @@ const App = ({ header }: AppProps) => {
   // Mounting them after landing (while the browser is idle) takes the biggest layout off the intro.
   const [mountRest, setMountRest] = useState(false)
   useEffect(() => {
-    if (mountRest || splash) return
+    if (mountRest || splash) {
+      return
+    }
     const mount = () => startTransition(() => setMountRest(true))
     const onScroll = () => mount()
     window.addEventListener('scroll', onScroll, { once: true, passive: true })
@@ -195,13 +205,17 @@ const App = ({ header }: AppProps) => {
     return () => {
       window.removeEventListener('scroll', onScroll)
       window.clearTimeout(t)
-      if (typeof cancelIdleCallback === 'function') cancelIdleCallback(idle)
+      if (typeof cancelIdleCallback === 'function') {
+        cancelIdleCallback(idle)
+      }
     }
   }, [mountRest, splash])
 
   const [firstRun, setFirstRun] = useState(true)
   useEffect(() => {
-    if (splash) return
+    if (splash) {
+      return
+    }
     const t = window.setTimeout(() => setFirstRun(false), 1600)
     return () => window.clearTimeout(t)
   }, [splash])
@@ -270,9 +284,15 @@ const App = ({ header }: AppProps) => {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement
-      if (t.closest('input, [role="menu"], [role="dialog"], [data-hscroll]')) return
-      if (e.key === 'ArrowRight') goTo(safeIndex + 1)
-      if (e.key === 'ArrowLeft') goTo(safeIndex - 1)
+      if (t.closest('input, [role="menu"], [role="dialog"], [data-hscroll]')) {
+        return
+      }
+      if (e.key === 'ArrowRight') {
+        goTo(safeIndex + 1)
+      }
+      if (e.key === 'ArrowLeft') {
+        goTo(safeIndex - 1)
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -286,8 +306,11 @@ const App = ({ header }: AppProps) => {
       const w = window.innerWidth
       const dir =
         offset < -w * 0.2 || velocity < -450 ? 1 : offset > w * 0.2 || velocity > 450 ? -1 : 0
-      if (dir === 0 || (dir === 1 && !canNext) || (dir === -1 && !canPrev)) settle(velocity)
-      else void goTo(safeIndex + dir, velocity)
+      if (dir === 0 || (dir === 1 && !canNext) || (dir === -1 && !canPrev)) {
+        settle(velocity)
+      } else {
+        void goTo(safeIndex + dir, velocity)
+      }
     },
     [canNext, canPrev, goTo, safeIndex, settle],
   )
@@ -302,14 +325,20 @@ const App = ({ header }: AppProps) => {
   const dragged = useRef(false)
   const onPointerDown = (e: React.PointerEvent) => {
     // you can only drag sideways when there is another city to go to
-    if (!canSwipe || switching.current || e.button !== 0) return
-    if ((e.target as HTMLElement).closest('[data-hscroll], input, a')) return
+    if (!canSwipe || switching.current || e.button !== 0) {
+      return
+    }
+    if ((e.target as HTMLElement).closest('[data-hscroll], input, a')) {
+      return
+    }
     drag.current = { x0: e.clientX, y0: e.clientY, lock: null, samples: [[e.clientX, e.timeStamp]] }
     dragged.current = false
   }
   const onPointerMove = (e: React.PointerEvent) => {
     const d = drag.current
-    if (!d) return
+    if (!d) {
+      return
+    }
     const dx = e.clientX - d.x0
     const dy = e.clientY - d.y0
     if (!d.lock) {
@@ -320,18 +349,24 @@ const App = ({ header }: AppProps) => {
       } else if (Math.abs(dy) > 8) {
         drag.current = null
         return
-      } else return
+      } else {
+        return
+      }
     }
     // edges: elastic resistance
     const edge = (dx > 0 && !canPrev) || (dx < 0 && !canNext)
     swipeX.set(edge ? dx * 0.22 : dx)
     d.samples.push([e.clientX, e.timeStamp])
-    if (d.samples.length > 6) d.samples.shift()
+    if (d.samples.length > 6) {
+      d.samples.shift()
+    }
   }
   const onPointerUp = (e: React.PointerEvent) => {
     const d = drag.current
     drag.current = null
-    if (!d || d.lock !== 'x') return
+    if (!d || d.lock !== 'x') {
+      return
+    }
     const [x0, t0] = d.samples[0]
     const dt = Math.max(1, e.timeStamp - t0)
     release(e.clientX - d.x0, ((e.clientX - x0) / dt) * 1000)
@@ -350,14 +385,22 @@ const App = ({ header }: AppProps) => {
     let idle = 0
     let lockedUntil = 0
     const onWheel = (e: WheelEvent) => {
-      if (!canSwipe || Math.abs(e.deltaX) <= Math.abs(e.deltaY) * 1.2) return
-      if ((e.target as HTMLElement).closest('[data-hscroll], [role="dialog"]')) return
+      if (!canSwipe || Math.abs(e.deltaX) <= Math.abs(e.deltaY) * 1.2) {
+        return
+      }
+      if ((e.target as HTMLElement).closest('[data-hscroll], [role="dialog"]')) {
+        return
+      }
       e.preventDefault()
-      if (switching.current || performance.now() < lockedUntil) return
+      if (switching.current || performance.now() < lockedUntil) {
+        return
+      }
       const w = window.innerWidth
       let x = swipeX.get() - e.deltaX
       // at the edges, elastic resistance
-      if ((x > 0 && !canPrev) || (x < 0 && !canNext)) x = swipeX.get() - e.deltaX * 0.25
+      if ((x > 0 && !canPrev) || (x < 0 && !canNext)) {
+        x = swipeX.get() - e.deltaX * 0.25
+      }
       swipeX.set(Math.max(-w * 0.6, Math.min(w * 0.6, x)))
       window.clearTimeout(idle)
       const commit = () => {
@@ -366,8 +409,11 @@ const App = ({ header }: AppProps) => {
         lockedUntil = performance.now() + 700 // ignore trackpad inertia
         release(dir === 0 ? 0 : -dir * w, 0)
       }
-      if (Math.abs(swipeX.get()) > w * 0.32) commit()
-      else idle = window.setTimeout(commit, 220)
+      if (Math.abs(swipeX.get()) > w * 0.32) {
+        commit()
+      } else {
+        idle = window.setTimeout(commit, 220)
+      }
     }
     window.addEventListener('wheel', onWheel, { passive: false })
     return () => {
@@ -380,7 +426,9 @@ const App = ({ header }: AppProps) => {
   const [locating, setLocating] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
   useEffect(() => {
-    if (!notice) return
+    if (!notice) {
+      return
+    }
     const t = window.setTimeout(() => setNotice(null), 3200)
     return () => window.clearTimeout(t)
   }, [notice])
@@ -390,7 +438,9 @@ const App = ({ header }: AppProps) => {
       setHere(place)
       writeHere(place)
       void refresh(place)
-      if (select) setIndex(0)
+      if (select) {
+        setIndex(0)
+      }
     },
     [refresh],
   )
@@ -413,7 +463,9 @@ const App = ({ header }: AppProps) => {
   const [listOpen, setListOpen] = useState(false)
   // after it has been opened once, the list stays mounted (it closes with an animation)
   const [sheetUsed, setSheetUsed] = useState(false)
-  if (listOpen && !sheetUsed) setSheetUsed(true)
+  if (listOpen && !sheetUsed) {
+    setSheetUsed(true)
+  }
   const anchorRef = useRef<HTMLDivElement>(null)
   const splashCharacterRef = useRef<HTMLDivElement>(null)
   const [travelerReady, setTravelerReady] = useState(false)
@@ -422,8 +474,9 @@ const App = ({ header }: AppProps) => {
 
   const selectPlace = (p: Place) => {
     const i = places.findIndex((x) => x.id === p.id)
-    if (i >= 0) goTo(i)
-    else {
+    if (i >= 0) {
+      goTo(i)
+    } else {
       // a newly added city goes to the end of the list
       setDirection(1)
       setIndex(places.length)
@@ -573,11 +626,15 @@ const App = ({ header }: AppProps) => {
             onAdd={addPlace}
             onClose={() => setListOpen(false)}
             onRemove={(id) => {
-              if (id === CLUB_PLACE.id) return
+              if (id === CLUB_PLACE.id) {
+                return
+              }
               if (id === HERE_ID) {
                 setHere(null)
                 writeHere(null)
-              } else removePlace(id)
+              } else {
+                removePlace(id)
+              }
               setIndex(0)
             }}
             onSelect={selectPlace}

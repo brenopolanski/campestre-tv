@@ -17,7 +17,9 @@ export const RainCanvas = ({ intensity, reduced }: RainCanvasProps) => {
 
   useEffect(() => {
     const host = wrap.current
-    if (!host || intensity === 0) return
+    if (!host || intensity === 0) {
+      return
+    }
     // a new canvas on every effect: a canvas can be transferred to the worker only once
     const canvas = document.createElement('canvas')
     canvas.className = 'env__rain-canvas'
@@ -71,7 +73,9 @@ interface Drop {
 /** Main-thread version, for browsers without OffscreenCanvas. */
 function rainOnMainThread(canvas: HTMLCanvasElement, intensity: 1 | 2, reduced: boolean) {
   const ctx = canvas.getContext('2d')
-  if (!ctx) return () => {}
+  if (!ctx) {
+    return () => {}
+  }
   let w = 0
   let h = 0
   let drops: Drop[] = []
@@ -106,7 +110,9 @@ function rainOnMainThread(canvas: HTMLCanvasElement, intensity: 1 | 2, reduced: 
       ctx.lineWidth = LAYERS[l].width
       ctx.beginPath()
       for (const d of drops) {
-        if (Math.min(2, Math.floor(d.depth * 3)) !== l) continue
+        if (Math.min(2, Math.floor(d.depth * 3)) !== l) {
+          continue
+        }
         ctx.moveTo(d.x, d.y)
         ctx.lineTo(d.x + d.len * wind, d.y + d.len)
       }
@@ -130,7 +136,9 @@ function rainOnMainThread(canvas: HTMLCanvasElement, intensity: 1 | 2, reduced: 
       const d = drops[i]
       d.y += d.speed * dt
       d.x += d.speed * dt * wind
-      if (d.y > h + 20) drops[i] = spawn(false)
+      if (d.y > h + 20) {
+        drops[i] = spawn(false)
+      }
     }
     draw()
     raf = requestAnimationFrame(tick)

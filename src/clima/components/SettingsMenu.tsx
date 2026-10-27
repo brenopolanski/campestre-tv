@@ -46,10 +46,14 @@ export const SettingsMenu = ({
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!open) return
+    if (!open) {
+      return
+    }
     const onDown = (e: PointerEvent) => {
       const t = e.target as Node
-      if (!menuRef.current?.contains(t) && !buttonRef.current?.contains(t)) setOpen(false)
+      if (!menuRef.current?.contains(t) && !buttonRef.current?.contains(t)) {
+        setOpen(false)
+      }
     }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -67,7 +71,9 @@ export const SettingsMenu = ({
   }, [open])
 
   const onMenuKey = (e: React.KeyboardEvent) => {
-    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') {
+      return
+    }
     e.preventDefault()
     const items = Array.from(
       menuRef.current?.querySelectorAll<HTMLElement>('[role^="menuitem"]') ?? [],

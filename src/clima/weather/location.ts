@@ -140,7 +140,9 @@ function readTimezonePlace(tz: string): Place | null {
 export function timezonePlace(): Place {
   const tz = deviceTimezone()
   const city = TIMEZONE_CITIES[tz]
-  if (city) return { id: `tz-${tz}`, ...city }
+  if (city) {
+    return { id: `tz-${tz}`, ...city }
+  }
   return readTimezonePlace(tz) ?? { id: 'tz-default', ...TIMEZONE_CITIES['America/Sao_Paulo'] }
 }
 
@@ -150,11 +152,17 @@ export function timezonePlace(): Place {
  */
 export async function resolveTimezonePlace(): Promise<Place | null> {
   const tz = deviceTimezone()
-  if (!tz || TIMEZONE_CITIES[tz] || readTimezonePlace(tz)) return null
+  if (!tz || TIMEZONE_CITIES[tz] || readTimezonePlace(tz)) {
+    return null
+  }
   const name = tz.split('/').pop()?.replace(/_/g, ' ')
-  if (!name || !tz.includes('/')) return null
+  if (!name || !tz.includes('/')) {
+    return null
+  }
   const [found] = await searchPlaces(name)
-  if (!found) return null
+  if (!found) {
+    return null
+  }
   const place = { ...found, id: `tz-${tz}` }
   try {
     localStorage.setItem(TZ_PLACE_KEY, JSON.stringify({ tz, place }))
@@ -166,7 +174,9 @@ export async function resolveTimezonePlace(): Promise<Place | null> {
 
 export function getPosition(timeout = 12000): Promise<GeolocationPosition> {
   return new Promise((resolve, reject) => {
-    if (!('geolocation' in navigator)) return reject(new Error('sem geolocalização'))
+    if (!('geolocation' in navigator)) {
+      return reject(new Error('sem geolocalização'))
+    }
     navigator.geolocation.getCurrentPosition(resolve, reject, {
       enableHighAccuracy: false,
       timeout,
@@ -203,7 +213,9 @@ async function fromBigDataCloud(
   const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?${params}`, {
     signal,
   })
-  if (!res.ok) return null
+  if (!res.ok) {
+    return null
+  }
   const d = (await res.json()) as {
     city?: string
     locality?: string
@@ -213,7 +225,9 @@ async function fromBigDataCloud(
   // in capitals "city" sometimes comes back as the metro area: then the municipality is "locality"
   const regional = /regi[aã]o|metropolitana|microrregi/i
   const name = d.city && !regional.test(d.city) ? d.city : d.locality || d.city
-  if (!name) return null
+  if (!name) {
+    return null
+  }
   return { name, region: [d.principalSubdivision, d.countryName].filter(Boolean).join(', ') }
 }
 
@@ -230,11 +244,15 @@ async function fromNominatim(
     'accept-language': 'pt',
   })
   const res = await fetch(`https://nominatim.openstreetmap.org/reverse?${params}`, { signal })
-  if (!res.ok) return null
+  if (!res.ok) {
+    return null
+  }
   const d = (await res.json()) as { address?: Record<string, string> }
   const a = d.address ?? {}
   const name = a.city || a.town || a.municipality || a.village || a.county
-  if (!name) return null
+  if (!name) {
+    return null
+  }
   return { name, region: [a.state, a.country].filter(Boolean).join(', ') }
 }
 
@@ -247,9 +265,13 @@ export async function cityNameAt(
   for (const source of [fromBigDataCloud, fromNominatim]) {
     try {
       const r = await source(lat, lon, signal)
-      if (r) return r
+      if (r) {
+        return r
+      }
     } catch (e) {
-      if ((e as Error).name === 'AbortError') throw e
+      if ((e as Error).name === 'AbortError') {
+        throw e
+      }
     }
   }
   return null
@@ -299,12 +321,16 @@ export function watchUser(
   onMove: (latitude: number, longitude: number) => void,
   minKm = 1.5,
 ): () => void {
-  if (!('geolocation' in navigator)) return () => {}
+  if (!('geolocation' in navigator)) {
+    return () => {}
+  }
   const id = navigator.geolocation.watchPosition(
     (pos) => {
       const next = { latitude: pos.coords.latitude, longitude: pos.coords.longitude }
       const prev = from()
-      if (!prev || distanceKm(prev, next) >= minKm) onMove(next.latitude, next.longitude)
+      if (!prev || distanceKm(prev, next) >= minKm) {
+        onMove(next.latitude, next.longitude)
+      }
     },
     () => {},
     { enableHighAccuracy: false, maximumAge: 60 * 1000, timeout: 30 * 1000 },
