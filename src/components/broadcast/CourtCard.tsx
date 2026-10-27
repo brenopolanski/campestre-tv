@@ -1,9 +1,8 @@
-import Image from 'next/image'
-
 import { siteConfig } from '@/config/site'
 import type { BroadcastCourt } from '@/lib/courts'
 import { cn } from '@/lib/utils'
 
+import { CourtImage } from './CourtImage'
 import { LiveBadge, Viewers } from './LiveStatus'
 import { ShareButton } from './ShareButton'
 
@@ -30,7 +29,7 @@ export const CourtCard = ({ court, active = false, onWatch }: CourtCardProps) =>
               active && 'outline-brand',
             )}
           >
-            <Image
+            <CourtImage
               alt={court.alt}
               className="aspect-video w-full object-cover"
               height={court.height}

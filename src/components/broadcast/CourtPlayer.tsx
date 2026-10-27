@@ -1,13 +1,12 @@
 'use client'
 
-import Image from 'next/image'
-
 import { ExternalLink } from '@/components/shared/ExternalLink'
 import { PlayIcon } from '@/components/shared/Icons'
 import { siteConfig } from '@/config/site'
 import { ANALYTICS_EVENTS, trackEvent } from '@/lib/analytics'
 import type { BroadcastCourt } from '@/lib/courts'
 
+import { CourtImage } from './CourtImage'
 import { LiveBadge, Viewers } from './LiveStatus'
 import { ShareButton } from './ShareButton'
 
@@ -25,7 +24,7 @@ export const CourtPlayer = ({ court, externalWatchUrl, playback, onWatch }: Cour
         <figure className="relative overflow-hidden rounded-lg">
           {playback ?? (
             <>
-              <Image
+              <CourtImage
                 alt={court.alt}
                 className="aspect-video h-auto w-full object-cover"
                 fetchPriority="high"
