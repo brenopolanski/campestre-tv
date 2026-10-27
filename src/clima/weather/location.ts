@@ -224,7 +224,7 @@ async function fromBigDataCloud(
   }
   // in capitals "city" sometimes comes back as the metro area: then the municipality is "locality"
   const regional = /regi[aã]o|metropolitana|microrregi/i
-  const name = d.city && !regional.test(d.city) ? d.city : d.locality || d.city
+  const name = d.city && !regional.test(d.city) ? d.city : (d.locality ?? d.city)
   if (!name) {
     return null
   }
