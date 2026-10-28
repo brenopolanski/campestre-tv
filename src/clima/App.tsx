@@ -345,7 +345,7 @@ const App = ({ header }: AppProps) => {
       if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy) * 1.2) {
         d.lock = 'x'
         dragged.current = true
-        ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
+        e.currentTarget.setPointerCapture(e.pointerId)
       } else if (Math.abs(dy) > 8) {
         drag.current = null
         return
