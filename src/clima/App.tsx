@@ -364,7 +364,7 @@ const App = ({ header }: AppProps) => {
   const onPointerUp = (e: React.PointerEvent) => {
     const d = drag.current
     drag.current = null
-    if (!d || d.lock !== 'x') {
+    if (d?.lock !== 'x') {
       return
     }
     const [x0, t0] = d.samples[0]

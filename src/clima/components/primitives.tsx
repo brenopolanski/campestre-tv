@@ -16,25 +16,25 @@ interface GlassButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
 }
 
 /** Floating circular control (UI layer). Minimum 44px target. */
-export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(function GlassButton(
-  { icon, label, size = 44, className, ...rest },
-  ref,
-) {
-  return (
-    <motion.button
-      ref={ref}
-      aria-label={label}
-      className={['glass glass-button', className].filter(Boolean).join(' ')}
-      style={{ width: size, height: size }}
-      transition={motionTokens.system.press}
-      type="button"
-      whileTap={{ scale: pressScale }}
-      {...rest}
-    >
-      <UiIcon name={icon} size={20} />
-    </motion.button>
-  )
-})
+export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
+  ({ icon, label, size = 44, className, ...rest }, ref) => {
+    return (
+      <motion.button
+        ref={ref}
+        aria-label={label}
+        className={['glass glass-button', className].filter(Boolean).join(' ')}
+        style={{ width: size, height: size }}
+        transition={motionTokens.system.press}
+        type="button"
+        whileTap={{ scale: pressScale }}
+        {...rest}
+      >
+        <UiIcon name={icon} size={20} />
+      </motion.button>
+    )
+  },
+)
+GlassButton.displayName = 'GlassButton'
 
 interface PlainIconButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   icon: UiIconName
@@ -44,7 +44,7 @@ interface PlainIconButtonProps extends Omit<HTMLMotionProps<'button'>, 'children
 
 /** Flat button inside a glass container (no glass inside glass). */
 export const PlainIconButton = forwardRef<HTMLButtonElement, PlainIconButtonProps>(
-  function PlainIconButton({ icon, label, pressed, className, ...rest }, ref) {
+  ({ icon, label, pressed, className, ...rest }, ref) => {
     return (
       <motion.button
         ref={ref}
@@ -62,6 +62,7 @@ export const PlainIconButton = forwardRef<HTMLButtonElement, PlainIconButtonProp
     )
   },
 )
+PlainIconButton.displayName = 'PlainIconButton'
 
 interface CardProps {
   title: string

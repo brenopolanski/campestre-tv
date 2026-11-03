@@ -61,7 +61,7 @@ interface EnvironmentProps {
   onLightning?: () => void
 }
 
-export const Environment = memo(function Environment({ theme, onLightning }: EnvironmentProps) {
+export const Environment = memo(({ theme, onLightning }: EnvironmentProps) => {
   const reduced = useReducedMotion() ?? false
   const a = theme.atmosphere
   const { scrollY } = useScroll()
@@ -173,6 +173,7 @@ export const Environment = memo(function Environment({ theme, onLightning }: Env
     </div>
   )
 })
+Environment.displayName = 'Environment'
 
 /**
  * Opacity of a sky layer. At zero it becomes `visibility: hidden`:
