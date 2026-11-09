@@ -86,12 +86,20 @@ export interface ForecastEntry {
   status: 'loading' | 'ready' | 'error'
 }
 
+/** A saved forecast is shown only while it is still the observation the next fetch would keep. */
+export function forecastEntryFromCache(data: Forecast, now = Date.now()): ForecastEntry {
+  if (now - data.fetchedAt < STALE_MS) {
+    return { data, status: 'ready' }
+  }
+  return { status: 'loading' }
+}
+
 export function useForecasts(places: Place[]) {
   const [entries, setEntries] = useState<Record<string, ForecastEntry>>(() => {
     const cache = read<Record<string, Forecast>>(CACHE_KEY, {})
     const initial: Record<string, ForecastEntry> = {}
     for (const [id, data] of Object.entries(cache)) {
-      initial[id] = { data, status: 'loading' }
+      initial[id] = forecastEntryFromCache(data)
     }
     return initial
   })
@@ -119,23 +127,20 @@ export function useForecasts(places: Place[]) {
     setEntries((e) => ({ ...e, [place.id]: { data: e[place.id]?.data, status: 'loading' } }))
     try {
       const data = await fetchForecast(place, controller.signal)
-      setEntries((e) => {
-        const next = { ...e, [place.id]: { data, status: 'ready' as const } }
-        const cache: Record<string, Forecast> = {}
-        for (const [id, entry] of Object.entries(next)) {
-          if (entry.data) {
-            cache[id] = entry.data
-          }
-        }
-        write(CACHE_KEY, cache)
-        return next
-      })
+      const cache = read<Record<string, Forecast>>(CACHE_KEY, {})
+      cache[place.id] = data
+      write(CACHE_KEY, cache)
+      setEntries((e) => ({ ...e, [place.id]: { data, status: 'ready' } }))
     } catch (err) {
       if ((err as Error).name === 'AbortError') {
         return
       }
-      // keep the last good data
-      setEntries((e) => ({ ...e, [place.id]: { data: e[place.id]?.data, status: 'error' } }))
+      // The stale copy stayed out of the first paint. It appears only once this fetch has failed.
+      const cached = read<Record<string, Forecast>>(CACHE_KEY, {})[place.id]
+      setEntries((e) => {
+        const data = e[place.id]?.data ?? cached
+        return { ...e, [place.id]: data ? { data, status: 'error' } : { status: 'error' } }
+      })
     } finally {
       inflight.current.delete(place.id)
     }

@@ -1,8 +1,5 @@
 import type { Forecast } from './types'
 
-/** after this, the "now" condition comes from the forecast for the current hour */
-const CURRENT_STALE_MS = 20 * 60 * 1000
-
 const formatters = new Map<string, Intl.DateTimeFormat>()
 
 /** "YYYY-MM-DDTHH:MM" in the city's timezone — same format as Open-Meteo times. */
@@ -29,7 +26,7 @@ export function localTimeIn(timezone: string, now: Date): string {
  *  - day/night from today's sunrise and sunset
  *  - "Agora" and the hourly list start at the current hour
  *  - "Hoje" is today in the city's timezone
- *  - stale data: temperature and condition come from the forecast for this hour
+ * The current observation stays the one that was fetched. The hourly code is a different field.
  */
 export function liveForecast(f: Forecast, now: Date): Forecast {
   const local = localTimeIn(f.timezone, now)
@@ -45,12 +42,8 @@ export function liveForecast(f: Forecast, now: Date): Forecast {
 
   const hourIdx = f.hourly.findIndex((h) => h.time.slice(0, 13) === hourKey)
   const hourly = f.hourly.slice(Math.max(0, hourIdx))
+  const current = { ...f.current, time: local, isDay }
 
-  let current = { ...f.current, time: local, isDay }
-  if (now.getTime() - f.fetchedAt > CURRENT_STALE_MS && hourIdx >= 0) {
-    const h = f.hourly[hourIdx]
-    current = { ...current, temperature: h.temperature, code: h.code, kind: h.kind }
-  }
   if (hourly[0]) {
     hourly[0] = { ...hourly[0], isDay }
   }
