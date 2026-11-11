@@ -125,27 +125,29 @@ const App = ({ header }: AppProps) => {
       document.removeEventListener('visibilitychange', onHide)
     }
   }, [])
+  const forecastData = entry?.data
   const forecast = useMemo(() => {
-    if (!entry?.data) {
+    if (!forecastData) {
       return undefined
     }
-    const live = liveForecast(entry.data, now)
+    const live = liveForecast(forecastData, now)
     return simulation ? applySimulation(live, simulation) : live
-  }, [entry?.data, simulation, now])
+  }, [forecastData, simulation, now])
 
   // --- environment + character derived from the weather ----------------------
+  const observation = forecast?.current
   const theme = useMemo(
-    () => (forecast ? getTheme(forecast.current.kind, forecast.current.isDay) : LOADING_THEME),
-    [forecast],
+    () => (observation ? getTheme(observation.kind, observation.isDay) : LOADING_THEME),
+    [observation],
   )
   useLayoutEffect(() => applyTheme(theme), [theme])
 
   const climinha = useMemo(
     () =>
-      forecast
-        ? climinhaFor(forecast.current.kind, forecast.current.isDay, forecast.current.temperature)
+      observation
+        ? climinhaFor(observation.kind, observation.isDay, observation.temperature)
         : NEUTRAL_STATE,
-    [forecast],
+    [observation],
   )
 
   // full-screen open: stays at least a moment and leaves when there is data

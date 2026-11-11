@@ -254,8 +254,6 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
   useEffect(() => {
     const q = query.trim()
     if (q.length < 2) {
-      setResults([])
-      setStatus('idle')
       return
     }
     let ignore = false
@@ -322,7 +320,14 @@ const SearchPanel = ({ children, onPick, onExpand, autoFocus }: SearchPanelProps
           placeholder="Buscar cidade"
           type="search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            const value = e.target.value
+            setQuery(value)
+            if (value.trim().length < 2) {
+              setResults([])
+              setStatus('idle')
+            }
+          }}
           onFocus={onExpand}
           onKeyDown={onKeyDown}
         />

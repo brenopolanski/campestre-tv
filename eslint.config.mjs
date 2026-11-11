@@ -100,9 +100,6 @@ const eslintConfig = defineConfig([
     // Climinha's own code style: function components and grouped imports
     files: ['src/clima/**'],
     rules: {
-      'react-hooks/preserve-manual-memoization': 'off',
-      'react-hooks/refs': 'off',
-      'react-hooks/set-state-in-effect': 'off',
       'shadcn/no-unknown-classes': 'off',
     },
   },

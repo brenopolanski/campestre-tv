@@ -124,7 +124,6 @@ export function useForecasts(places: Place[]) {
     }
     const controller = new AbortController()
     inflight.current.set(place.id, controller)
-    setEntries((e) => ({ ...e, [place.id]: { data: e[place.id]?.data, status: 'loading' } }))
     try {
       const data = await fetchForecast(place, controller.signal)
       const cache = read<Record<string, Forecast>>(CACHE_KEY, {})
@@ -147,8 +146,17 @@ export function useForecasts(places: Place[]) {
   }, [])
 
   useEffect(() => {
-    for (const p of places) {
-      void load(p)
+    let cancel = false
+    queueMicrotask(() => {
+      if (cancel) {
+        return
+      }
+      for (const p of places) {
+        void load(p)
+      }
+    })
+    return () => {
+      cancel = true
     }
   }, [places, load])
 

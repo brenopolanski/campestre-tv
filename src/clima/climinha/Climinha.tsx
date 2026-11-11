@@ -134,7 +134,6 @@ export const Climinha = ({
     if (wake !== 'drowsy') {
       return
     }
-    setDrowse(0.1)
     const id = window.setInterval(() => setDrowse((d) => Math.min(0.86, d + 0.1)), 1100)
     return () => window.clearInterval(id)
   }, [wake])
@@ -272,7 +271,10 @@ export const Climinha = ({
       setWake('awake')
       clearWakeTimers()
       wakeTimers.current.push(
-        window.setTimeout(() => setWake('drowsy'), 10_000),
+        window.setTimeout(() => {
+          setWake('drowsy')
+          setDrowse(0.1)
+        }, 10_000),
         window.setTimeout(() => setWake('asleep'), 20_000),
       )
       window.setTimeout(() => setReaction(null), 700)
@@ -324,10 +326,11 @@ export const Climinha = ({
   }, [live, phase, drowsy])
 
   // --- fluid body -------------------------------------------------------------
-  const bodyRefs = useRef<(SVGPathElement | null)[]>([])
-  const setBodyRef = (i: number) => (el: SVGPathElement | null) => {
-    bodyRefs.current[i] = el
-  }
+  const clipRef = useRef<SVGPathElement>(null)
+  const bodyRef = useRef<SVGPathElement>(null)
+  const warmRef = useRef<SVGPathElement>(null)
+  const coolRef = useRef<SVGPathElement>(null)
+  const rimRef = useRef<SVGPathElement>(null)
   const fallbackLean = useMotionValue(0)
   const leanSource = lean ?? fallbackLean
   const idleLean = useMotionValue(0)
@@ -348,8 +351,8 @@ export const Climinha = ({
     // a slow sway even when still: a cloud is never rigid
     idleLean.set(Math.sin(t * 0.55) * 0.12)
     const d = fluidBodyPath(t, waveAmp, totalLean.get())
-    for (const el of bodyRefs.current) {
-      el?.setAttribute('d', d)
+    for (const el of [clipRef, bodyRef, warmRef, coolRef, rimRef]) {
+      el.current?.setAttribute('d', d)
     }
   })
 
@@ -443,7 +446,7 @@ export const Climinha = ({
           <stop offset="1" stopColor="#ffc93d" stopOpacity="0" />
         </radialGradient>
         <clipPath id={`${uid}-clip`}>
-          <path ref={setBodyRef(0)} d={BODY_PATH} />
+          <path ref={clipRef} d={BODY_PATH} />
         </clipPath>
       </defs>
 
@@ -484,9 +487,9 @@ export const Climinha = ({
           }}
         >
           <motion.g animate={body} style={{ originX: '50%', originY: '100%' }}>
-            <path ref={setBodyRef(1)} d={BODY_PATH} fill={`url(#${uid}-body)`} />
-            <path ref={setBodyRef(2)} d={BODY_PATH} fill={`url(#${uid}-warm)`} />
-            <path ref={setBodyRef(3)} d={BODY_PATH} fill={`url(#${uid}-cool)`} />
+            <path ref={bodyRef} d={BODY_PATH} fill={`url(#${uid}-body)`} />
+            <path ref={warmRef} d={BODY_PATH} fill={`url(#${uid}-warm)`} />
+            <path ref={coolRef} d={BODY_PATH} fill={`url(#${uid}-cool)`} />
             {state.storm && (
               <g clipPath={`url(#${uid}-clip)`}>
                 <motion.ellipse
@@ -514,7 +517,7 @@ export const Climinha = ({
             )}
             <g clipPath={`url(#${uid}-clip)`}>
               <path
-                ref={setBodyRef(4)}
+                ref={rimRef}
                 d={BODY_PATH}
                 fill="none"
                 stroke={`url(#${uid}-rim)`}

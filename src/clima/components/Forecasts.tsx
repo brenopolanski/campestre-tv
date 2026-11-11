@@ -36,12 +36,13 @@ interface HourlyCardProps {
 }
 
 export const HourlyCard = ({ forecast, unit, order }: HourlyCardProps) => {
+  const { current: observation, daily, hourly } = forecast
   const items = useMemo<HourlyItem[]>(() => {
-    const hours = forecast.hourly.slice(0, 25)
+    const hours = hourly.slice(0, 25)
     const out: HourlyItem[] = []
     const first = hours[0]?.time ?? ''
     const last = hours[hours.length - 1]?.time ?? ''
-    const events = forecast.daily
+    const events = daily
       .slice(0, 2)
       .flatMap((d) => [
         { time: d.sunrise, event: 'sunrise' as const },
@@ -54,9 +55,9 @@ export const HourlyCard = ({ forecast, unit, order }: HourlyCardProps) => {
         type: 'hour',
         key: h.time,
         label: i === 0 ? 'Agora' : hourLabel(h.time),
-        temp: i === 0 ? forecast.current.temperature : h.temperature,
-        kind: i === 0 ? forecast.current.kind : h.kind,
-        isDay: i === 0 ? forecast.current.isDay : h.isDay,
+        temp: i === 0 ? observation.temperature : h.temperature,
+        kind: i === 0 ? observation.kind : h.kind,
+        isDay: i === 0 ? observation.isDay : h.isDay,
         pop: h.precipProbability,
       })
       const next = hours[i + 1]
@@ -73,7 +74,7 @@ export const HourlyCard = ({ forecast, unit, order }: HourlyCardProps) => {
       }
     })
     return out
-  }, [forecast])
+  }, [daily, hourly, observation])
 
   const summary = hourlySummary(forecast.hourly)
 
