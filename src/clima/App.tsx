@@ -62,13 +62,15 @@ const SHOW_SPLASH = false
 const SkeletonCards = () => {
   return (
     <div className="skeletons" aria-hidden>
+      <div className="card skeleton-card" style={{ height: 420 }} />
       <div className="card skeleton-card" style={{ height: 168 }} />
-      <div className="content__columns">
-        <div className="card skeleton-card" style={{ height: 420 }} />
-        <div className="details">
-          <div className="card skeleton-card" style={{ height: 164 }} />
-          <div className="card skeleton-card" style={{ height: 164 }} />
-        </div>
+      <div className="details">
+        <div className="card skeleton-card" style={{ height: 164 }} />
+        <div className="card skeleton-card" style={{ height: 164 }} />
+        <div className="card skeleton-card" style={{ height: 164 }} />
+        <div className="card skeleton-card" style={{ height: 164 }} />
+        <div className="card skeleton-card" style={{ height: 164 }} />
+        <div className="card skeleton-card" style={{ height: 164 }} />
       </div>
     </div>
   )
