@@ -2,6 +2,9 @@ import { withEnvStyles } from 'env.style'
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  experimental: {
+    agentUpgrade: 'security',
+  },
   images: {
     imageSizes: [32, 48, 64, 96, 128, 256, 384, 480],
     minimumCacheTTL: 60,
